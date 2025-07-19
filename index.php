@@ -1,267 +1,6 @@
 <?php 
-include "DB_connection.php";
-include "data/setting.php";
-$setting = getSetting($conn);
-
-if ($setting != 0) {
+    include "header.php";
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?=$setting['school_name']?></title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="logo.png">
-	<style>
-		
-
-
-/* ----------------------------------- index.php css file ----------------------------------
-********************************************************************************************
-********************************************************************************************/
-:root {
-            --primary-color: #003366;
-            --secondary-color: #ff6600;
-            --light-color: #f8f9fa;
-            --dark-color: #343a40;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
-        
-        .navbar {
-            background-color: var(--primary-color) !important;
-            padding: 0;
-        }
-        
-        .navbar-brand img {
-            height: 80px;
-        }
-        
-        .nav-link {
-            color: white !important;
-            font-weight: 500;
-            padding: 8px 15px !important;
-        }
-        
-        .nav-link:hover {
-            color: var(--secondary-color) !important;
-        }
-        
-        .hero-section {
-            background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 51, 102, 0.8)), url('img/campus.jpg');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 100px 0;
-            text-align: center;
-        }
-        
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-        
-        .hero-subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-        }
-        
-        .section-title {
-            color: var(--primary-color);
-            font-weight: 700;
-            margin-bottom: 30px;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .section-title:after {
-            content: '';
-            position: absolute;
-            width: 50%;
-            height: 3px;
-            background-color: var(--secondary-color);
-            bottom: -10px;
-            left: 0;
-        }
-        
-        .feature-box {
-            text-align: center;
-            padding: 30px 20px;
-            margin-bottom: 30px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            background-color: white;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-box:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .feature-icon {
-            font-size: 3rem;
-            color: var(--secondary-color);
-            margin-bottom: 20px;
-        }
-        
-        .about-section {
-            padding: 80px 0;
-            background-color: var(--light-color);
-        }
-        
-        .event-card {
-            margin-bottom: 30px;
-            border: none;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .event-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .event-date {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px;
-            text-align: center;
-            border-radius: 5px 0 0 5px;
-        }
-        
-        .event-day {
-            font-size: 2rem;
-            font-weight: 700;
-            display: block;
-        }
-        
-        .event-month {
-            font-size: 1rem;
-            display: block;
-        }
-        
-        .news-section {
-            padding: 80px 0;
-        }
-        
-        .news-card {
-            margin-bottom: 30px;
-            border: none;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .news-img {
-            height: 200px;
-            object-fit: cover;
-        }
-        
-        .contact-section {
-            padding: 80px 0;
-            background-color: var(--light-color);
-        }
-        
-        .footer {
-            background-color: var(--dark-color);
-            color: white;
-            padding: 50px 0 20px;
-        }
-        
-        .footer-links h5 {
-            color: var(--secondary-color);
-            margin-bottom: 20px;
-        }
-        
-        .footer-links ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-links a {
-            color: #adb5bd;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: var(--secondary-color);
-            text-decoration: none;
-        }
-        
-        .social-icons a {
-            color: white;
-            font-size: 1.5rem;
-            margin-right: 15px;
-            transition: color 0.3s;
-        }
-        
-        .social-icons a:hover {
-            color: var(--secondary-color);
-        }
-        
-        .copyright {
-            border-top: 1px solid #495057;
-            padding-top: 20px;
-            margin-top: 30px;
-        }
-        
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-        }
-	</style>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="logo.png" alt="<?=$setting['school_name']?>">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#academics">Academics</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#admissions">Admissions</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="login.php">Login</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
     <!-- Hero Section -->
     <section class="hero-section">
@@ -346,7 +85,7 @@ if ($setting != 0) {
             <h2 class="text-center section-title">About <?=$setting['school_name']?></h2>
             <div class="row ">
                 <div class="col-lg-6">
-                    <img src="img/about.jpg" alt="About our school" class="img-fluid rounded">
+                    <img src="img/about.jpg" alt="About our school" class="img-fluid rounded" width="100%">
                 </div>
                 <div class="col-lg-6">
                     <p><?=$setting['about']?></p>
@@ -354,9 +93,7 @@ if ($setting != 0) {
                 </div>
             </div>
 			<div class="row ">
-                <div class="col-lg-12">
-                    <img src="img/rank.jpg" alt="our school ranking" class="img-fluid rounded" >
-                </div>
+                <img src="img/rank.jpg" alt="our school ranking" class="img-fluid rounded" >
             </div>
         </div>
     </section>
@@ -397,7 +134,7 @@ if ($setting != 0) {
                             <i class="fas fa-globe"></i>
                         </div>
                         <h4>International Hubs</h4>
-                        <p>Global connections with partner institutions worldwide for student exchange programs.</p>
+                        <p>Global connections with partner institutions worldwide for student.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -574,60 +311,6 @@ if ($setting != 0) {
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <h5><?=$setting['school_name']?></h5>
-                    <p>We are one of the largest, most diverse universities with a commitment to excellence in education, research, and community engagement.</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-6 mb-4">
-                    <h5>Quick Links</h5>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#academics">Academics</a></li>
-                        <li><a href="#admissions">Admissions</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h5>Academics</h5>
-                    <ul>
-                        <li><a href="#">Undergraduate Programs</a></li>
-                        <li><a href="#">Graduate Programs</a></li>
-                        <li><a href="#">Professional Studies</a></li>
-                        <li><a href="#">Online Learning</a></li>
-                        <li><a href="#">Academic Calendar</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h5>Contact Info</h5>
-                    <ul>
-                        <li><i class="fas fa-map-marker-alt me-2"></i> 1810 Campus Way NE, Bothell, WA</li>
-                        <li><i class="fas fa-phone-alt me-2"></i> +1-2534-4456-345</li>
-                        <li><i class="fas fa-envelope me-2"></i> admin@<?=strtolower(str_replace(' ', '', $setting['school_name']))?>.edu</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright text-center">
-                <p>&copy; <?=$setting['current_year']?> <?=$setting['school_name']?>. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
-<?php } else {
-    header("Location: login.php");
-    exit;
-} ?>
+<?php 
+include "footer.php";
+?>
