@@ -1,39 +1,47 @@
-<?php  
+<?php 
+session_start();
+include "../DB_connection.php";
 
-if (isset($_POST['email']) &&
-    isset($_POST['full_name']) &&
-    isset($_POST['message'])) {
-
-    include "../DB_connection.php";
-	
-	$email     = $_POST['email'];
-	$full_name = $_POST['full_name'];
-	$message   = $_POST['message'];
-
-	if (empty($email)) {
-		$em  = "Email is required";
-		header("Location: ../index.php?error=$em#contact");
-		exit;
-	}else if (empty($full_name)) {
-		$em  = "Full name is required";
-		header("Location: ../index.php?error=$em#contact");
-		exit;
-	}else if (empty($message)) {
-		$em  = "Massage is required";
-		header("Location: ../index.php?error=$em#contact");
-		exit;
-	}else {
-       $sql  = "INSERT INTO
-                 message (sender_full_name, sender_email, message)
-                 VALUES(?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$full_name, $email, $message]);
-        $sm = "Message sent successfully";
-        header("Location: ../index.php?success=$sm#contact");
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $full_name = $_POST['full_name'];
+    $email = $_POST['email'];
+    $mobile = $_POST['mobile'];
+    $message = $_POST['message'];
+    
+    // Validate inputs
+    if (empty($full_name)) {
+        $em = "Full name is required";
+        header("Location: ../contact.php?error=$em");
         exit;
-	}
-
-}else{
-	header("Location: ../login.php");
-	exit;
+    } else if (empty($email)) {
+        $em = "Email is required";
+        header("Location: ../contact.php?error=$em");
+        exit;
+    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $em = "Invalid email format";
+        header("Location: ../contact.php?error=$em");
+        exit;
+    } else if (empty($mobile)) {
+        $em = "Mobile number is required";
+        header("Location: ../contact.php?error=$em");
+        exit;
+    } else if (empty($message)) {
+        $em = "Message is required";
+        header("Location: ../contact.php?error=$em");
+        exit;
+    } else {
+        // Insert into database
+        $sql = "INSERT INTO message (sender_full_name, sender_email, sender_mobile, message, date_time) 
+                VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $date_time = date("Y-m-d H:i:s");
+        $stmt->execute([$full_name, $email, $mobile, $message, $date_time]);
+        
+        $sm = "Your message has been sent successfully!";
+        header("Location: ../contact.php?success=$sm");
+        exit;
+    }
+} else {
+    header("Location: ../contact.php");
+    exit;
 }

@@ -2,7 +2,7 @@
 
 // All Students 
 function getAllMessages($conn){
-   $sql = "SELECT * FROM message ORDER BY message_id DESC";
+   $sql = "SELECT * FROM message ORDER BY date_time DESC";
    $stmt = $conn->prepare($sql);
    $stmt->execute();
 

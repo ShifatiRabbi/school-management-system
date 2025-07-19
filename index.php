@@ -98,7 +98,7 @@
         </div>
     </section>
 
-    <!-- Video Tour Section -->
+    <!-- Video Tour Section --><!--
     <section class="py-5 bg-primary text-white">
         <div class="container text-center">
             <h2 class="section-title">Video Tour in <?=$setting['school_name']?></h2>
@@ -106,8 +106,8 @@
             <a href="#" class="btn btn-light btn-lg">Watch Video</a>
         </div>
     </section>
-
-    <!-- Admissions Section -->
+    -->
+    <!-- Admissions Section --><!--
     <section id="admissions" class="py-5">
         <div class="container">
             <div class="row align-items-center">
@@ -122,7 +122,7 @@
             </div>
         </div>
     </section>
-
+    -->
     <!-- Services Section -->
     <section class="py-5 bg-light">
         <div class="container">
@@ -131,40 +131,40 @@
                 <div class="col-md-3">
                     <div class="feature-box">
                         <div class="feature-icon">
-                            <i class="fas fa-globe"></i>
+                            <i class="fas fa-chalkboard-teacher"></i>
                         </div>
-                        <h4>International Hubs</h4>
-                        <p>Global connections with partner institutions worldwide for student.</p>
+                        <h4>Experienced Teachers</h4>
+                        <p>Highly qualified educators who delivering impactful and engaging instruction.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="feature-box">
                         <div class="feature-icon">
-                            <i class="fas fa-user-graduate"></i>
+                            <i class="fas fa-calendar-check"></i>
                         </div>
-                        <h4>Bachelor's Degrees</h4>
-                        <p>Comprehensive undergraduate programs across various disciplines.</p>
+                        <h4>Monthly Exam</h4>
+                        <p>Regular assessments to ensure academic progress and concept clarity.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="feature-box">
                         <div class="feature-icon">
-                            <i class="fas fa-graduation-cap"></i>
+                            <i class="fas fa-coins"></i>
                         </div>
-                        <h4>Master's Degrees</h4>
-                        <p>Advanced graduate programs designed for career advancement.</p>
+                        <h4>Student Monetization</h4>
+                        <p>Opportunities for students to earn through skills, projects, and internships.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="feature-box">
                         <div class="feature-icon">
-                            <i class="fas fa-home"></i>
+                            <i class="fas fa-futbol"></i>
                         </div>
-                        <h4>Campus Life</h4>
-                        <p>Vibrant residential life with modern facilities and support services.</p>
+                        <h4>Co-curricular Activities</h4>
+                        <p>Balanced growth through quiz, sports, arts, clubs, and leadership programs.</p>
                     </div>
                 </div>
-            </div>
+            </div>    
         </div>
     </section>
 
@@ -173,47 +173,43 @@
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="section-title">Alumni Events</h2>
-                <a href="#" class="btn btn-outline-primary">View All Events</a>
+                <a href="events.php" class="btn btn-outline-primary">View All Events</a>
             </div>
             <div class="row">
+                <?php
+                include "admin/data/event.php";
+                $events = getAllEvents($conn, 2); // Show 2 events
+                foreach ($events as $event) {
+                    $event_date = new DateTime($event['event_date']);
+                    $start_time = new DateTime($event['start_time']);
+                    $end_time = new DateTime($event['end_time']);
+                ?>
                 <div class="col-md-6">
                     <div class="card event-card">
                         <div class="row g-0">
                             <div class="col-md-2 bg-primary text-white d-flex align-items-center justify-content-center">
                                 <div class="event-date">
-                                    <span class="event-day">17</span>
-                                    <span class="event-month">DEC</span>
+                                    <span class="event-day"><?= $event_date->format('d') ?></span>
+                                    <span class="event-month"><?= strtoupper($event_date->format('M')) ?></span>
                                 </div>
                             </div>
                             <div class="col-md-10">
                                 <div class="card-body">
-                                    <h5 class="card-title">Fintech & Key Investment Conference</h5>
-                                    <p class="card-text text-muted"><small><i class="far fa-clock"></i> 1:00 pm - 5:00 pm</small></p>
-                                    <p class="card-text text-muted"><small><i class="fas fa-map-marker-alt"></i> <?=$setting['school_name']?> Grand Hall</small></p>
+                                    <h5 class="card-title"><?= htmlspecialchars($event['title']) ?></h5>
+                                    <p class="card-text text-muted"><small>
+                                        <i class="far fa-clock"></i> 
+                                        <?= $start_time->format('g:i a') ?> - <?= $end_time->format('g:i a') ?>
+                                    </small></p>
+                                    <p class="card-text text-muted"><small>
+                                        <i class="fas fa-map-marker-alt"></i> 
+                                        <?= $event['is_online'] ? 'Online Event' : htmlspecialchars($event['location']) ?>
+                                    </small></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card event-card">
-                        <div class="row g-0">
-                            <div class="col-md-2 bg-primary text-white d-flex align-items-center justify-content-center">
-                                <div class="event-date">
-                                    <span class="event-day">20</span>
-                                    <span class="event-month">JAN</span>
-                                </div>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="card-body">
-                                    <h5 class="card-title">Sport Management Information Webinar</h5>
-                                    <p class="card-text text-muted"><small><i class="far fa-clock"></i> 1:00 pm - 3:00 pm</small></p>
-                                    <p class="card-text text-muted"><small><i class="fas fa-map-marker-alt"></i> Online Event</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
     </section>
@@ -223,39 +219,29 @@
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="section-title">News & Updates</h2>
-                <a href="#" class="btn btn-outline-primary">Read All News</a>
+                <a href="news.php" class="btn btn-outline-primary">Read All News</a>
             </div>
             <div class="row">
+                <?php
+                include "admin/data/news.php";
+                $news_items = getAllNews($conn, 3); // Show 3 news items
+                foreach ($news_items as $news) {
+                ?>
                 <div class="col-md-4">
                     <div class="card news-card">
-                        <img src="img/news1.jpg" class="card-img-top news-img" alt="News">
+                        <?php if ($news['image_path']): ?>
+                        <img src="<?= htmlspecialchars($news['image_path']) ?>" class="card-img-top news-img" alt="<?= htmlspecialchars($news['title']) ?>">
+                        <?php else: ?>
+                        <div class="news-img-placeholder"></div>
+                        <?php endif; ?>
                         <div class="card-body">
-                            <h5 class="card-title">Professor Albert joint research on mobile money in Tanzania</h5>
-                            <p class="card-text">Groundbreaking research on financial inclusion in East Africa.</p>
-                            <a href="#" class="btn btn-sm btn-primary">Read More</a>
+                            <h5 class="card-title"><?= htmlspecialchars($news['title']) ?></h5>
+                            <p class="card-text"><?= htmlspecialchars($news['short_description']) ?></p>
+                            <a href="news-detail.php?id=<?= $news['news_id'] ?>" class="btn btn-sm btn-primary">Read More</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card news-card">
-                        <img src="img/news2.jpg" class="card-img-top news-img" alt="News">
-                        <div class="card-body">
-                            <h5 class="card-title">A Global MBA for the next generation of business leaders</h5>
-                            <p class="card-text">Our redesigned MBA program focuses on global leadership.</p>
-                            <a href="#" class="btn btn-sm btn-primary">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card news-card">
-                        <img src="img/news3.jpg" class="card-img-top news-img" alt="News">
-                        <div class="card-body">
-                            <h5 class="card-title">Professor Tom comments on voluntary recalls by snack brands</h5>
-                            <p class="card-text">Expert analysis on food safety and corporate responsibility.</p>
-                            <a href="#" class="btn btn-sm btn-primary">Read More</a>
-                        </div>
-                    </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
     </section>
@@ -268,18 +254,18 @@
                 <div class="col-lg-6">
                     <div class="mb-4">
                         <h4><i class="fas fa-map-marker-alt me-2"></i> Address</h4>
-                        <p>Box 35300<br>1810 Campus Way NE<br>Bothell, WA 98011-8246</p>
+                        <p>Dohar<br>Dhaka<br></p>
                     </div>
                     <div class="mb-4">
                         <h4><i class="fas fa-phone-alt me-2"></i> Phone</h4>
-                        <p>+1-2534-4456-345</p>
+                        <p>01712334847</p>
                     </div>
                     <div class="mb-4">
                         <h4><i class="fas fa-envelope me-2"></i> Email</h4>
-                        <p>admin@<?=strtolower(str_replace(' ', '', $setting['school_name']))?>.edu</p>
+                        <p>admin@spahhs.edu</p>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="contact-form">
                     <form method="post" action="req/contact.php">
                         <?php if (isset($_GET['error'])) { ?>
                         <div class="alert alert-danger" role="alert">
@@ -291,20 +277,30 @@
                             <?=$_GET['success']?>
                         </div>
                         <?php } ?>
+                        
                         <div class="mb-3">
-                            <label for="fullName" class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="fullName" name="full_name" required>
+                            <label for="full_name" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="full_name" name="full_name" required>
                         </div>
+                        
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email address</label>
+                            <label for="email" class="form-label">Your Email</label>
                             <input type="email" class="form-control" id="email" name="email" required>
-                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         </div>
+                        
                         <div class="mb-3">
-                            <label for="message" class="form-label">Message</label>
-                            <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                            <label for="mobile" class="form-label">Your Mobile</label>
+                            <input type="tel" class="form-control" id="mobile" name="mobile" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
+                        
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Your Message</label>
+                            <textarea class="form-control" id="message" name="message" required></textarea>
+                        </div>
+                        
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-send">Send</button>
+                        </div>
                     </form>
                 </div>
             </div>

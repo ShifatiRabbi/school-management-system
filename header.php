@@ -261,166 +261,235 @@ if ($setting == 0) {
         }
 
         /* Basic Info and People Info Page Styles */
-.basic-info-section, .people-info-section {
-    background-color: #f8f9fa;
-    min-height: calc(100vh - 150px);
-}
+        .basic-info-section, .people-info-section {
+            background-color: #f8f9fa;
+            min-height: calc(100vh - 150px);
+        }
 
-.card-header h4 {
-    margin: 0;
-    font-weight: 600;
-}
+        .card-header h4 {
+            margin: 0;
+            font-weight: 600;
+        }
 
-.table th {
-    background-color: #f1f1f1;
-    font-weight: 600;
-}
+        .table th {
+            background-color: #f1f1f1;
+            font-weight: 600;
+        }
 
-.table-bordered {
-    border: 1px solid #dee2e6;
-}
+        .table-bordered {
+            border: 1px solid #dee2e6;
+        }
 
-.table-bordered th,
-.table-bordered td {
-    border: 1px solid #dee2e6;
-}
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #dee2e6;
+        }
 
-.table-responsive {
-    overflow-x: auto;
-}
+        .table-responsive {
+            overflow-x: auto;
+        }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .basic-info-section .col-md-6,
-    .people-info-section .col-md-6 {
-        margin-bottom: 20px;
-    }
-    
-    .people-info-section .table-responsive {
-        margin-bottom: 15px;
-    }
-}
-
-
-
-/* Public Results Page Styles */
-.public-results-section {
-    background-color: #f8f9fa;
-    min-height: calc(100vh - 150px);
-}
-
-.stats-box {
-    border: 1px solid #dee2e6;
-}
-
-.stat-value {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--primary-color);
-}
-
-.stat-label {
-    font-size: 0.9rem;
-    color: #6c757d;
-}
-
-.table th {
-    background-color: #f1f1f1;
-    font-weight: 600;
-    text-align: center;
-}
-
-.table td {
-    text-align: center;
-    vertical-align: middle;
-}
-
-.table tfoot {
-    background-color: #f8f9fa;
-}
-
-.table-responsive {
-    overflow-x: auto;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .stats-box .row {
-        margin-bottom: 10px;
-    }
-    
-    .stat-value {
-        font-size: 1.2rem;
-    }
-    
-    .stat-label {
-        font-size: 0.8rem;
-    }
-}
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .basic-info-section .col-md-6,
+            .people-info-section .col-md-6 {
+                margin-bottom: 20px;
+            }
+            
+            .people-info-section .table-responsive {
+                margin-bottom: 15px;
+            }
+        }
 
 
 
-.gallery-img {
-    height: 270px;
-    object-fit: cover;
-    width: 100%;
-    border-radius: 6px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease;
-}
+        /* Public Results Page Styles */
+        .public-results-section {
+            background-color: #f8f9fa;
+            min-height: calc(100vh - 150px);
+        }
 
-.gallery-img:hover {
-    transform: scale(1.02);
-}
+        .stats-box {
+            border: 1px solid #dee2e6;
+        }
 
-@media (max-width: 768px) {
-    .gallery-img {
-        height: 200px;
-    }
-}
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
 
-.shadow-1-strong {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    border-radius: 6px;
-}
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
 
-#bootstrap-image-gallery img {
-    transition: transform 0.3s ease;
-    cursor: pointer;
-}
+        .table th {
+            background-color: #f1f1f1;
+            font-weight: 600;
+            text-align: center;
+        }
 
-#bootstrap-image-gallery img:hover {
-    transform: scale(1.02);
-}
-.shadow-1-strong {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-    transition: transform 0.3s ease;
-}
+        .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
 
-.shadow-1-strong:hover {
-    transform: scale(1.02);
-}
-.video-thumb {
-    width: 100%;
-    height: 270px;
-    object-fit: cover;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: transform 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-.video-thumb:hover {
-    transform: scale(1.03);
-}
+        .table tfoot {
+            background-color: #f8f9fa;
+        }
 
-@media (max-width: 768px) {
-    .video-thumb {
-        height: 200px;
-    }
-}
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .stats-box .row {
+                margin-bottom: 10px;
+            }
+            
+            .stat-value {
+                font-size: 1.2rem;
+            }
+            
+            .stat-label {
+                font-size: 0.8rem;
+            }
+        }
 
 
+
+        .gallery-img {
+            height: 270px;
+            object-fit: cover;
+            width: 100%;
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 768px) {
+            .gallery-img {
+                height: 200px;
+            }
+        }
+
+        .shadow-1-strong {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            border-radius: 6px;
+        }
+
+        #bootstrap-image-gallery img {
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        #bootstrap-image-gallery img:hover {
+            transform: scale(1.02);
+        }
+        .shadow-1-strong {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            transition: transform 0.3s ease;
+        }
+
+        .shadow-1-strong:hover {
+            transform: scale(1.02);
+        }
+        .video-thumb {
+            width: 100%;
+            height: 270px;
+            object-fit: cover;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        .video-thumb:hover {
+            transform: scale(1.03);
+        }
+
+        @media (max-width: 768px) {
+            .video-thumb {
+                height: 200px;
+            }
+        }
+
+        .contact-info-section {
+            background-color: #f8f9fa;
+            padding: 60px 0;
+        }
+        
+        .contact-card {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .contact-card .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        
+        .contact-table {
+            width: 100%;
+        }
+        
+        .contact-table th {
+            width: 25%;
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .contact-table td {
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .form-control {
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        
+        textarea.form-control {
+            height: 150px;
+        }
+        
+        .btn-send {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        
+        .btn-send:hover {
+            background-color: var(--secondary-color);
+        }
 
     </style>
 </head>
@@ -476,7 +545,7 @@ if ($setting == 0) {
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
+                        <a class="nav-link" href="/school-management-system/contact.php">Contact</a>
                     </li>
 
                     <li class="nav-item">
