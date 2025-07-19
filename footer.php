@@ -47,6 +47,7 @@
             </div>
             <div class="copyright text-center">
                 <p>&copy; <?=$setting['current_year']?> <?=$setting['school_name']?>. All rights reserved.</p>
+                <p>Design & Developed by Shifati Rabbi.</p>
             </div>
         </div>
     </footer>

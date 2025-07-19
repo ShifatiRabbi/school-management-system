@@ -359,7 +359,7 @@ if ($setting == 0) {
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <img src="logo.png" alt="<?=$setting['school_name']?>">
@@ -387,8 +387,8 @@ if ($setting == 0) {
                             Institute Info
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="instituteDropdown">
-                            <li><a class="dropdown-item" href="/basic_info.php">Basic Info</a></li>
-                            <li><a class="dropdown-item" href="/people_info.php">Teacher, Student & Staff Info</a></li>
+                            <li><a class="dropdown-item" href="/school-management-system/basic_info.php">Basic Info</a></li>
+                            <li><a class="dropdown-item" href="/school-management-system/people_info.php">Teacher, Student & Staff Info</a></li>
                         </ul>
                     </li>
 
@@ -399,8 +399,8 @@ if ($setting == 0) {
                             Public Result
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="resultDropdown">
-                            <li><a class="dropdown-item" href="/public_results_ssc.php">SSC Details</a></li>
-                            <li><a class="dropdown-item" href="/public_results_jsc.php">JSC Details</a></li>
+                            <li><a class="dropdown-item" href="/school-management-system/public_results_ssc.php">SSC Details</a></li>
+                            <li><a class="dropdown-item" href="/school-management-system/public_results_jsc.php">JSC Details</a></li>
                         </ul>
                     </li>
 
