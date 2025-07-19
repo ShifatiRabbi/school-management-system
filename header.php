@@ -16,7 +16,12 @@ if ($setting == 0) {
     <title><?=$setting['school_name']?></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" />
+    <!-- LightGallery CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lightgallery-bundle.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="icon" href="logo.png">
     <style>
         :root {
@@ -355,6 +360,68 @@ if ($setting == 0) {
 
 
 
+.gallery-img {
+    height: 270px;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.gallery-img:hover {
+    transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+    .gallery-img {
+        height: 200px;
+    }
+}
+
+.shadow-1-strong {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+}
+
+#bootstrap-image-gallery img {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+#bootstrap-image-gallery img:hover {
+    transform: scale(1.02);
+}
+.shadow-1-strong {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    transition: transform 0.3s ease;
+}
+
+.shadow-1-strong:hover {
+    transform: scale(1.02);
+}
+.video-thumb {
+    width: 100%;
+    height: 270px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+.video-thumb:hover {
+    transform: scale(1.03);
+}
+
+@media (max-width: 768px) {
+    .video-thumb {
+        height: 200px;
+    }
+}
+
+
+
     </style>
 </head>
 <body>
@@ -405,7 +472,7 @@ if ($setting == 0) {
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#gallery">Gallery</a>
+                        <a class="nav-link" href="/school-management-system/gallery.php">Gallery</a>
                     </li>
 
                     <li class="nav-item">

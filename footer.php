@@ -52,6 +52,46 @@
         </div>
     </footer>
 
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/lightgallery.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/zoom/lg-zoom.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/video/lg-video.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const modal = document.getElementById('videoModal');
+        const video = document.getElementById('modalVideo');
+
+        modal.addEventListener('show.bs.modal', function (e) {
+            const trigger = e.relatedTarget;
+            const videoSrc = trigger.getAttribute('data-video');
+            video.querySelector('source').src = videoSrc;
+            video.load();
+            video.play();
+        });
+
+        modal.addEventListener('hidden.bs.modal', function () {
+            video.pause();
+            video.currentTime = 0;
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const galleryContainer = document.getElementById("bootstrap-image-gallery");
+            if (galleryContainer) {
+                lightGallery(galleryContainer, {
+                    selector: '.lg-item',
+                    plugins: [lgZoom, lgThumbnail],
+                    speed: 500
+                });
+            }
+        });
+    </script>
+
 </body>
 </html>
