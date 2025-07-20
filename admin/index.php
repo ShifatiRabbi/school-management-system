@@ -45,10 +45,12 @@ if (isset($_SESSION['admin_id']) &&
                  <i class="fa fa-columns fs-1" aria-hidden="true"></i><br>
                   Section
                </a> 
+          <!--     
                <a href="grade.php" class="col btn btn-dark m-2 py-3">
                  <i class="fa fa-level-up fs-1" aria-hidden="true"></i><br>
                   Grade
                </a> 
+          -->
                <a href="course.php" class="col btn btn-dark m-2 py-3">
                  <i class="fa fa-book fs-1" aria-hidden="true"></i><br>
                   Course

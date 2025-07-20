@@ -6,10 +6,10 @@ if (isset($_SESSION['admin_id']) &&
 
   if ($_SESSION['role'] == 'Admin') {
      include "../DB_connection.php";
-     include "data/course.php";
+     include "data/subject.php";
 
      $id = $_GET['course_id'];
-     if (removeCourse($id, $conn)) {
+     if (removeSubject($id, $conn)) {
      	$sm = "Successfully deleted!";
         header("Location: course.php?success=$sm");
         exit;

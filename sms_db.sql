@@ -45,51 +45,6 @@ INSERT INTO `admin` (`admin_id`, `username`, `password`, `fname`, `lname`) VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `class`
---
-
-CREATE TABLE `class` (
-  `class_id` int(11) NOT NULL,
-  `grade` int(11) NOT NULL,
-  `section` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `class`
---
-
-INSERT INTO `class` (`class_id`, `grade`, `section`) VALUES
-(1, 7, 2),
-(2, 1, 1),
-(3, 3, 3),
-(4, 2, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `grades`
---
-
-CREATE TABLE `grades` (
-  `grade_id` int(11) NOT NULL,
-  `grade` varchar(31) NOT NULL,
-  `grade_code` varchar(7) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `grades`
---
-
-INSERT INTO `grades` (`grade_id`, `grade`, `grade_code`) VALUES
-(1, '1', 'G'),
-(2, '2', 'G'),
-(3, '1', 'KG'),
-(4, '2', 'KG'),
-(7, '3', 'G');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `message`
 --
 
@@ -139,27 +94,6 @@ CREATE TABLE `registrar_office` (
 INSERT INTO `registrar_office` (`r_user_id`, `username`, `password`, `fname`, `lname`, `address`, `employee_number`, `date_of_birth`, `phone_number`, `qualification`, `gender`, `email_address`, `date_of_joined`) VALUES
 (1, 'james', '$2y$10$t0SCfeXNcyiO9hdzNTKKB.j2xlE2yt8Hm2.0AWJR5kSE469JIkHKG', 'James', 'William', 'West Virginia', 843583, '2022-10-04', '+12328324092', 'diploma', 'Male', 'james@j.com', '2022-10-23 01:03:25'),
 (2, 'oliver2', '$2y$10$7XhzOu.3OgHPFv7hKjvfUu3waU.8j6xTASj4yIWMfo...k/p8yvvS', 'Oliver2', 'Noah', 'California,  Los angeles', 6546, '1999-06-11', '09457396789', 'BSc, BA', 'Male', 'ov@ab.com', '2022-11-12 23:06:18');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `section`
---
-
-CREATE TABLE `section` (
-  `section_id` int(11) NOT NULL,
-  `section` varchar(7) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `section`
---
-
-INSERT INTO `section` (`section_id`, `section`) VALUES
-(1, 'A'),
-(2, 'B'),
-(3, 'C'),
-(6, 'D');
 
 -- --------------------------------------------------------
 
@@ -243,31 +177,41 @@ INSERT INTO `student_score` (`id`, `semester`, `year`, `student_id`, `teacher_id
 (3, 'I', 2022, 1, 1, 5, '10 20,50 50');
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `subjects`
---
-
-CREATE TABLE `subjects` (
-  `subject_id` int(11) NOT NULL,
-  `subject` varchar(31) NOT NULL,
-  `subject_code` varchar(31) NOT NULL,
-  `grade` int(11) NOT NULL
+-- Table structure for table `class`
+CREATE TABLE `class` (
+  `class_id` int(11) NOT NULL AUTO_INCREMENT,
+  `class_name` varchar(50) NOT NULL,
+  `discipline` enum('Science','Humanities','Business Studies','None') NOT NULL DEFAULT 'None',
+  PRIMARY KEY (`class_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `subjects`
---
+-- Table structure for table `section`
+CREATE TABLE `section` (
+  `section_id` int(11) NOT NULL AUTO_INCREMENT,
+  `class_id` int(11) NOT NULL,
+  `section_name` varchar(50) NOT NULL,
+  `male_students` int(11) DEFAULT 0,
+  `female_students` int(11) DEFAULT 0,
+  PRIMARY KEY (`section_id`),
+  FOREIGN KEY (`class_id`) REFERENCES `class`(`class_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `subjects` (`subject_id`, `subject`, `subject_code`, `grade`) VALUES
-(1, 'English', 'En', 1),
-(2, 'Physics', 'Phy', 2),
-(3, 'Biology', 'Bio-01', 1),
-(4, 'Math', 'Math-01', 1),
-(5, 'Chemistry', 'ch-01', 1),
-(6, 'Programming', 'pro-01', 1),
-(7, 'Java', 'java-01', 1);
+-- Table structure for table `subjects`
+CREATE TABLE `subjects` (
+  `subject_id` int(11) NOT NULL AUTO_INCREMENT,
+  `subject_name` varchar(100) NOT NULL,
+  `subject_code` varchar(50) NOT NULL,
+  PRIMARY KEY (`subject_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Junction table for class-subject relationship
+CREATE TABLE `class_subjects` (
+  `class_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  PRIMARY KEY (`class_id`, `subject_id`),
+  FOREIGN KEY (`class_id`) REFERENCES `class`(`class_id`),
+  FOREIGN KEY (`subject_id`) REFERENCES `subjects`(`subject_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
 
 --

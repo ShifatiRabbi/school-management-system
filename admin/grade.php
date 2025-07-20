@@ -74,9 +74,23 @@ if (isset($_SESSION['admin_id']) &&
               </table>
            </div>
          <?php }else{ ?>
-             <div class="alert alert-info .w-450 m-5" 
-                  role="alert">
-                Empty!
+             <div class="container mt-5">
+        <a href="grade-add.php"
+           class="btn btn-dark">Add New Class</a>
+
+           <?php if (isset($_GET['error'])) { ?>
+            <div class="alert alert-danger mt-3 n-table" 
+                 role="alert">
+              <?=$_GET['error']?>
+            </div>
+            <?php } ?>
+
+          <?php if (isset($_GET['success'])) { ?>
+            <div class="alert alert-info mt-3 n-table" 
+                 role="alert">
+              <?=$_GET['success']?>
+            </div>
+            <?php } ?>
               </div>
          <?php } ?>
      </div>
