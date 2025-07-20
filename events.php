@@ -5,7 +5,7 @@
         <h2 class="section-title mb-5">All Events</h2>
         <div class="row">
             <?php
-            include "data/event.php";
+            include "admin/data/event.php";
             $events = getAllEvents($conn);
             foreach ($events as $event) {
                 $event_date = new DateTime($event['event_date']);

@@ -172,13 +172,13 @@
     <section class="py-5">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="section-title">Alumni Events</h2>
+                <h2 class="section-title">Upcoming Events</h2>
                 <a href="events.php" class="btn btn-outline-primary">View All Events</a>
             </div>
             <div class="row">
                 <?php
                 include "admin/data/event.php";
-                $events = getAllEvents($conn, 2); // Show 2 events
+                $events = getAllEvents($conn, 4); // Show 2 events
                 foreach ($events as $event) {
                     $event_date = new DateTime($event['event_date']);
                     $start_time = new DateTime($event['start_time']);

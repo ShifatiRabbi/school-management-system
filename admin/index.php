@@ -57,11 +57,21 @@ if (isset($_SESSION['admin_id']) &&
                  <i class="fa fa-envelope fs-1" aria-hidden="true"></i><br>
                   Message
                </a> 
-               <a href="settings.php" class="col btn btn-primary m-2 py-3 col-5">
+               <a href="events.php" class="col btn btn-dark m-2 py-3">
+                  <i class="fa fa-calendar fs-1" aria-hidden="true"></i><br>
+                  Events
+               </a> 
+
+               <a href="news.php" class="col btn btn-dark m-2 py-3">
+                  <i class="fa fa-bullhorn fs-1" aria-hidden="true"></i><br>
+                  News & Updates
+               </a>
+
+               <a href="settings.php" class="col btn btn-primary m-2 py-3">
                  <i class="fa fa-cogs fs-1" aria-hidden="true"></i><br>
                   Settings
                </a> 
-               <a href="../logout.php" class="col btn btn-warning m-2 py-3 col-5">
+               <a href="../logout.php" class="col btn btn-warning m-2 py-3">
                  <i class="fa fa-sign-out fs-1" aria-hidden="true"></i><br>
                   Logout
                </a> 
