@@ -231,7 +231,7 @@ CREATE TABLE `teachers` (
   `highest_qualification` varchar(255) NOT NULL COMMENT 'Highest educational degree',
   `qualification_details` text DEFAULT NULL COMMENT 'Details of all qualifications',
   `subjects` varchar(255) NOT NULL COMMENT 'Subjects taught (comma separated IDs)',
-  `classes_assigned` varchar(255) DEFAULT NULL COMMENT 'Classes assigned (comma separated IDs)',
+  `classes_assigned` varchar(255) DEFAULT NULL COMMENT 'Classes -> section assigned (comma separated IDs)',
   `address` varchar(255) NOT NULL,
   `employee_number` int(11) NOT NULL,
   `date_of_birth` date NOT NULL,

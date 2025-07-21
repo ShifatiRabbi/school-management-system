@@ -38,7 +38,7 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
                 <label class="form-label">Class</label>
                 <select name="class_id" class="form-control" required>
                     <?php foreach ($classes as $class) { ?>
-                        <option value="<?=$class['class_id']?>"><?=$class['class_name']?></option>
+                        <option value="<?=$class['class_id']?>"><?=$class['class_name']?>  <?=$class['discipline']?>  </option>
                     <?php } ?>
                 </select>
             </div>

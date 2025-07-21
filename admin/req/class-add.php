@@ -1,10 +1,9 @@
 <?php 
 
-include '../../DB_connection.php';
 session_start();
 if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
     if ($_SESSION['role'] == 'Admin') {
-        include "../DB_connection.php";
+        include '../../DB_connection.php';
         
         $class_name = $_POST['class_name'];
         $discipline = $_POST['discipline'];

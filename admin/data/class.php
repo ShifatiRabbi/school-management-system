@@ -76,4 +76,20 @@ function getClassSubjects($class_id, $conn) {
         return 0;
     }
 }
+
+function getMaleStudentsInClass($class_id, $conn) {
+    $sql = "SELECT SUM(male_students) as total FROM section WHERE class_id=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$class_id]);
+    $result = $stmt->fetch();
+    return $result['total'] ?? 0;
+}
+
+function getFemaleStudentsInClass($class_id, $conn) {
+    $sql = "SELECT SUM(female_students) as total FROM section WHERE class_id=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$class_id]);
+    $result = $stmt->fetch();
+    return $result['total'] ?? 0;
+}
 ?>
