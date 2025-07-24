@@ -1,129 +1,99 @@
 <?php 
 session_start();
-if (isset($_SESSION['admin_id']) && 
-    isset($_SESSION['role'])) {
-
+if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
     if ($_SESSION['role'] == 'Admin') {
-    	
-
-if (isset($_POST['fname']) &&
-    isset($_POST['lname']) &&
-    isset($_POST['username']) &&
-    isset($_POST['pass'])     &&
-    isset($_POST['address'])  &&
-    isset($_POST['employee_number']) &&
-    isset($_POST['phone_number'])  &&
-    isset($_POST['qualification']) &&
-    isset($_POST['email_address']) &&
-    isset($_POST['classes'])        &&
-    isset($_POST['date_of_birth']) &&
-    isset($_POST['subjects'])) {
-    
-    include '../../DB_connection.php';
-    include "../data/teacher.php";
-
-    $fname = $_POST['fname'];
-    $lname = $_POST['lname'];
-    $uname = $_POST['username'];
-    $pass = $_POST['pass'];
-
-    $address = $_POST['address'];
-    $employee_number = $_POST['employee_number'];
-    $phone_number = $_POST['phone_number'];
-    $qualification = $_POST['qualification'];
-    $email_address = $_POST['email_address'];
-    $gender = $_POST['gender'];
-    $date_of_birth = $_POST['date_of_birth'];
-
-    $classes = "";
-    foreach ($_POST['classes'] as $class) {
-    	$classes .=$class;
-    }
-
-    $subjects = "";
-    foreach ($_POST['subjects'] as $subject) {
-    	$subjects .=$subject;
-    }
-
-    $data = 'uname='.$uname.'&fname='.$fname.'&lname='.$lname.'&address='.$address.'&en='.$employee_number.'&pn='.$phone_number.'&qf='.$qualification.'&email='.$email_address;
-
-    if (empty($fname)) {
-		$em  = "First name is required";
-		header("Location: ../teacher-add.php?error=$em&$data");
-		exit;
-	}else if (empty($lname)) {
-		$em  = "Last name is required";
-		header("Location: ../teacher-add.php?error=$em&$data");
-		exit;
-	}else if (empty($uname)) {
-		$em  = "Username is required";
-		header("Location: ../teacher-add.php?error=$em&$data");
-		exit;
-	}else if (!unameIsUnique($uname, $conn)) {
-		$em  = "Username is taken! try another";
-		header("Location: ../teacher-add.php?error=$em&$data");
-		exit;
-	}else if (empty($pass)) {
-		$em  = "Password is required";
-		header("Location: ../teacher-add.php?error=$em&$data");
-		exit;
-	}else if (empty($address)) {
-        $em  = "Address is required";
-        header("Location: ../teacher-add.php?error=$em&$data");
-        exit;
-    }else if (empty($employee_number)) {
-        $em  = "Employee number is required";
-        header("Location: ../teacher-add.php?error=$em&$data");
-        exit;
-    }else if (empty($phone_number)) {
-        $em  = "Phone number is required";
-        header("Location: ../teacher-add.php?error=$em&$data");
-        exit;
-    }else if (empty($qualification)) {
-        $em  = "Qualification is required";
-        header("Location: ../teacher-add.php?error=$em&$data");
-        exit;
-    }else if (empty($email_address)) {
-        $em  = "Email address is required";
-        header("Location: ../teacher-add.php?error=$em&$data");
-        exit;
-    }else if (empty($gender)) {
-        $em  = "Gender address is required";
-        header("Location: ../teacher-add.php?error=$em&$data");
-        exit;
-    }else if (empty($date_of_birth)) {
-        $em  = "Date of birth address is required";
-        header("Location: ../teacher-add.php?error=$em&$data");
-        exit;
-    }else if (empty($pass)) {
-        $em  = "Password is required";
-        header("Location: ../teacher-add.php?error=$em&$data");
-        exit;
-    }else {
-        // hashing the password
+        include "../../DB_connection.php";
+        include "../data/teacher.php";
+        
+        // Required fields
+        $required = [
+            'fname', 'lname', 'username', 'pass', 'teacher_index', 'designation',
+            'highest_qualification', 'address', 'employee_number', 'date_of_birth',
+            'phone_number', 'gender', 'email_address', 'date_of_joined'
+        ];
+        
+        // Check all required fields are present
+        foreach ($required as $field) {
+            if (empty($_POST[$field])) {
+                $em = ucfirst(str_replace('_', ' ', $field)) . " is required";
+                header("Location: ../teacher-add.php?error=$em");
+                exit;
+            }
+        }
+        
+        // Collect all data
+        $fname = $_POST['fname'];
+        $lname = $_POST['lname'];
+        $uname = $_POST['username'];
+        $pass = $_POST['pass'];
+        $teacher_index = $_POST['teacher_index'];
+        $designation = $_POST['designation'];
+        $salary_code = $_POST['salary_code'] ?? '';
+        $salary = $_POST['salary'] ?? 0;
+        $highest_qualification = $_POST['highest_qualification'];
+        $qualification_details = $_POST['qualification_details'] ?? '';
+        $address = $_POST['address'];
+        $employee_number = $_POST['employee_number'];
+        $date_of_birth = $_POST['date_of_birth'];
+        $phone_number = $_POST['phone_number'];
+        $gender = $_POST['gender'];
+        $email_address = $_POST['email_address'];
+        $date_of_joined = $_POST['date_of_joined'];
+        $years_of_experience = $_POST['years_of_experience'] ?? null;
+        $marital_status = $_POST['marital_status'] ?? '';
+        $bank_name = $_POST['bank_name'] ?? '';
+        $bank_account = $_POST['bank_account'] ?? '';
+        $emergency_contact = $_POST['emergency_contact'] ?? '';
+        $emergency_phone = $_POST['emergency_phone'] ?? '';
+        $notes = $_POST['notes'] ?? '';
+        
+        // Subjects and classes (arrays)
+        $subjects = isset($_POST['subjects']) ? implode(',', $_POST['subjects']) : '';
+        $classes = isset($_POST['classes']) ? implode(',', $_POST['classes']) : '';
+        
+        // Validate username and teacher index uniqueness
+        if (!unameIsUnique($uname, $conn)) {
+            $em = "Username is taken! try another";
+            header("Location: ../teacher-add.php?error=$em");
+            exit;
+        }
+        
+        if (!teacherIndexIsUnique($teacher_index, $conn)) {
+            $em = "Teacher Index is already in use! try another";
+            header("Location: ../teacher-add.php?error=$em");
+            exit;
+        }
+        
+        // Hash password
         $pass = password_hash($pass, PASSWORD_DEFAULT);
-
-        $sql  = "INSERT INTO
-                 teachers(username, password, class, fname, lname, subjects, address, employee_number, date_of_birth, phone_number, qualification, gender, email_address)
-                 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        
+        // Insert teacher
+        $sql = "INSERT INTO teachers (
+            username, password, fname, lname, teacher_index, designation, salary_code, salary, 
+            highest_qualification, qualification_details, subjects, classes_assigned, address, 
+            employee_number, date_of_birth, phone_number, gender, email_address, date_of_joined, 
+            years_of_experience, marital_status, bank_name, bank_account, emergency_contact, 
+            emergency_phone, notes
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
         $stmt = $conn->prepare($sql);
-        $stmt->execute([$uname, $pass, $classes, $fname, $lname, $subjects, $address, $employee_number, $date_of_birth, $phone_number, $qualification, $gender, $email_address]);
+        $stmt->execute([
+            $uname, $pass, $fname, $lname, $teacher_index, $designation, $salary_code, $salary,
+            $highest_qualification, $qualification_details, $subjects, $classes, $address,
+            $employee_number, $date_of_birth, $phone_number, $gender, $email_address, $date_of_joined,
+            $years_of_experience, $marital_status, $bank_name, $bank_account, $emergency_contact,
+            $emergency_phone, $notes
+        ]);
+        
         $sm = "New teacher registered successfully";
         header("Location: ../teacher-add.php?success=$sm");
         exit;
-	}
-    
-  }else {
-  	$em = "An error occurred";
-    header("Location: ../teacher-add.php?error=$em");
-    exit;
-  }
-
-  }else {
+    } else {
+        header("Location: ../../logout.php");
+        exit;
+    } 
+} else {
     header("Location: ../../logout.php");
     exit;
-  } 
-}else {
-	header("Location: ../../logout.php");
-	exit;
-} 
+}
+?>
