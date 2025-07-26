@@ -118,64 +118,38 @@ INSERT INTO `setting` (`id`, `current_year`, `current_semester`, `school_name`, 
 (1, 2023, 'II', 'Y School', 'Lux et Veritas Light and Truth', 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.');
 
 -- --------------------------------------------------------
-
---
 -- Table structure for table `students`
---
-
 CREATE TABLE `students` (
   `student_id` int(11) NOT NULL,
   `username` varchar(127) NOT NULL,
   `password` varchar(255) NOT NULL,
   `fname` varchar(127) NOT NULL,
   `lname` varchar(255) NOT NULL,
-  `grade` int(11) NOT NULL,
-  `section` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `section_id` int(11) NOT NULL,
+  `roll_number` int(11) NOT NULL,
   `address` varchar(31) NOT NULL,
   `gender` varchar(7) NOT NULL,
   `email_address` varchar(255) NOT NULL,
   `date_of_birth` date NOT NULL,
-  `date_of_joined` timestamp NULL DEFAULT current_timestamp(),
-  `parent_fname` varchar(127) NOT NULL,
-  `parent_lname` varchar(127) NOT NULL,
-  `parent_phone_number` varchar(31) NOT NULL
+  `father_name` varchar(127) NOT NULL,
+  `mother_name` varchar(127) NOT NULL,
+  `parent_phone_number` varchar(31) NOT NULL,
+  `last_exam_result` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `students`
---
-
-INSERT INTO `students` (`student_id`, `username`, `password`, `fname`, `lname`, `grade`, `section`, `address`, `gender`, `email_address`, `date_of_birth`, `date_of_joined`, `parent_fname`, `parent_lname`, `parent_phone_number`) VALUES
-(1, 'john', '$2y$10$xmtROY8efWeORYiuQDE3SO.eZwscao20QNuLky1Qlr88zDzNNq4gm', 'John', 'Doe', 1, 1, 'California,  Los angeles', 'Male', 'abas55@ab.com', '2012-09-12', '2019-12-11 14:16:44', 'Doe', 'Mark', '09393'),
-(3, 'abas', '$2y$10$KLFheMWgpLfoiqMuW2LQxOPficlBiSIJ9.wE2qr5yJUbAQ.5VURoO', 'Abas', 'A.', 2, 1, 'Berlin', 'Male', 'abas@ab.com', '2002-12-03', '2021-12-01 14:16:51', 'dsf', 'dfds', '7979'),
-(4, 'jo', '$2y$10$pYyVlWg9jxkT0u/4LrCMS.ztMaOvgyol1hgNt.jqcFEqUC7yZLIYe', 'John3', 'Doe', 1, 1, 'California,  Los angeles', 'Female', 'jo@jo.com', '2013-06-13', '2022-09-10 13:48:49', 'Doe', 'Mark', '074932040'),
-(5, 'jo2', '$2y$10$lRQ58lbak05rW7.be8ok4OaWJcb9znRp9ra.qXqnQku.iDrA9N8vy', 'Jhon', 'Doe', 1, 1, 'UK', 'Male', 'jo@jo.com', '1990-02-15', '2023-02-12 18:11:26', 'Doe', 'Do', '0943568654');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `student_score`
---
-
-CREATE TABLE `student_score` (
+-- Table structure for table `previous_results`
+CREATE TABLE `previous_results` (
   `id` int(11) NOT NULL,
-  `semester` varchar(100) NOT NULL,
-  `year` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
-  `teacher_id` int(11) NOT NULL,
-  `subject_id` int(11) NOT NULL,
-  `results` varchar(512) NOT NULL
+  `class` varchar(50) NOT NULL,
+  `section` varchar(50) NOT NULL,
+  `roll_number` int(11) NOT NULL,
+  `total_marks` decimal(10,2) NOT NULL,
+  `gpa` decimal(3,2) NOT NULL,
+  `rank` int(11) NOT NULL,
+  `year` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `student_score`
---
-
-INSERT INTO `student_score` (`id`, `semester`, `year`, `student_id`, `teacher_id`, `subject_id`, `results`) VALUES
-(1, 'II', 2021, 1, 1, 1, '10 15,15 20,10 10,10 20,30 35'),
-(2, 'II', 2023, 1, 1, 4, '15 20,4 5'),
-(3, 'I', 2022, 1, 1, 5, '10 20,50 50');
-
 -- --------------------------------------------------------
 -- Table structure for table `class`
 CREATE TABLE `class` (
@@ -249,16 +223,31 @@ CREATE TABLE `teachers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `teachers`
+-- 
 --
 
-INSERT INTO `teachers` (`teacher_id`, `username`, `password`, `fname`, `lname`, `teacher_index`, `designation`, `salary_code`, `salary`, `highest_qualification`, `qualification_details`, `subjects`, `classes_assigned`, `address`, `employee_number`, `date_of_birth`, `phone_number`, `gender`, `email_address`, `date_of_joined`, `years_of_experience`, `marital_status`, `bank_name`, `bank_account`, `emergency_contact`, `emergency_phone`, `notes`) VALUES
-(1, 'oliver', '$2y$10$JruTW/rNZ6CVO4nxYWCrn.GJpiIKMACEPYrK00S7Dk/fkbJIdYau2', 'Oliver', 'Noah', 'TCH-2020-001', 'Senior Teacher', 'SAL-5', 4500.00, 'M.Ed', 'B.Sc in Education (2010)\nM.Ed in Curriculum Development (2015)', '1,2,4,5', '1,2', 'California, Los angeles', 6546, '1985-06-11', '0945739', 'Male', 'ol@ab.com', '2020-09-01', 12, 'Married', 'City Bank', '1234567890', 'Sarah Noah (Spouse)', '0945739678', 'Excellent classroom management skills'),
-(5, 'abas', '$2y$10$cMSKcHEJcg3K6wbVcxcXGuksgU39i70aEQVKN7ZHrzqTH9oAc3y5m', 'Abas', 'A.', 'TCH-2021-005', 'Assistant Teacher', 'SAL-3', 3200.00, 'B.Sc', 'Diploma in Teaching (2018)\nB.Sc in Mathematics (2020)', '1,2', '3', 'Berlin', 1929, '1990-09-16', '09457396789', 'Male', 'abas55@ab.com', '2021-03-15', 5, 'Single', 'National Bank', '987654321', 'Ali A. (Brother)', '0945123456', 'Specializes in STEM subjects');
+-- Gallery Images Table
+CREATE TABLE `gallery_images` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `file_name` varchar(255) NOT NULL,
+  `file_path` varchar(255) NOT NULL,
+  `caption` varchar(255) DEFAULT NULL,
+  `upload_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `file_type` enum('image','video') NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Indexes for dumped tables
---
+-- Gallery Videos Table (or you can combine with images using file_type)
+CREATE TABLE `gallery_videos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `file_name` varchar(255) NOT NULL,
+  `file_path` varchar(255) NOT NULL,
+  `thumbnail_path` varchar(255) DEFAULT NULL,
+  `caption` varchar(255) DEFAULT NULL,
+  `upload_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 --
 -- Indexes for table `admin`
@@ -273,11 +262,6 @@ ALTER TABLE `admin`
 ALTER TABLE `class`
   ADD PRIMARY KEY (`class_id`);
 
---
--- Indexes for table `grades`
---
-ALTER TABLE `grades`
-  ADD PRIMARY KEY (`grade_id`);
 
 --
 -- Indexes for table `message`
@@ -310,11 +294,6 @@ ALTER TABLE `students`
   ADD PRIMARY KEY (`student_id`),
   ADD UNIQUE KEY `username` (`username`);
 
---
--- Indexes for table `student_score`
---
-ALTER TABLE `student_score`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `subjects`

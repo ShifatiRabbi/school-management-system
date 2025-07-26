@@ -4,7 +4,7 @@ if (isset($_SESSION['admin_id']) &&
     isset($_SESSION['role'])) {
 
     if ($_SESSION['role'] == 'Admin') {
-    	
+        
 
 if (isset($_POST['fname']) &&
     isset($_POST['lname']) &&
@@ -14,11 +14,12 @@ if (isset($_POST['fname']) &&
     isset($_POST['gender'])   &&
     isset($_POST['email_address']) &&
     isset($_POST['date_of_birth']) &&
-    isset($_POST['parent_fname'])  &&
-    isset($_POST['parent_lname'])  &&
+    isset($_POST['father_name'])  &&
+    isset($_POST['mother_name'])  &&
     isset($_POST['parent_phone_number']) &&
-    isset($_POST['section']) &&
-    isset($_POST['grade'])) {
+    isset($_POST['section_id']) &&
+    isset($_POST['class_id'])   &&
+    isset($_POST['roll_number'])) {
     
     include '../../DB_connection.php';
     include "../data/student.php";
@@ -32,37 +33,40 @@ if (isset($_POST['fname']) &&
     $gender = $_POST['gender'];
     $email_address = $_POST['email_address'];
     $date_of_birth = $_POST['date_of_birth'];
-    $parent_fname = $_POST['parent_fname'];
-    $parent_lname = $_POST['parent_lname'];
+    $father_name = $_POST['father_name'];
+    $mother_name = $_POST['mother_name'];
     $parent_phone_number = $_POST['parent_phone_number'];
 
-    $grade = $_POST['grade'];
-    $section = $_POST['section'];
+    $class_id = $_POST['class_id'];
+    $section_id = $_POST['section_id'];
+    $roll_number = $_POST['roll_number'];
     
 
-    $data = 'uname='.$uname.'&fname='.$fname.'&lname='.$lname.'&address='.$address.'&gender='.$email_address.'&pfn='.$parent_fname.'&pln='.$parent_lname.'&ppn='.$parent_phone_number;
+    $data = 'uname='.$uname.'&fname='.$fname.'&lname='.$lname.'&address='.$address.
+            '&email='.$email_address.'&father_name='.$father_name.'&mother_name='.$mother_name.
+            '&parent_phone='.$parent_phone_number;
 
     if (empty($fname)) {
-		$em  = "First name is required";
-		header("Location: ../student-add.php?error=$em&$data");
-		exit;
-	}else if (empty($lname)) {
-		$em  = "Last name is required";
-		header("Location: ../student-add.php?error=$em&$data");
-		exit;
-	}else if (empty($uname)) {
-		$em  = "Username is required";
-		header("Location: ../student-add.php?error=$em&$data");
-		exit;
-	}else if (!unameIsUnique($uname, $conn)) {
-		$em  = "Username is taken! try another";
-		header("Location: ../student-add.php?error=$em&$data");
-		exit;
-	}else if (empty($pass)) {
-		$em  = "Password is required";
-		header("Location: ../student-add.php?error=$em&$data");
-		exit;
-	}else if (empty($address)) {
+        $em  = "First name is required";
+        header("Location: ../student-add.php?error=$em&$data");
+        exit;
+    }else if (empty($lname)) {
+        $em  = "Last name is required";
+        header("Location: ../student-add.php?error=$em&$data");
+        exit;
+    }else if (empty($uname)) {
+        $em  = "Username is required";
+        header("Location: ../student-add.php?error=$em&$data");
+        exit;
+    }else if (!unameIsUnique($uname, $conn)) {
+        $em  = "Username is taken! try another";
+        header("Location: ../student-add.php?error=$em&$data");
+        exit;
+    }else if (empty($pass)) {
+        $em  = "Password is required";
+        header("Location: ../student-add.php?error=$em&$data");
+        exit;
+    }else if (empty($address)) {
         $em  = "Address is required";
         header("Location: ../student-add.php?error=$em&$data");
         exit;
@@ -78,37 +82,49 @@ if (isset($_POST['fname']) &&
         $em  = "Date of birth is required";
         header("Location: ../student-add.php?error=$em&$data");
         exit;
-    }else if (empty($parent_fname)) {
-        $em  = "Parent first name is required";
+    }else if (empty($father_name)) {
+        $em  = "Father's name is required";
         header("Location: ../student-add.php?error=$em&$data");
         exit;
-    }else if (empty($parent_lname)) {
-        $em  = "Parent last name is required";
+    }else if (empty($mother_name)) {
+        $em  = "Mother's name is required";
         header("Location: ../student-add.php?error=$em&$data");
         exit;
     }else if (empty($parent_phone_number)) {
         $em  = "Parent phone number is required";
         header("Location: ../student-add.php?error=$em&$data");
         exit;
-    }else if (empty($section)) {
+    }else if (empty($section_id)) {
         $em  = "Section is required";
+        header("Location: ../student-add.php?error=$em&$data");
+        exit;
+    }else if (empty($class_id)) {
+        $em  = "Class is required";
+        header("Location: ../student-add.php?error=$em&$data");
+        exit;
+    }else if (empty($roll_number)) {
+        $em  = "Roll number is required";
         header("Location: ../student-add.php?error=$em&$data");
         exit;
     }else {
         // hashing the password
         $pass = password_hash($pass, PASSWORD_DEFAULT);
         $sql  = "INSERT INTO
-                 students(username, password, fname, lname, grade, section, address, gender, email_address, date_of_birth, parent_fname, parent_lname, parent_phone_number)
-                 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                 students(username, password, fname, lname, class_id, section_id, roll_number, 
+                         address, gender, email_address, date_of_birth, 
+                         father_name, mother_name, parent_phone_number)
+                 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $stmt = $conn->prepare($sql);
-        $stmt->execute([$uname, $pass, $fname, $lname, $grade, $section, $address, $gender, $email_address, $date_of_birth, $parent_fname, $parent_lname, $parent_phone_number]);
+        $stmt->execute([$uname, $pass, $fname, $lname, $class_id, $section_id, $roll_number,
+                       $address, $gender, $email_address, $date_of_birth, 
+                       $father_name, $mother_name, $parent_phone_number]);
         $sm = "New student registered successfully";
         header("Location: ../student-add.php?success=$sm");
         exit;
-	}
+    }
     
   }else {
-  	$em = "An error occurred";
+    $em = "An error occurred";
     header("Location: ../student-add.php?error=$em");
     exit;
   }
@@ -118,6 +134,7 @@ if (isset($_POST['fname']) &&
     exit;
   } 
 }else {
-	header("Location: ../../logout.php");
-	exit;
+    header("Location: ../../logout.php");
+    exit;
 } 
+?>

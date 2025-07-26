@@ -86,7 +86,7 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
 
         <?php if ($teachers != 0) { ?>
             <div class="table-responsive">
-                <table class="table table-bordered mt-3 n-table table-hover">
+                <table class="table table-bordered mt-3 table-hover">
                     <thead class="table-light">
                         <tr>
                             <th scope="col">#</th>

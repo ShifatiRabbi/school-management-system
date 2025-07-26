@@ -6,42 +6,40 @@ if (isset($_SESSION['admin_id']) &&
     if ($_SESSION['role'] == 'Admin') {
       
        include "../DB_connection.php";
-       include "data/grade.php";
+       include "data/class.php";
        include "data/section.php";
-       $grades = getAllGrades($conn);
+       $classes = getAllClasses($conn);
        $sections = getAllSections($conn);
-
 
        $fname = '';
        $lname = '';
        $uname = '';
        $address = '';
        $email = '';
-       $pfn = '';
-       $pln = '';
-       $ppn = '';
-
+       $father_name = '';
+       $mother_name = '';
+       $parent_phone = '';
 
        if (isset($_GET['fname'])) $fname = $_GET['fname'];
        if (isset($_GET['lname'])) $lname = $_GET['lname'];
        if (isset($_GET['uname'])) $uname = $_GET['uname'];
        if (isset($_GET['address'])) $address = $_GET['address'];
        if (isset($_GET['email'])) $email = $_GET['email'];
-       if (isset($_GET['pfn'])) $pfn = $_GET['pfn'];
-       if (isset($_GET['pln'])) $pln = $_GET['pln'];
-       if (isset($_GET['ppn'])) $ppn = $_GET['ppn'];
+       if (isset($_GET['father_name'])) $father_name = $_GET['father_name'];
+       if (isset($_GET['mother_name'])) $mother_name = $_GET['mother_name'];
+       if (isset($_GET['parent_phone'])) $parent_phone = $_GET['parent_phone'];
  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Admin - Add Student</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../css/style.css">
-	<link rel="icon" href="../logo.png">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Add Student</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../logo.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <?php 
@@ -118,6 +116,12 @@ if (isset($_SESSION['admin_id']) &&
                  name="username">
         </div>
         <div class="mb-3">
+          <label class="form-label">Roll Number</label>
+          <input type="number" 
+                 class="form-control"
+                 name="roll_number">
+        </div>
+        <div class="mb-3">
           <label class="form-label">Password</label>
           <div class="input-group mb-3">
               <input type="text" 
@@ -131,60 +135,53 @@ if (isset($_SESSION['admin_id']) &&
           
         </div><br><hr>
         <div class="mb-3">
-          <label class="form-label">Parent first name</label>
+          <label class="form-label">Father's Name</label>
           <input type="text" 
                  class="form-control"
-                 value="<?=$pfn?>"
-                 name="parent_fname">
+                 value="<?=$father_name?>"
+                 name="father_name">
         </div>
         <div class="mb-3">
-          <label class="form-label">Parent last name</label>
+          <label class="form-label">Mother's Name</label>
           <input type="text" 
                  class="form-control"
-                 value="<?=$pln?>"
-                 name="parent_lname">
+                 value="<?=$mother_name?>"
+                 name="mother_name">
         </div>
         <div class="mb-3">
           <label class="form-label">Parent phone number</label>
           <input type="text" 
                  class="form-control"
-                 value="<?=$ppn?>"
+                 value="<?=$parent_phone?>"
                  name="parent_phone_number">
         </div><br><hr>
         <div class="mb-3">
-          <label class="form-label">Grade</label>
-          <div class="row row-cols-5">
-            <?php foreach ($grades as $grade): ?>
-            <div class="col">
-              <input type="radio"
-                     name="grade"
-                     value="<?=$grade['grade_id']?>">
-                     <?=$grade['grade_code']?>-<?=$grade['grade']?>
-            </div>
-            <?php endforeach ?>
-             
-          </div>
+          <label class="form-label">Class</label>
+          <select name="class_id" class="form-control">
+              <?php foreach ($classes as $class) { ?>
+              <option value="<?=$class['class_id']?>">
+                <?=$class['class_name']?> <?=$class['discipline']?>
+              </option>
+              <?php } ?>
+          </select>
         </div>
         <div class="mb-3">
           <label class="form-label">Section</label>
-          <div class="row row-cols-5">
-            <?php foreach ($sections as $section): ?>
-            <div class="col">
-              <input type="radio"
-                     name="section"
-                     value="<?=$section['section_id']?>">
-                     <?=$section['section']?>
-            </div>
-            <?php endforeach ?>
-             
-          </div>
+          <select name="section_id" class="form-control">
+              <?php foreach ($sections as $section) { 
+              $class = getClassById($section['class_id'], $conn);  ?>
+              <option value="<?=$section['section_id']?>">
+                <?=$class['class_name']?> <?=$class['discipline']?> -> <?=$section['section_name']?>
+              </option>
+              <?php } ?>
+          </select>
         </div>
 
       <button type="submit" class="btn btn-primary">Register</button>
      </form>
      </div>
      
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>	
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>    
     <script>
         $(document).ready(function(){
              $("#navLinks li:nth-child(3) a").addClass('active');
@@ -213,14 +210,12 @@ if (isset($_SESSION['admin_id']) &&
 </body>
 </html>
 <?php 
-
   }else {
     header("Location: ../login.php");
     exit;
   } 
 }else {
-	header("Location: ../login.php");
-	exit;
+    header("Location: ../login.php");
+    exit;
 } 
-
 ?>

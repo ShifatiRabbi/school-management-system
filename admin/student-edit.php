@@ -7,13 +7,12 @@ if (isset($_SESSION['admin_id']) &&
     if ($_SESSION['role'] == 'Admin') {
       
        include "../DB_connection.php";
-       include "data/subject.php";
-       include "data/grade.php";
+       include "data/class.php";
        include "data/student.php";
        include "data/section.php";
-       $subjects = getAllSubjects($conn);
-       $grades = getAllGrades($conn);
-       $sections = getAllsections($conn);
+       
+       $classes = getAllClasses($conn);
+       $sections = getAllSections($conn);
        
        $student_id = $_GET['student_id'];
        $student = getStudentById($student_id, $conn);
@@ -22,20 +21,18 @@ if (isset($_SESSION['admin_id']) &&
          header("Location: student.php");
          exit;
        }
-
-
  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Admin - Edit Student</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../css/style.css">
-	<link rel="icon" href="../logo.png">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Edit Student</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../logo.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <?php 
@@ -107,82 +104,74 @@ if (isset($_SESSION['admin_id']) &&
                  name="gender"> Female
         </div>
 
-        <div class="mb-3">
+      <!--  <div class="mb-3">
           <label class="form-label">Username</label>
           <input type="text" 
                  class="form-control"
                  value="<?=$student['username']?>"
                  name="username">
         </div>
+      -->
         <input type="text"
                 value="<?=$student['student_id']?>"
                 name="student_id"
                 hidden>
 
         <div class="mb-3">
-          <label class="form-label">Grade</label>
-          <div class="row row-cols-5">
-            <?php 
-            $grade_ids = str_split(trim($student['grade']));
-            foreach ($grades as $grade){ 
-              $checked =0;
-              foreach ($grade_ids as $grade_id ) {
-                if ($grade_id == $grade['grade_id']) {
-                   $checked =1;
-                }
-              }
-            ?>
-            <div class="col">
-              <input type="radio"
-                     name="grade"
-                     <?php if($checked) echo "checked"; ?>
-                     value="<?=$grade['grade_id']?>">
-                     <?=$grade['grade_code']?>-<?=$grade['grade']?>
-            </div>
-            <?php } ?>
-             
-          </div>
+          <label class="form-label">Roll Number</label>
+          <input type="number" 
+                 class="form-control"
+                 value="<?=$student['roll_number']?>"
+                 name="roll_number">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Last Exam Result</label>
+          <input type="text" 
+                 class="form-control"
+                 value="<?=$student['last_exam_result'] ?? ''?>"
+                 name="last_exam_result">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Class</label>
+          <select name="class_id" class="form-control">
+              <?php foreach ($classes as $class) { ?>
+              <option value="<?=$class['class_id']?>"
+                <?php if($class['class_id'] == $student['class_id']) echo 'selected'; ?>>
+                <?=$class['class_name']?> <?=$class['discipline']?>
+              </option>
+              <?php } ?>
+          </select>
         </div>
 
         <div class="mb-3">
           <label class="form-label">Section</label>
-          <div class="row row-cols-5">
-            <?php 
-            $section_ids = str_split(trim($student['section']));
-            foreach ($sections as $section){ 
-              $checked =0;
-              foreach ($section_ids as $section_id ) {
-                if ($section_id == $section['section_id']) {
-                   $checked =1;
-                }
-              }
-            ?>
-            <div class="col">
-              <input type="radio"
-                     name="section"
-                     <?php if($checked) echo "checked"; ?>
-                     value="<?=$section['section_id']?>">
-                     <?=$section['section']?>
-            </div>
-            <?php } ?>
-             
-          </div>
+          <select name="section_id" class="form-control">
+              <?php foreach ($sections as $section) { 
+              $class = getClassById($section['class_id'], $conn);?>
+              <option value="<?=$section['section_id']?>"
+                <?php if($section['section_id'] == $student['section_id']) echo 'selected'; ?>>
+                <?=$class['class_name']?> <?=$class['discipline']?> -> <?=$section['section_name']?>
+              </option>
+              <?php } ?>
+          </select>
         </div>
         <br><hr>
 
         <div class="mb-3">
-          <label class="form-label">Parent first name</label>
+          <label class="form-label">Father's Name</label>
           <input type="text" 
                  class="form-control"
-                 value="<?=$student['parent_fname']?>"
-                 name="parent_fname">
+                 value="<?=$student['father_name']?>"
+                 name="father_name">
         </div>
         <div class="mb-3">
-          <label class="form-label">Parent last name</label>
+          <label class="form-label">Mother's Name</label>
           <input type="text" 
                  class="form-control"
-                 value="<?=$student['parent_lname']?>"
-                 name="parent_lname">
+                 value="<?=$student['mother_name']?>"
+                 name="mother_name">
         </div>
         <div class="mb-3">
           <label class="form-label">Parent phone number</label>
@@ -191,8 +180,6 @@ if (isset($_SESSION['admin_id']) &&
                  value="<?=$student['parent_phone_number']?>"
                  name="parent_phone_number">
         </div>
-
-        
 
       <button type="submit" 
               class="btn btn-primary">
@@ -251,9 +238,82 @@ if (isset($_SESSION['admin_id']) &&
               class="btn btn-primary">
               Change</button>
         </form>
+
+        <form method="post"
+              class="shadow p-3 my-5 form-w" 
+              action="req/student-add-result.php">
+        <h3>Add Previous Result</h3><hr>
+          <?php if (isset($_GET['rerror'])) { ?>
+            <div class="alert alert-danger" role="alert">
+             <?=$_GET['rerror']?>
+            </div>
+          <?php } ?>
+          <?php if (isset($_GET['rsuccess'])) { ?>
+            <div class="alert alert-success" role="alert">
+             <?=$_GET['rsuccess']?>
+            </div>
+          <?php } ?>
+
+          <input type="hidden"
+                value="<?=$student['student_id']?>"
+                name="student_id">
+
+          <div class="mb-3">
+            <label class="form-label">Class</label>
+            <input type="text" 
+                   class="form-control"
+                   name="class">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Section</label>
+            <input type="text" 
+                   class="form-control"
+                   name="section_name">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Roll Number</label>
+            <input type="number" 
+                   class="form-control"
+                   name="roll_number">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Total Marks</label>
+            <input type="number" step="0.01"
+                   class="form-control"
+                   name="total_marks">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">GPA</label>
+            <input type="number" step="0.01"
+                   class="form-control"
+                   name="gpa">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Rank</label>
+            <input type="number" 
+                   class="form-control"
+                   name="rank">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Year</label>
+            <input type="number" 
+                   class="form-control"
+                   name="year">
+          </div>
+
+          <button type="submit" 
+              class="btn btn-primary">
+              Add Result</button>
+        </form>
      </div>
      
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>	
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>    
     <script>
         $(document).ready(function(){
              $("#navLinks li:nth-child(3) a").addClass('active');
@@ -284,14 +344,12 @@ if (isset($_SESSION['admin_id']) &&
 </body>
 </html>
 <?php 
-
   }else {
     header("Location: student.php");
     exit;
   } 
 }else {
-	header("Location: student.php");
-	exit;
+    header("Location: student.php");
+    exit;
 } 
-
 ?>

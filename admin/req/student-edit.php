@@ -14,11 +14,13 @@ if (isset($_POST['fname'])      &&
     isset($_POST['email_address']) &&
     isset($_POST['gender'])        &&
     isset($_POST['date_of_birth']) &&
-    isset($_POST['section'])       &&
-    isset($_POST['parent_fname'])  &&
-    isset($_POST['parent_lname'])  &&
+    isset($_POST['section_id'])    &&
+    isset($_POST['father_name'])   &&
+    isset($_POST['mother_name'])   &&
     isset($_POST['parent_phone_number']) &&
-    isset($_POST['grade'])) {
+    isset($_POST['class_id'])      &&
+    isset($_POST['roll_number'])   &&
+    isset($_POST['last_exam_result'])) {
     
     include '../../DB_connection.php';
     include "../data/student.php";
@@ -29,17 +31,18 @@ if (isset($_POST['fname'])      &&
 
     $address = $_POST['address'];
     $gender = $_POST['gender'];
-    $section = $_POST['section'];
+    $section_id = $_POST['section_id'];
     $email_address = $_POST['email_address'];
     $date_of_birth = $_POST['date_of_birth'];
-    $parent_fname = $_POST['parent_fname'];
-    $parent_lname = $_POST['parent_lname'];
+    $father_name = $_POST['father_name'];
+    $mother_name = $_POST['mother_name'];
     $parent_phone_number = $_POST['parent_phone_number'];
+    $class_id = $_POST['class_id'];
+    $roll_number = $_POST['roll_number'];
+    $last_exam_result = $_POST['last_exam_result'];
 
     $student_id = $_POST['student_id'];
     
-    $grade = $_POST['grade'];
-
     $data = 'student_id='.$student_id;
 
     if (empty($fname)) {
@@ -74,28 +77,41 @@ if (isset($_POST['fname'])      &&
         $em  = "Date of birth is required";
         header("Location: ../student-edit.php?error=$em&$data");
         exit;
-    }else if (empty($parent_fname)) {
-        $em  = "Parent first name is required";
+    }else if (empty($father_name)) {
+        $em  = "Father's name is required";
         header("Location: ../student-edit.php?error=$em&$data");
         exit;
-    }else if (empty($parent_lname)) {
-        $em  = "Parent last name is required";
+    }else if (empty($mother_name)) {
+        $em  = "Mother's name is required";
         header("Location: ../student-edit.php?error=$em&$data");
         exit;
     }else if (empty($parent_phone_number)) {
         $em  = "Parent phone number is required";
         header("Location: ../student-edit.php?error=$em&$data");
         exit;
-    }else if (empty($section)) {
+    }else if (empty($section_id)) {
         $em  = "Section is required";
+        header("Location: ../student-edit.php?error=$em&$data");
+        exit;
+    }else if (empty($class_id)) {
+        $em  = "Class is required";
+        header("Location: ../student-edit.php?error=$em&$data");
+        exit;
+    }else if (empty($roll_number)) {
+        $em  = "Roll number is required";
         header("Location: ../student-edit.php?error=$em&$data");
         exit;
     }else {
         $sql = "UPDATE students SET
-                username = ?, fname=?, lname=?, grade=?, address=?,gender = ?, section=?, email_address=?, date_of_birth=?, parent_fname=?,parent_lname=?,parent_phone_number=?
+                username = ?, fname=?, lname=?, class_id=?, section_id=?, roll_number=?, 
+                address=?, gender=?, email_address=?, date_of_birth=?, 
+                father_name=?, mother_name=?, parent_phone_number=?, last_exam_result=?
                 WHERE student_id=?";
         $stmt = $conn->prepare($sql);
-        $stmt->execute([$uname,$fname, $lname, $grade, $address, $gender,$section, $email_address, $date_of_birth, $parent_fname, $parent_lname,$parent_phone_number, $student_id]);
+        $stmt->execute([$uname, $fname, $lname, $class_id, $section_id, $roll_number, 
+                       $address, $gender, $email_address, $date_of_birth, 
+                       $father_name, $mother_name, $parent_phone_number, $last_exam_result, 
+                       $student_id]);
         $sm = "successfully updated!";
         header("Location: ../student-edit.php?success=$sm&$data");
         exit;
@@ -115,3 +131,4 @@ if (isset($_POST['fname'])      &&
     header("Location: ../../logout.php");
     exit;
 } 
+?>
