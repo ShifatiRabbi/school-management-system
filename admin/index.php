@@ -53,7 +53,7 @@ if (isset($_SESSION['admin_id']) &&
           -->
                <a href="course.php" class="col btn btn-dark m-2 py-3">
                  <i class="fa fa-book fs-1" aria-hidden="true"></i><br>
-                  Course
+                  All Subjects
                </a> 
                <a href="message.php" class="col btn btn-dark m-2 py-3">
                  <i class="fa fa-envelope fs-1" aria-hidden="true"></i><br>
@@ -67,6 +67,16 @@ if (isset($_SESSION['admin_id']) &&
                <a href="news.php" class="col btn btn-dark m-2 py-3">
                   <i class="fa fa-bullhorn fs-1" aria-hidden="true"></i><br>
                   News & Updates
+               </a>
+
+               <a href="gallery-manage.php" class="col btn btn-dark m-2 py-3">
+                  <i class="fa fa-bullhorn fs-1" aria-hidden="true"></i><br>
+                  Gallery
+               </a>
+
+               <a href="result.php" class="col btn btn-dark m-2 py-3">
+                  <i class="fa fa-bullhorn fs-1" aria-hidden="true"></i><br>
+                  Public Result
                </a>
 
                <a href="settings.php" class="col btn btn-primary m-2 py-3">
