@@ -10,7 +10,6 @@ if (isset($_SESSION['admin_id']) &&
        include "../DB_connection.php";
        include "data/teacher.php";
        include "data/subject.php";
-       include "data/grade.php";
        $teachers = searchTeachers($search_key, $conn);
  ?>
 <!DOCTYPE html>
@@ -75,7 +74,6 @@ if (isset($_SESSION['admin_id']) &&
                     <th scope="col">Last Name</th>
                     <th scope="col">Username</th>
                     <th scope="col">Subject</th>
-                    <th scope="col">Grade</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
@@ -101,19 +99,7 @@ if (isset($_SESSION['admin_id']) &&
                            echo $s;
                         ?>
                     </td>
-                    <td>
-                      <?php 
-                           $g = '';
-                           $grades = str_split(trim($teacher['grades']));
-                           foreach ($grades as $grade) {
-                              $g_temp = getGradeById($grade, $conn);
-                              if ($g_temp != 0) 
-                                $g .=$g_temp['grade_code'].'-'.
-                                     $g_temp['grade'].', ';
-                           }
-                           echo $g;
-                        ?>
-                    </td>
+                    
                     <td>
                         <a href="teacher-edit.php?teacher_id=<?=$teacher['teacher_id']?>"
                            class="btn btn-warning">Edit</a>

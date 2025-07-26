@@ -65,8 +65,8 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
 
         <form action="teacher-search.php" class="mt-3 n-table" method="get">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" name="searchKey" placeholder="Search...">
-                <button class="btn btn-primary">
+                <input type="text" class="form-control" name="searchKey" placeholder="Search..." style="height: 50px;">
+                <button class="btn btn-primary" style="height: 50px; width: 100px;">
                     <i class="fa fa-search" aria-hidden="true"></i>
                 </button>
             </div>
