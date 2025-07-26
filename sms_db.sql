@@ -249,6 +249,46 @@ CREATE TABLE `gallery_videos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
+-- Create results table
+CREATE TABLE `public_results` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `exam_type` enum('SSC','HSC','JSC','PSC') NOT NULL,
+  `year` int(4) NOT NULL,
+  `board` varchar(50) NOT NULL,
+  `appeared` int(11) NOT NULL,
+  `passed` int(11) NOT NULL,
+  `failed` int(11) NOT NULL,
+  `a_plus` int(11) NOT NULL,
+  `pass_rate` decimal(5,2) NOT NULL,
+  `a_plus_rate` decimal(5,2) NOT NULL,
+  `national_rank` varchar(20) NOT NULL,
+  `board_rank` varchar(20) NOT NULL,
+  `division_rank` varchar(20) NOT NULL,
+  `district_rank` varchar(20) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `exam_year_unique` (`exam_type`,`year`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Insert sample data (SSC results from your example)
+INSERT INTO `public_results` 
+(`exam_type`, `year`, `board`, `appeared`, `passed`, `failed`, `a_plus`, `pass_rate`, `a_plus_rate`, `national_rank`, `board_rank`, `division_rank`, `district_rank`) VALUES
+('SSC', 2025, 'Dhaka', 147, 115, 32, 25, 78.23, 17.01, '3346th', '464th', '620th', '256th'),
+('SSC', 2024, 'Dhaka', 81, 66, 15, 0, 81.48, 0.00, '9451st', '1784th', '2158th', '581st'),
+('SSC', 2023, 'Dhaka', 146, 133, 13, 8, 91.10, 5.48, '4800th', '637th', '775th', '311th'),
+('SSC', 2022, 'Dhaka', 68, 66, 2, 1, 97.06, 1.47, '6942nd', '1275th', '1448th', '441st'),
+('SSC', 2021, 'Dhaka', 88, 73, 15, 0, 82.95, 0.00, '11774th', '2615th', '3057th', '739th'),
+('SSC', 2020, 'Dhaka', 89, 72, 17, 0, 80.90, 0.00, '8905th', '1732nd', '2067th', '606th'),
+('SSC', 2019, 'Dhaka', 108, 73, 35, 0, 67.59, 0.00, '10689th', '2787th', '2586th', '685th'),
+('SSC', 2018, 'Dhaka', 112, 64, 48, 0, 57.14, 0.00, '11304th', '3453rd', '2966th', '735th'),
+('SSC', 2017, 'Dhaka', 95, 81, 14, 3, 85.26, 3.16, '5785th', '2065th', '1817th', '589th'),
+('SSC', 2016, 'Dhaka', 100, 94, 6, 0, 94.00, 0.00, '5166th', '1481st', '1299th', '429th'),
+('SSC', 2015, 'Dhaka', 82, 68, 14, 0, 82.93, 0.00, '7050th', '2209th', '2149th', '581st'),
+('SSC', 2014, 'Dhaka', 94, 90, 4, 3, 95.74, 3.19, '4684th', '1324th', '1263rd', '432nd'),
+('SSC', 2013, 'Dhaka', 90, 73, 17, 0, 81.11, 0.00, '6731st', '1940th', '1911th', '570th'),
+('SSC', 2012, 'Dhaka', 94, 84, 10, 0, 89.36, 0.00, '5009th', '1288th', '1433rd', '453rd'),
+('SSC', 2011, 'Dhaka', 79, 74, 5, 1, 93.67, 1.27, '3380th', '943rd', '1029th', '387th');
+
 --
 -- Indexes for table `admin`
 --

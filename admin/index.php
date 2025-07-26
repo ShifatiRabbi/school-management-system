@@ -74,7 +74,7 @@ if (isset($_SESSION['admin_id']) &&
                   Gallery
                </a>
 
-               <a href="result.php" class="col btn btn-dark m-2 py-3">
+               <a href="manage-results.php" class="col btn btn-dark m-2 py-3">
                   <i class="fa fa-bullhorn fs-1" aria-hidden="true"></i><br>
                   Public Result
                </a>
