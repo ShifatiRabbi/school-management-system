@@ -224,6 +224,10 @@ html {
     color: var(--secondary-color);
 }
 
+.quick-link-btn:hover span {
+    color: var(--secondary-color);
+}
+
 .section-title {
 	color: var(--primary-color);
 	font-weight: 700;

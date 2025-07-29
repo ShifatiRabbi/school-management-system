@@ -52,7 +52,7 @@
     </style>
 
     <div class="container mt-5">
-        <a href="class_info" class="btn btn-dark mb-3">
+        <a href="class-info" class="btn btn-dark mb-3">
             <i class="fas fa-arrow-left"></i> Back to Classes
         </a>
 

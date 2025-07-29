@@ -74,66 +74,112 @@ if (count($all_images) > 0) {
     <div class="container">
         <h2 class="text-center section-title">Quick Access</h2>
         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-4">
-            <div class="col">
-                <a href="teacher-info" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
-                    <i class="fas fa-chalkboard-teacher"></i>
-                    <span>Teachers</span>
-                </a>
-            </div>
-            <div class="col">
-                <a href="student-info" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
-                    <i class="fas fa-user-graduate"></i>
-                    <span>Students</span>
-                </a>
-            </div>
-            <div class="col">
-                <a href="#" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
-                    <i class="fas fa-file-signature"></i>
-                    <span>Registrar Office</span>
-                </a>
-            </div>
-            <div class="col">
-                <a href="class-info" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
-                    <i class="fas fa-school"></i>
-                    <span>Class</span>
-                </a>
-            </div>
+
             <div class="col">
                 <a href="basic-info" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
                     <i class="fas fa-info-circle"></i>
                     <span>School Details</span>
                 </a>
             </div>
+
             <div class="col">
-                <a href="#" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
-                    <i class="fas fa-book-open"></i>
-                    <span>All Subjects</span>
+                <a href="people_info" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Teacher Staff Student</span>
                 </a>
             </div>
+
             <div class="col">
-                <a href="contact" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
-                    <i class="fas fa-envelope"></i>
-                    <span>Message</span>
+                <a href="teacher-info" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>All Teachers</span>
                 </a>
             </div>
+            
             <div class="col">
-                <a href="events.php" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                <a href="student-info" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-user-graduate"></i>
+                    <span>All Students</span>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="governing-body" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-users-cog"></i>
+                    <span>Governing Body</span>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="ragistrar-office" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-file-signature"></i>
+                    <span>Registrar Office</span>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="events" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
                     <i class="fas fa-calendar-alt"></i>
                     <span>Events</span>
                 </a>
             </div>
+
             <div class="col">
                 <a href="news" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
                     <i class="fas fa-bullhorn"></i>
                     <span>News</span>
                 </a>
             </div>
+
             <div class="col">
-                <a href="gallery.php" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                <a href="notices" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-bell"></i>
+                    <span>Notices</span>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="gallery" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
                     <i class="fas fa-images"></i>
                     <span>Gallery</span>
                 </a>
             </div>
+
+            <div class="col">
+                <a href="all-subject" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-book-open"></i>
+                    <span>All Subjects</span>
+                </a>
+            </div>
+            
+            <div class="col">
+                <a href="class-info" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-school"></i>
+                    <span>Class</span>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="routine" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-bell"></i>
+                    <span>Routine</span>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="public_results_ssc" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Public Results</span>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="contact" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-envelope"></i>
+                    <span>Message</span>
+                </a>
+            </div>
+
         </div>
     </div>
 </section>
@@ -199,7 +245,7 @@ if (count($all_images) > 0) {
                 $start_time = new DateTime($event['start_time']);
                 $end_time = new DateTime($event['end_time']);
             ?>
-            <div class="col-md-6">
+            <div class="col-md-6 mb-3">
                 <div class="card event-card h-100">
                     <div class="row g-0 h-100">
                         <div class="col-md-3">
@@ -260,6 +306,55 @@ if (count($all_images) > 0) {
             </div>
             <?php } ?>
         </div>
+    </div>
+</section>
+
+<!-- Events Section -->
+<section class="events-section">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="section-title">Gallery</h2>
+            <a href="gallery" class="btn btn-outline-primary">View Full Gallery</a>
+        </div>
+
+        <?php
+        // Fetch and randomize 6 images
+        $sql = "SELECT * FROM gallery_images WHERE file_type = 'image'";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $allImages = $stmt->fetchAll();
+
+        $galleryImages = [];
+        if (count($allImages) > 0) {
+            $randomKeys = array_rand($allImages, min(6, count($allImages)));
+            if (is_array($randomKeys)) {
+                foreach ($randomKeys as $key) {
+                    $galleryImages[] = $allImages[$key];
+                }
+            } else {
+                $galleryImages[] = $allImages[$randomKeys];
+            }
+        }
+        ?>
+
+        <div class="row">
+            <?php foreach ($galleryImages as $image): ?>
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <img src="<?= htmlspecialchars($image['file_path']) ?>" 
+                             class="card-img-top" 
+                             alt="<?= htmlspecialchars($image['caption']) ?>" 
+                             style="height: 200px; object-fit: cover;">
+                        <?php if (!empty($image['caption'])): ?>
+                            <div class="card-body p-2">
+                                <p class="card-text text-muted small"><?= htmlspecialchars($image['caption']) ?></p>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
     </div>
 </section>
 

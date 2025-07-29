@@ -170,6 +170,23 @@ CREATE TABLE `section` (
   FOREIGN KEY (`class_id`) REFERENCES `class`(`class_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Table structure for table `class_routines`
+
+CREATE TABLE `class_routines` (
+  `routine_id` int(11) NOT NULL AUTO_INCREMENT,
+  `class_id` int(11) NOT NULL,
+  `section_id` int(11) NOT NULL,
+  `routine_image` varchar(255) NOT NULL,
+  `upload_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `uploaded_by` int(11) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`routine_id`),
+  FOREIGN KEY (`class_id`) REFERENCES `class`(`class_id`),
+  FOREIGN KEY (`section_id`) REFERENCES `section`(`section_id`),
+  FOREIGN KEY (`uploaded_by`) REFERENCES `admin`(`admin_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
 -- Table structure for table `subjects`
 CREATE TABLE `subjects` (
   `subject_id` int(11) NOT NULL AUTO_INCREMENT,

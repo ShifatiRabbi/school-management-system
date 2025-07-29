@@ -56,10 +56,12 @@
                                    class="btn btn-info btn-sm">
                                    <i class="fas fa-eye"></i> View Details
                                 </a>
+                                <!--
                                 <a href="class-edit.php?class_id=<?=$class['class_id']?>" 
                                    class="btn btn-warning btn-sm">
                                    <i class="fas fa-edit"></i> Edit
                                 </a>
+                                -->
                             </td>
                         </tr>
                         <?php } ?>
