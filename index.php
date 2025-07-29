@@ -133,7 +133,7 @@ if (count($all_images) > 0) {
 
             <div class="col">
                 <a href="notices" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
-                    <i class="fas fa-bell"></i>
+                    <i class="fas fa-newspaper"></i>
                     <span>Notices</span>
                 </a>
             </div>

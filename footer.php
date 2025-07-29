@@ -1,45 +1,59 @@
 <footer class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 mb-4 mb-lg-0">
+            <!-- Quick Links Column -->
+            <div class="col-md-4 mb-4 mb-md-0">
                 <div class="footer-links">
-                    <h5>Quick Links</h5>
-                    <ul>
-                        <li><a href="/school-management-system">Home</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="/school-management-system/basic_info">Basic Info</a></li>
-                        <li><a href="/school-management-system/people_info">People Info</a></li>
-                        <li><a href="/school-management-system/gallery">Gallery</a></li>
+                    <h5 class="text-uppercase mb-4" style="color: var(--secondary-color);">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/school-management-system" class="text-white footer-link">Home</a></li>
+                        <li class="mb-2"><a href="about" class="text-white footer-link">About Us</a></li>
+                        <li class="mb-2"><a href="basic-info" class="text-white footer-link">School Details</a></li>
+                        <li class="mb-2"><a href="people_info" class="text-white footer-link">Staff Details</a></li>
+                        <li class="mb-2"><a href="gallery" class="text-white footer-link">Gallery</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-4 mb-4 mb-lg-0">
+
+            <!-- Academic Column -->
+            <div class="col-md-4 mb-4 mb-md-0">
                 <div class="footer-links">
-                    <h5>Academic</h5>
-                    <ul>
-                        <li><a href="/school-management-system/public_results_ssc">SSC Results</a></li>
-                        <li><a href="/school-management-system/public_results_jsc">JSC Results</a></li>
-                        <li><a href="/school-management-system/events.php">Events</a></li>
-                        <li><a href="/school-management-system/news">News & Updates</a></li>
-                        <li><a href="/school-management-system/contact">Contact Us</a></li>
+                    <h5 class="text-uppercase mb-4" style="color: var(--secondary-color);">Academic</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="public_results_ssc" class="text-white footer-link">SSC Results</a></li>
+                        <li class="mb-2"><a href="public_results_jsc" class="text-white footer-link">JSC Results</a></li>
+                        <li class="mb-2"><a href="events" class="text-white footer-link">Events</a></li>
+                        <li class="mb-2"><a href="news" class="text-white footer-link">News & Updates</a></li>
+                        <li class="mb-2"><a href="contact" class="text-white footer-link">Contact Us</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="footer-links">
-                    <h5>Connect With Us</h5>
-                    <div class="social-icons mb-3">
-                        <a href="#" class="me-2"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="me-2"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="me-2"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="me-2"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="me-2"><i class="fab fa-youtube"></i></a>
+
+            <!-- Contact Column -->
+            <div class="col-md-4">
+                <div class="footer-contact">
+                    <h5 class="text-uppercase mb-4" style="color: var(--secondary-color);">Connect With Us</h5>
+                    <div class="social-icons mb-4">
+                        <a href="#" class="text-white me-3 social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3 social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3 social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-3 social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-white me-3 social-icon"><i class="fab fa-youtube"></i></a>
                     </div>
-                    <p>
-                        <i class="fas fa-map-marker-alt me-2"></i> Dohar, Dhaka<br>
-                        <i class="fas fa-phone-alt me-2"></i> 01712334847<br>
-                        <i class="fas fa-envelope me-2"></i> admin@spahhs.edu
-                    </p>
+                    <address class="mb-0">
+                        <p class="mb-2">
+                            <i class="fas fa-map-marker-alt me-2" style="color: var(--secondary-color);"></i> 
+                            <span>Dohar, Dhaka</span>
+                        </p>
+                        <p class="mb-2">
+                            <i class="fas fa-phone-alt me-2" style="color: var(--secondary-color);"></i> 
+                            <a href="tel:01712334847" class="text-white">01712334847</a>
+                        </p>
+                        <p class="mb-0">
+                            <i class="fas fa-envelope me-2" style="color: var(--secondary-color);"></i> 
+                            <a href="mailto:admin@spahhs.edu" class="text-white">admin@spahhs.edu</a>
+                        </p>
+                    </address>
                 </div>
             </div>
         </div>
@@ -161,6 +175,36 @@ $(document).ready(function() {
 
 <!-- ScrollReveal Library -->
 <script src="https://unpkg.com/scrollreveal"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggler = document.querySelector('.navbar-toggler');
+    const collapseTarget = document.querySelector('#navbarNav');
+
+    // Bootstrap Collapse instance (manual control)
+    const bsCollapse = new bootstrap.Collapse(collapseTarget, {
+        toggle: false
+    });
+
+    toggler.addEventListener('click', function () {
+        const isOpen = toggler.classList.contains('collapsed') === false;
+
+        if (isOpen) {
+            // Currently open, so hide it (user clicked close "X")
+            bsCollapse.hide();
+            toggler.classList.add('collapsed');
+            toggler.setAttribute('aria-expanded', 'false');
+        } else {
+            // Currently closed, so show it (user clicked hamburger)
+            bsCollapse.show();
+            toggler.classList.remove('collapsed');
+            toggler.setAttribute('aria-expanded', 'true');
+        }
+    });
+});
+</script>
+
+
 
 </body>
 </html>

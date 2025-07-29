@@ -1,7 +1,7 @@
 <?php include "header.php"; ?>
 
     <!-- About Section -->
-    <section id="about" class="about-section">
+    <section id="about" class="about-section mt-3">
         <div class="container">
             <h2 class="text-center section-title">About <?=$setting['school_name']?></h2>
             <div class="row ">

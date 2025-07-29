@@ -6,29 +6,35 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="contact-card card">
-                    <div class="card-header">
-                        <h3 class="text-center mb-0">CONTACT INFO</h3>
+                    <div class="card-header text-center">
+                        <h3 class="mb-0">CONTACT INFO</h3>
                     </div>
                     <div class="card-body">
-                        <table class="contact-table">
-                            <tr>
-                                <th>MOBILE</th>
-                                <td>01712334847</td>
-                                <th>UNION</th>
-                                <td>Dohar</td>
-                            </tr>
-                            <tr>
-                                <th>UPAZILA / P.S.</th>
-                                <td>Dohar</td>
-                                <th>DISTRICT</th>
-                                <td>Dhaka</td>
-                            </tr>
-                            <tr>
-                                <th>DIVISION</th>
-                                <td colspan="3">Dhaka</td>
-                            </tr>
-                        </table>
-                    
+                        <!-- Responsive Grid for Mobile -->
+                        <div class="row gy-3">
+                            <div class="col-md-6">
+                                <strong>MOBILE</strong><br>
+                                <span>01712334847</span>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>UNION</strong><br>
+                                <span>Dohar</span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <strong>UPAZILA / P.S.</strong><br>
+                                <span>Dohar</span>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>DISTRICT</strong><br>
+                                <span>Dhaka</span>
+                            </div>
+
+                            <div class="col-12">
+                                <strong>DIVISION</strong><br>
+                                <span>Dhaka</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 

@@ -36,6 +36,13 @@ html {
 	margin-top: 0;
 	margin-bottom: 2rem;
 }
+/* Mobile styles */
+@media (max-width: 768px) {
+    #about p {
+        padding: 0 25px !important;
+    }
+}
+
 /* Navigation */
 .navbar {
     background-color: var(--primary-color) !important;
@@ -88,14 +95,11 @@ html {
 
 /* Dropdown */
 .dropdown-menu {
-    display: none;
     border: none;
     border-radius: 0 0 8px 8px;
     background-color: rgba(0, 51, 102, 0.95);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     transition: all var(--transition-speed) ease;
-    opacity: 0;
-    transform: translateY(10px);
 }
 
 .navbar-nav .dropdown:hover .dropdown-menu {
@@ -115,7 +119,92 @@ html {
     padding-left: 2rem;
 }
 
-* Hero Slider */
+/* Mobile Specific Styles */
+@media (max-width: 768px) {
+    .navbar-collapse {
+        background-color: var(--primary-color);
+        padding: 1rem;
+        margin-top: 0.5rem;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .nav-item {
+        margin-bottom: 0.5rem;
+    }
+    
+    .navbar-brand img.navbar-logo {
+        height: 50px;
+    }
+
+    /* Enhanced Navbar Toggler Styles */
+    .navbar-toggler {
+        border: none;
+        padding: 0.5rem;
+        outline: none !important;
+        box-shadow: none !important;
+        position: relative;
+        width: 30px;
+        height: 30px;
+    }
+
+    /* Default state (hamburger icon) */
+    .navbar-toggler .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        transition: opacity 0.3s ease;
+        opacity: 1;
+    }
+
+    /* Expanded state (close icon) */
+    .navbar-toggler:not(.collapsed) .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 102, 0, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M5 5L25 25M25 5L5 25'/%3E%3C/svg%3E");
+        opacity: 1;
+    }
+
+    /* Remove the default Bootstrap toggler animation */
+    .navbar-toggler:focus,
+    .navbar-toggler:active {
+        outline: none;
+        box-shadow: none;
+    }
+
+}
+
+/* Mobile dropdown menu styles */
+@media (max-width: 768px) {
+    .dropdown-menu {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-left: 3px solid var(--secondary-color);
+        margin-left: 1rem;
+        padding-left: 0.5rem;
+    }
+    
+    .dropdown-item {
+        padding: 0.5rem 1rem;
+    }
+    
+    .dropdown-toggle::after {
+        display: inline-block;
+        margin-left: auto;
+        padding-left: 1rem;
+        transition: transform 0.3s ease;
+    }
+    
+    .dropdown-toggle[aria-expanded="true"]::after {
+        transform: rotate(180deg);
+    }
+    
+    .navbar-collapse {
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
+    }
+}
+
+/* ------------------------------Nav end----------------------- */
+
+
+/* Hero Slider */
+
 .hero-slider-section {
     position: relative;
     overflow: hidden;
@@ -682,7 +771,7 @@ html {
 }
 
 /* Responsive Adjustments */
-@media (max-width: 992px) {
+@media (max-width: 768px) {
     .hero-overlay h1 {
         font-size: 2.8rem;
     }
@@ -732,7 +821,7 @@ html {
     }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
     .hero-overlay h1 {
         font-size: 1.8rem;
     }
@@ -1219,7 +1308,7 @@ textarea.form-control {
     }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
     .member-img, .img-placeholder {
         height: 180px;
     }
@@ -1260,8 +1349,8 @@ textarea.form-control {
 
 .position-badge {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
+    bottom: 0px;
+    left: -40px;
     font-size: 0.75rem;
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
@@ -1293,8 +1382,18 @@ textarea.form-control {
     }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
     .teacher-img, .teacher-img-placeholder {
         height: 180px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .input-group button{
+        height: 50px; width: 100px
+    }
+    .input-group:not(.has-validation)>:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):not(.form-floating) {
+        height: 50px;
     }
 }
