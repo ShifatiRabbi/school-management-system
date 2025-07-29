@@ -52,7 +52,7 @@ $notices = getAllNotices($conn);
                         <td><?= htmlspecialchars($notice['title']) ?></td>
                         <td><?= date('d M, Y', strtotime($notice['notice_date'])) ?></td>
                         <td>
-                            <a href="notice-edit.php?id=<?= $notice['notice_id'] ?>" class="btn btn-warning btn-sm">
+                            <a href="notice-add.php?id=<?= $notice['notice_id'] ?>" class="btn btn-warning btn-sm">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
                             <a href="notice-delete.php?id=<?= $notice['notice_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this notice?')">

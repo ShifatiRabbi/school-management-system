@@ -25,12 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     // Handle file upload
     if (isset($_FILES['notice_image']) && $_FILES['notice_image']['error'] == UPLOAD_ERR_OK) {
-        $uploadDir = '../uploads/notices/';
+        $uploadDir = 'uploads/notices/';
         if (!file_exists($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
         
-        $fileName = uniqid() . '_' . basename($_FILES['notice_image']['name']);
+        $fileName = basename($_FILES['notice_image']['name']);
         $targetPath = $uploadDir . $fileName;
         
         if (move_uploaded_file($_FILES['notice_image']['tmp_name'], $targetPath)) {
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="date" class="form-control" name="notice_date" 
                        value="<?= isset($notice) ? $notice['notice_date'] : date('Y-m-d') ?>" required>
             </div>
-            
+             
             <div class="mb-3">
                 <label class="form-label">Notice Image (Optional)</label>
                 <input type="file" class="form-control" name="notice_image" accept="image/*">

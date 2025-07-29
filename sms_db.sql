@@ -306,6 +306,19 @@ INSERT INTO `public_results`
 ('SSC', 2012, 'Dhaka', 94, 84, 10, 0, 89.36, 0.00, '5009th', '1288th', '1433rd', '453rd'),
 ('SSC', 2011, 'Dhaka', 79, 74, 5, 1, 93.67, 1.27, '3380th', '943rd', '1029th', '387th');
 
+
+--
+--  for table `notices`
+--
+
+CREATE TABLE notices (
+    notice_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    notice_date DATE NOT NULL,
+    image_path VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 --
 -- Indexes for table `admin`
 --
