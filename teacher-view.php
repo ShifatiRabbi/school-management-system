@@ -9,7 +9,7 @@
 ?>
 
 <div class="container mt-5">
-    <a href="teacher.php" class="btn btn-dark mb-3">
+    <a href="teacher-info.php" class="btn btn-dark mb-3">
         <i class="fas fa-arrow-left"></i> Back to Teachers
     </a>
 
@@ -20,7 +20,13 @@
         </div>
         <br>
         <div class="card-body text-center">
-            <img src="../img/teacher-<?=$teacher['gender']?>.png" class="teacher-img mb-3" alt="Teacher Image">
+            <?php if (!empty($teacher['image_path'])): ?>
+                <img src="<?=$teacher['image_path']?>" class="img-fluid rounded-circle mb-3" style="width: 200px; height: 200px; object-fit: cover;">
+            <?php else: ?>
+                <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mb-3" style="width: 200px; height: 200px; margin: 0 auto;">
+                    <i class="fas fa-user-graduate fa-4x text-muted"></i>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 

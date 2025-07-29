@@ -264,6 +264,17 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role']) && isset($_GET['tea
                 </div>
             </div>
 
+            <div class="mb-3">
+                <label class="form-label">Teacher Image</label>
+                <div class="mb-3">
+                    <div class="border rounded p-4 text-center bg-light mb-3">
+                        <i class="fas fa-user-circle fa-5x text-muted mb-3"></i>
+                        <p class="text-muted">No image selected</p>
+                    </div>
+                    <input type="file" class="form-control" name="image" accept="image/*">
+                    <small class="text-muted">Recommended size: 400x400px (square image)</small>
+                </div>
+            </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
 

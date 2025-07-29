@@ -1,105 +1,105 @@
 <?php 
-    include "header.php";
-    include "admin/data/teacher.php";
-    include "admin/data/subject.php";
-    include "admin/data/class.php";
-    
-    $teachers = getAllTeachers($conn);
+include "header.php";
+include "admin/data/teacher.php";
+include "admin/data/subject.php";
+include "admin/data/class.php";
+
+$teachers = getAllTeachers($conn);
 ?>
 
-    <div class="container mt-5" style="min-height: 500px;">
-
-        <form action="teacher-search.php" class="mt-3 n-table" method="get">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" name="searchKey" placeholder="Search..." style="height: 50px;">
-                <button class="btn btn-primary" style="height: 50px; width: 100px;">
-                    <i class="fa fa-search" aria-hidden="true"></i>
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center section-title mb-5">Our Teachers</h2>
+        
+        <form action="teacher-search.php" class="mb-5" method="get">
+            <div class="input-group shadow-sm">
+                <input type="text" class="form-control form-control-lg" name="searchKey" placeholder="Search teachers..." required>
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search"></i> Search
                 </button>
             </div>
         </form>
 
         <?php if (isset($_GET['error'])) { ?>
-            <div class="alert alert-danger mt-3 n-table" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <?=$_GET['error']?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php } ?>
 
         <?php if (isset($_GET['success'])) { ?>
-            <div class="alert alert-info mt-3 n-table" role="alert">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <?=$_GET['success']?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php } ?>
 
-        <?php if ($teachers != 0) { ?>
-            <div class="table-responsive mt-3">
-                <table class="table table-bordered table-hover">
-                    <thead class="table-light">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Teacher Index</th>
-                            <th scope="col">Designation</th>
-                            <th scope="col">Subjects</th>
-                            <th scope="col">Classes</th>
-                            <th scope="col">Phone</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($teachers as $i => $teacher) { ?>
-                        <tr>
-                            <th scope="row"><?=$i+1?></th>
-                            <td><?=$teacher['teacher_id']?></td>
-                            <td>
-                                <a style="text-decoration: none;" href="teacher-view.php?teacher_id=<?=$teacher['teacher_id']?>">
-                                    <?=$teacher['fname']?> <?=$teacher['lname']?>
-                                </a>
-                            </td>
-                            <td><?=$teacher['teacher_index']?></td>
-                            <td><?=$teacher['designation']?></td>
-                            <td>
-                                <?php 
-                                    $subjectNames = [];
-                                    if (!empty($teacher['subjects'])) {
-                                        $subjectIds = explode(',', $teacher['subjects']);
-                                        foreach ($subjectIds as $subjectId) {
-                                            $subject = getSubjectById($subjectId, $conn);
-                                            if ($subject) {
-                                                $subjectNames[] = $subject['subject_name'];
-                                            }
-                                        }
-                                    }
-                                    echo implode(', ', $subjectNames);
-                                ?>
-                            </td>
-                            <td>
-                                <?php 
-                                    $classNames = [];
-                                    if (!empty($teacher['classes_assigned'])) {
-                                        $classIds = explode(',', $teacher['classes_assigned']);
-                                        foreach ($classIds as $classId) {
-                                            $class = getClassById($classId, $conn);
-                                            if ($class) {
-                                                $classNames[] = $class['class_name'];
-                                            }
-                                        }
-                                    }
-                                    echo implode(', ', $classNames);
-                                ?>
-                            </td>
-                            <td><?=$teacher['phone_number']?></td>
-                        </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
+        <div class="row">
+            <?php if ($teachers != 0) { 
+                foreach ($teachers as $teacher) { 
+                    $subjects = [];
+                    if (!empty($teacher['subjects'])) {
+                        $subjectIds = explode(',', $teacher['subjects']);
+                        foreach ($subjectIds as $subjectId) {
+                            $subject = getSubjectById($subjectId, $conn);
+                            if ($subject) $subjects[] = $subject['subject_name'];
+                        }
+                    }
+            ?>
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card teacher-card h-100">
+                    <div class="card-img-top position-relative">
+                        <?php if (!empty($teacher['image_path'])): ?>
+                            <img src="<?=$teacher['image_path']?>" class="teacher-img" alt="<?=$teacher['fname']?> <?=$teacher['lname']?>">
+                        <?php else: ?>
+                            <div class="teacher-img-placeholder">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                        <?php endif; ?>
+                        <span class="position-badge bg-<?= 
+                            strpos($teacher['designation'], 'Head') !== false ? 'primary' : 
+                            (strpos($teacher['designation'], 'Senior') !== false ? 'info' : 'success') ?>">
+                            <?=$teacher['designation']?>
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title mb-1"><?=$teacher['fname']?> <?=$teacher['lname']?></h5>
+                        <p class="text-muted mb-2">
+                            <i class="fas fa-book me-2"></i>
+                            <?=!empty($subjects) ? implode(', ', $subjects) : 'Not assigned'?>
+                        </p>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-phone me-2 text-muted"></i>
+                            <a href="tel:<?=$teacher['phone_number']?>" class="text-decoration-none">
+                                <?=$teacher['phone_number']?>
+                            </a>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-envelope me-2 text-muted"></i>
+                            <a href="mailto:<?=$teacher['email_address']?>" class="text-decoration-none">
+                                <?=$teacher['email_address']?>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <a href="teacher-view.php?teacher_id=<?=$teacher['teacher_id']?>" class="btn btn-sm btn-outline-primary">
+                            View Profile
+                        </a>
+                    </div>
+                </div>
             </div>
-        <?php } else { ?>
-            <div class="alert alert-info mt-3" role="alert">
-                No teachers found.
+            <?php } 
+            } else { ?>
+            <div class="col-12">
+                <div class="alert alert-info text-center py-4" role="alert">
+                    <i class="fas fa-info-circle fa-2x mb-3"></i>
+                    <h4>No teachers found</h4>
+                    <p class="mb-0">Please check back later or contact the administration</p>
+                </div>
             </div>
-        <?php } ?>
+            <?php } ?>
+        </div>
     </div>
-    
-<?php 
-    include 'footer.php'
-?>
+</section>
+
+<?php include 'footer.php'; ?>

@@ -16,22 +16,61 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Teachers</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="icon" href="../logo.png">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .teacher-card {
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .teacher-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .teacher-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            object-position: top;
+        }
+        .teacher-img-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #f5f5f5, #e0e0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 4rem;
+        }
+        .position-badge {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+    </style>
 </head>
 <body>
     <?php include "inc/navbar.php"; ?>
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <a href="teacher-add.php" class="btn btn-dark">Add New Teacher</a>
+            <h2>Manage Teachers</h2>
             <div>
+                <a href="teacher-add.php" class="btn btn-dark me-2">
+                    <i class="fas fa-plus"></i> Add Teacher
+                </a>
                 <a href="req/teacher-export.php" class="btn btn-success me-2">
-                    <i class="fas fa-file-export"></i> Export CSV
+                    <i class="fas fa-file-export"></i> Export
                 </a>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importModal">
-                    <i class="fas fa-file-import"></i> Import CSV
+                    <i class="fas fa-file-import"></i> Import
                 </button>
             </div>
         </div>
@@ -42,7 +81,7 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
                 <div class="modal-content">
                     <form action="req/teacher-import.php" method="post" enctype="multipart/form-data">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="importModalLabel">Import Teachers from CSV</h5>
+                            <h5 class="modal-title" id="importModalLabel">Import Teachers</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -63,106 +102,88 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
             </div>
         </div>
 
-        <form action="teacher-search.php" class="mt-3 n-table" method="get">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" name="searchKey" placeholder="Search..." style="height: 50px;">
-                <button class="btn btn-primary" style="height: 50px; width: 100px;">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
-            </div>
-        </form>
-
         <?php if (isset($_GET['error'])) { ?>
-            <div class="alert alert-danger mt-3 n-table" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <?=$_GET['error']?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php } ?>
 
         <?php if (isset($_GET['success'])) { ?>
-            <div class="alert alert-info mt-3 n-table" role="alert">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <?=$_GET['success']?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php } ?>
 
-        <?php if ($teachers != 0) { ?>
-            <div class="table-responsive">
-                <table class="table table-bordered mt-3 table-hover">
-                    <thead class="table-light">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Teacher Index</th>
-                            <th scope="col">Designation</th>
-                            <th scope="col">Subjects</th>
-                            <th scope="col">Classes</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($teachers as $i => $teacher) { ?>
-                        <tr>
-                            <th scope="row"><?=$i+1?></th>
-                            <td><?=$teacher['teacher_id']?></td>
-                            <td>
-                                <a href="teacher-view.php?teacher_id=<?=$teacher['teacher_id']?>">
-                                    <?=$teacher['fname']?> <?=$teacher['lname']?>
-                                </a>
-                            </td>
-                            <td><?=$teacher['teacher_index']?></td>
-                            <td><?=$teacher['designation']?></td>
-                            <td>
-                                <?php 
-                                    $subjectNames = [];
-                                    if (!empty($teacher['subjects'])) {
-                                        $subjectIds = explode(',', $teacher['subjects']);
-                                        foreach ($subjectIds as $subjectId) {
-                                            $subject = getSubjectById($subjectId, $conn);
-                                            if ($subject) {
-                                                $subjectNames[] = $subject['subject_name'];
-                                            }
-                                        }
-                                    }
-                                    echo implode(', ', $subjectNames);
-                                ?>
-                            </td>
-                            <td>
-                                <?php 
-                                    $classNames = [];
-                                    if (!empty($teacher['classes_assigned'])) {
-                                        $classIds = explode(',', $teacher['classes_assigned']);
-                                        foreach ($classIds as $classId) {
-                                            $class = getClassById($classId, $conn);
-                                            if ($class) {
-                                                $classNames[] = $class['class_name'];
-                                            }
-                                        }
-                                    }
-                                    echo implode(', ', $classNames);
-                                ?>
-                            </td>
-                            <td><?=$teacher['phone_number']?></td>
-                            <td>
-                                <a href="teacher-edit.php?teacher_id=<?=$teacher['teacher_id']?>" 
-                                   class="btn btn-warning btn-sm">
-                                   <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="teacher-delete.php?teacher_id=<?=$teacher['teacher_id']?>" 
-                                   class="btn btn-danger btn-sm">
-                                   <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
+        <div class="row">
+            <?php if ($teachers != 0) { 
+                foreach ($teachers as $teacher) { 
+                    $subjects = [];
+                    if (!empty($teacher['subjects'])) {
+                        $subjectIds = explode(',', $teacher['subjects']);
+                        foreach ($subjectIds as $subjectId) {
+                            $subject = getSubjectById($subjectId, $conn);
+                            if ($subject) $subjects[] = $subject['subject_name'];
+                        }
+                    }
+            ?>
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card teacher-card h-100">
+                    <div class="card-img-top position-relative">
+                        <?php if (!empty($teacher['image_path'])): ?>
+                            <img src="../<?=$teacher['image_path']?>" class="teacher-img" alt="<?=$teacher['fname']?> <?=$teacher['lname']?>">
+                        <?php else: ?>
+                            <div class="teacher-img-placeholder">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                        <?php endif; ?>
+                        <span class="position-badge bg-<?= 
+                            strpos($teacher['designation'], 'Head') !== false ? 'primary' : 
+                            (strpos($teacher['designation'], 'Senior') !== false ? 'info' : 'success') ?>">
+                            <?=$teacher['designation']?>
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title mb-1"><?=$teacher['fname']?> <?=$teacher['lname']?></h5>
+                        <p class="text-muted mb-2">
+                            <i class="fas fa-id-card me-2"></i><?=$teacher['teacher_index']?>
+                        </p>
+                        <p class="text-muted mb-2">
+                            <i class="fas fa-book me-2"></i>
+                            <?=!empty($subjects) ? implode(', ', $subjects) : 'Not assigned'?>
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-phone me-2 text-muted"></i>
+                            <?=$teacher['phone_number']?>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <div class="d-flex justify-content-end">
+                            <a href="teacher-edit.php?teacher_id=<?=$teacher['teacher_id']?>" 
+                               class="btn btn-sm btn-warning me-2">
+                               <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="teacher-delete.php?teacher_id=<?=$teacher['teacher_id']?>" 
+                               class="btn btn-sm btn-danger" 
+                               onclick="return confirm('Are you sure you want to delete this teacher?')">
+                               <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        <?php } else { ?>
-            <div class="alert alert-info .w-450 m-5" role="alert">
-                No teachers found.
+            <?php } 
+            } else { ?>
+            <div class="col-12">
+                <div class="alert alert-info text-center py-4" role="alert">
+                    <i class="fas fa-info-circle fa-2x mb-3"></i>
+                    <h4>No teachers found</h4>
+                    <p class="mb-0">Click "Add Teacher" to create a new teacher record</p>
+                </div>
             </div>
-        <?php } ?>
+            <?php } ?>
+        </div>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>    
