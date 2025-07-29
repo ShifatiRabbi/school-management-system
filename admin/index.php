@@ -15,7 +15,7 @@ if (isset($_SESSION['admin_id']) &&
 	<link rel="stylesheet" href="../css/style.css">
 	<link rel="icon" href="../logo.png">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <?php 
@@ -45,12 +45,6 @@ if (isset($_SESSION['admin_id']) &&
                  <i class="fa fa-columns fs-1" aria-hidden="true"></i><br>
                   Section
                </a> 
-          <!--     
-               <a href="grade.php" class="col btn btn-dark m-2 py-3">
-                 <i class="fa fa-level-up fs-1" aria-hidden="true"></i><br>
-                  Grade
-               </a> 
-          -->
                <a href="course.php" class="col btn btn-dark m-2 py-3">
                  <i class="fa fa-book fs-1" aria-hidden="true"></i><br>
                   All Subjects
@@ -70,21 +64,22 @@ if (isset($_SESSION['admin_id']) &&
                </a>
 
                <a href="gallery-manage.php" class="col btn btn-dark m-2 py-3">
-                  <i class="fa fa-bullhorn fs-1" aria-hidden="true"></i><br>
+                  <i class="fa fa-photo-video fs-1" aria-hidden="true"></i><br>
                   Gallery
                </a>
 
                <a href="manage-results.php" class="col btn btn-dark m-2 py-3">
-                  <i class="fa fa-bullhorn fs-1" aria-hidden="true"></i><br>
+                  <i class="fa fa-chart-bar fs-1" aria-hidden="true"></i><br>
                   Public Result
                </a>
+
 
                <a href="settings.php" class="col btn btn-primary m-2 py-3">
                  <i class="fa fa-cogs fs-1" aria-hidden="true"></i><br>
                   Settings
                </a> 
-               <a href="../logout.php" class="col btn btn-warning m-2 py-3">
-                 <i class="fa fa-sign-out fs-1" aria-hidden="true"></i><br>
+               <a href="../logout.php" class="col btn btn-danger m-2 py-3">
+                 <i class="fa fa-sign-in fs-1" aria-hidden="true"></i><br>
                   Logout
                </a> 
              </div>

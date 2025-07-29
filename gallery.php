@@ -14,7 +14,7 @@ $videos = $stmt_videos->fetchAll();
 ?>
 
 <div class="container">
-    <h2 class="text-center section-title" style="margin: 60px 0px;">Gallery of <?=$setting['school_name']?></h2>
+    <h2 class="text-center section-title" style="margin: 60px 0px;">Gallery of <?= $setting['school_name'] ?></h2>
 </div>
 
 <!-- Image Gallery -->
@@ -38,7 +38,7 @@ $videos = $stmt_videos->fetchAll();
 
 <!-- Video Gallery -->
 <div class="container">
-    <h2 class="text-center section-title" style="margin: 60px 0px;">Videos of <?=$setting['school_name']?></h2>
+    <h2 class="text-center section-title" style="margin: 60px 0px;">Videos of <?= $setting['school_name'] ?></h2>
 </div>
 
 <div class="container py-4">
@@ -47,11 +47,12 @@ $videos = $stmt_videos->fetchAll();
             <div class="col-lg-4 col-md-6 col-sm-12 mb-4 text-center">
                 <div class="video-thumb-wrapper">
                     <?php 
-                    $thumbnail = $video['file_path'];
-                    // Replace video extension with image extension for thumbnail
-                    $thumbnail = preg_replace('/\.[^.]*$/', '.jpg', $thumbnail);
+                    // Use uploaded thumbnail if available, otherwise fallback
+                    $thumbnail = !empty($video['thumbnail_path']) && file_exists($video['thumbnail_path']) 
+                                 ? $video['thumbnail_path'] 
+                                 : 'img/video-thumb-placeholder.jpg';
                     ?>
-                    <img src="<?= file_exists($thumbnail) ? $thumbnail : 'img/video-thumb-placeholder.jpg' ?>" 
+                    <img src="<?= $thumbnail ?>" 
                          class="video-thumb" alt="<?= htmlspecialchars($video['caption']) ?>" 
                          data-bs-toggle="modal" data-bs-target="#videoModal" 
                          data-video="<?= $video['file_path'] ?>" 
@@ -81,6 +82,7 @@ $videos = $stmt_videos->fetchAll();
     </div>
 </div>
 
+<!-- Styles -->
 <style>
     .gallery-item-wrapper, .video-thumb-wrapper {
         position: relative;
@@ -114,23 +116,23 @@ $videos = $stmt_videos->fetchAll();
     }
 </style>
 
+<!-- Scripts -->
 <script>
-    // Video modal handler
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         var videoModal = document.getElementById('videoModal');
-        videoModal.addEventListener('show.bs.modal', function(event) {
+        videoModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget;
             var videoSrc = button.getAttribute('data-video');
             var videoCaption = button.getAttribute('data-caption');
-            
+
             var modalVideo = document.getElementById('modalVideo');
             modalVideo.src = videoSrc;
-            
+
             var captionElement = document.getElementById('videoCaption');
             captionElement.innerHTML = videoCaption ? '<h4>' + videoCaption + '</h4>' : '';
         });
-        
-        videoModal.addEventListener('hide.bs.modal', function() {
+
+        videoModal.addEventListener('hide.bs.modal', function () {
             var modalVideo = document.getElementById('modalVideo');
             modalVideo.pause();
             modalVideo.currentTime = 0;
