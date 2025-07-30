@@ -1275,7 +1275,7 @@ textarea.form-control {
     color: #999;
 }
 
-.position-badge {
+.position-badge, .position-badge-gb {
     font-size: 0.75rem;
     padding: 0.25rem 1rem;
     border-radius: 20px;
@@ -1348,6 +1348,15 @@ textarea.form-control {
 }
 
 .position-badge {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.position-badge-gb {
     position: absolute;
     bottom: 0px;
     left: -40px;

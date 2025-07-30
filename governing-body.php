@@ -21,7 +21,7 @@ $members = getAllGoverningMembers($conn);
                             </div>
                         <?php endif; ?>
                         <div class="position-absolute bottom-0 start-50 translate-middle-x mb-3">
-                            <span class="position-badge bg-<?= 
+                            <span class="position-badge-gb bg-<?= 
                                 $member['position'] == 'Chairman' ? 'danger' : 
                                 ($member['position'] == 'Member' ? 'success' : 'info') ?>">
                                 <?= htmlspecialchars($member['position']) ?>

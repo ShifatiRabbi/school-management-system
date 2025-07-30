@@ -28,7 +28,7 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Class Name</th>
-                            <th scope="col">Discipline</th>
+                        <!--    <th scope="col">Discipline</th> -->
                             <th scope="col">Sections</th>
                             <th scope="col">Total Students</th>
                             <th scope="col">Male</th>
@@ -46,7 +46,7 @@
                         <tr>
                             <th scope="row"><?=$i+1?></th>
                             <td><?=$class['class_name']?></td>
-                            <td><?=$class['discipline']?></td>
+                        <!--    <td><?=$class['discipline']?></td> -->
                             <td><?=($sections != 0) ? count($sections) : 0?></td>
                             <td><?=$totalStudents?></td>
                             <td><?=$maleStudents?></td>

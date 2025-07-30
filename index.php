@@ -309,7 +309,7 @@ if (count($all_images) > 0) {
     </div>
 </section>
 
-<!-- Events Section -->
+<!-- Gallery Section -->
 <section class="events-section">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -344,7 +344,7 @@ if (count($all_images) > 0) {
                         <img src="<?= htmlspecialchars($image['file_path']) ?>" 
                              class="card-img-top" 
                              alt="<?= htmlspecialchars($image['caption']) ?>" 
-                             style="height: 200px; object-fit: cover;">
+                             style="height: 300px; object-fit: cover;">
                         <?php if (!empty($image['caption'])): ?>
                             <div class="card-body p-2">
                                 <p class="card-text text-muted small"><?= htmlspecialchars($image['caption']) ?></p>
