@@ -20,17 +20,22 @@ if (count($all_images) > 0) {
     }
 }
 ?>
-<div class="container">
-    <div class="marquee-container">
-        <div class="marquee-title">Latest Notices</div>
-        <div class="marquee-content">
-            <?php
-            include "admin/data/notice.php";
-            $latestNotices = getLatestNotices($conn, 3);
-            foreach ($latestNotices as $notice) {
-                echo '<span class="marquee-item">' . htmlspecialchars($notice['title']) . '</span>';
-            }
-            ?>
+<div class="notice-bar bg-light py-2">
+    <div class="container d-flex align-items-center">
+        <div class="notice-label bg-primary text-white px-3 py-2 me-2 rounded-start">
+            <strong>নোটিশঃ</strong>
+        </div>
+        <div class="marquee-wrapper overflow-hidden flex-grow-1">
+            <div class="marquee-content d-flex align-items-center">
+                <?php
+                include "admin/data/notice.php";
+                $latestNotices = getLatestNotices($conn, 5);
+                foreach ($latestNotices as $notice) {
+                    echo '<span class="marquee-item me-4"><i class="fas fa-bullhorn text-primary me-2"></i>' 
+                        . htmlspecialchars($notice['title']) . '</span>';
+                }
+                ?>
+            </div>
         </div>
     </div>
 </div>
@@ -68,6 +73,104 @@ if (count($all_images) > 0) {
         <?php endif; ?>
     </div>
 </section>
+
+<!-- About Section -->
+<section id="about" class="about-section mt-5">
+    <div class="container">
+        <h2 class="text-center section-title">About <?=$setting['school_name']?></h2>
+        <div class="row ">
+            <div class="col-lg-6">
+                <img src="img/spahhs.jpeg" 
+                alt="About our school" 
+                class="img-fluid rounded clickable-image" 
+                width="100%" 
+                style="height: 350px; cursor: pointer;" 
+                data-bs-toggle="modal" 
+                data-bs-target="#aboutImageModal">
+            </div>
+            <div class="col-lg-6">
+                <p>সুতারপাড়া আব্দুল হামেদ উচ্চ বিদ্যালয় (EIIN: 107986) একটি স্বনামধন্য মাধ্যমিক স্তরের শিক্ষাপ্রতিষ্ঠান, যা ১২ ফেব্রুয়ারি, ১৯৮৭ সালে প্রতিষ্ঠিত হয়। এটি স্থানীয়ভাবে "সুতারপাড়া আব্দুল হামেদ উচ্চ বিদ্যালয়" নামে পরিচিত এবং শিক্ষার্থীদের কাছে খুবই জনপ্রিয়।
+                <br><br>
+                বিদ্যালয়টি ১ জানুয়ারি, ১৯৯১ সালে সরকারি স্বীকৃতি লাভ করে। এটি ঢাকা শিক্ষা বোর্ডের অধীনে পরিচালিত হয় এবং বর্তমানে এটি বিজ্ঞান, মানবিক এবং ব্যবসায় শিক্ষা বিভাগে পাঠদান করে। বিদ্যালয়টি একটি সম্মিলিত (ছেলে-মেয়ে উভয়ের জন্য) শিক্ষা প্রতিষ্ঠান এবং এখানে শুধুমাত্র দিনের বেলায় ক্লাস পরিচালিত হয়।
+                <br><br>
+                এই বিদ্যালয়টি সরকার কর্তৃক স্বীকৃত এবং শিক্ষকগণ সরকারি বেতনের আওতায় (MPO) অন্তর্ভুক্ত রয়েছেন, যার নিবন্ধন নম্বর ২৬০৫১১৩০৫। </p>
+                <a href="about" class="btn btn-outline-primary">Read More</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Fullscreen Image Modal -->
+<div class="modal fade" id="aboutImageModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content bg-transparent border-0">
+      <div class="modal-body p-0 position-relative">
+        <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+        <img src="img/spahhs.jpeg" alt="Enlarged school image" class="img-fluid w-100 rounded">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Head teacher and Chairman Say -->
+<section class="leaders-section py-5">
+  <div class="container">
+    <div class="row g-4">
+      
+      <!-- Head Teacher Card -->
+      <div class="col-md-6">
+        <div class="card h-100 shadow-sm rounded-3 border">
+          <div class="card-body">
+            <div class="d-flex align-items-start mb-3">
+              <img src="img/head-teacher.jpeg" alt="Head Teacher" class="rounded border me-3" style="width: 90px; height: 120px; object-fit: cover;">
+              <div>
+                <h4 class="mb-1 fw-bold text-uppercase">নগেন্দ্র কুমার সিংহ</h4>
+                <h6 class="text-muted">Head Teacher</h6>
+              </div>
+            </div>
+            <hr>
+            <p>
+              It is regarded as one of the best institutions due to its discipline, teaching technique and favorable teaching environment.
+              In the meantime we achieved name and fame due to cent percent successful result in all public exams and has acquired position in top of Sylhet education board.
+            </p>
+            <p>
+              The students of the institution take part actively and successfully in the programs organized by Government and local authorities.
+            </p>
+            <p>
+              In all respects, considering over all activities the institution is one of the best in Sylhet division as well as all over Bangladesh.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chairman Card -->
+      <div class="col-md-6">
+        <div class="card h-100 shadow-sm rounded-3 border">
+          <div class="card-body">
+            <div class="d-flex align-items-start mb-3">
+              <img src="img/head-teacher.jpeg" alt="Chairman" class="rounded border me-3" style="width: 90px; height: 120px; object-fit: cover;">
+              <div>
+                <h4 class="mb-1 fw-bold text-uppercase">KANIK CHANDRA SHARMA</h4>
+                <h6 class="text-muted">Chairman</h6>
+              </div>
+            </div>
+            <hr>
+            <p>
+              I feel pleasure to know that our school is going to open its own website to flow of information. Through this newly opened website, the overall activities of the institution will be ensured getting new speed and accountability. I hope the website activities will be rich in information and be updated regularly.
+            </p>
+            <p>
+              Those who are related opening the website is thanked and felicitated wholeheartedly.
+            </p>
+            <p>
+              The student of this institution will be enlighten citizens by attaining quality education and their on way will be furnished one blessed with truths and morality.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
 <!-- Quick Links Section -->
 <section class="quick-links-section">
@@ -366,7 +469,7 @@ if (count($all_images) > 0) {
             <div class="col-lg-5">
                 <div class="contact-info">
                     <h4><i class="fas fa-map-marker-alt me-2"></i> Address</h4>
-                    <p class="mb-4">Dohar<br>Dhaka<br></p>
+                    <p class="mb-4">Dohar, Dhaka<br></p>
                     
                     <h4><i class="fas fa-phone-alt me-2"></i> Phone</h4>
                     <p class="mb-4">01712334847</p>
@@ -420,6 +523,30 @@ if (count($all_images) > 0) {
         </div>
     </div>
 </section>
+
+<!-- map Section -->
+<section class="map-section py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center mb-4">Our Location</h2>
+        
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-0">
+                <div class="map-container ratio ratio-16x9">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.295777983086!2d90.14126997388676!3d23.593722994776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x37558fe725fa5f01%3A0x8cdc75d8a08a0a7!2sSutarpara%20Abdul%20Hamid%20High%20School!5e0!3m2!1sen!2sbd!4v1753982696282!5m2!1sen!2sbd" 
+                        width="600" 
+                        height="450" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 <?php 
 include "footer.php";

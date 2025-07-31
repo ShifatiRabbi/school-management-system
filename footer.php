@@ -2,9 +2,22 @@
     <div class="container">
         <div class="row">
             <!-- Quick Links Column -->
-            <div class="col-md-4 mb-4 mb-md-0">
+            <div class="col-md-3 mb-4 mb-md-0">
                 <div class="footer-links">
                     <h5 class="text-uppercase mb-4" style="color: var(--secondary-color);">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="https://www.moedu.gov.bd/" class="text-white footer-link">Ministry of Education</a></li>
+                        <li class="mb-2"><a href="https://www.mopme.gov.bd/" class="text-white footer-link">Primary & Mass Education</a></li>
+                        <li class="mb-2"><a href="https://bangladesh.gov.bd/" class="text-white footer-link">BD National Portal</a></li>
+                        <li class="mb-2"><a href="https://a2i.gov.bd/" class="text-white footer-link">ICT Division</a></li>
+                        <li class="mb-2"><a href="http://www.dshe.gov.bd/" class="text-white footer-link">DSHE</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Site Links Column -->
+            <div class="col-md-3 mb-4 mb-md-0">
+                <div class="footer-links">
+                    <h5 class="text-uppercase mb-4" style="color: var(--secondary-color);">Site Links</h5>
                     <ul class="list-unstyled">
                         <li class="mb-2"><a href="/school-management-system" class="text-white footer-link">Home</a></li>
                         <li class="mb-2"><a href="about" class="text-white footer-link">About Us</a></li>
@@ -16,7 +29,7 @@
             </div>
 
             <!-- Academic Column -->
-            <div class="col-md-4 mb-4 mb-md-0">
+            <div class="col-md-3 mb-4 mb-md-0">
                 <div class="footer-links">
                     <h5 class="text-uppercase mb-4" style="color: var(--secondary-color);">Academic</h5>
                     <ul class="list-unstyled">
@@ -30,11 +43,11 @@
             </div>
 
             <!-- Contact Column -->
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="footer-contact">
                     <h5 class="text-uppercase mb-4" style="color: var(--secondary-color);">Connect With Us</h5>
                     <div class="social-icons mb-4">
-                        <a href="#" class="text-white me-3 social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.facebook.com/groups/348161615295603/" class="text-white me-3 social-icon"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="text-white me-3 social-icon"><i class="fab fa-twitter"></i></a>
                         <a href="#" class="text-white me-3 social-icon"><i class="fab fa-instagram"></i></a>
                         <a href="#" class="text-white me-3 social-icon"><i class="fab fa-linkedin-in"></i></a>
@@ -59,7 +72,7 @@
         </div>
         <div class="copyright text-center">
             <p>&copy; <?=$setting['current_year']?> <?=$setting['school_name']?>. All rights reserved.</p>
-            <p>Design & Developed by Shifati Rabbi.</p>
+            <p>Design & Developed by <a href="tel: 01571501416" style="text-decoration: none; color: silver;">Shifati Rabbi</a>.</p>
         </div>
     </div>
 </footer>
@@ -120,23 +133,30 @@
             interval: 200
         });
     });
-
+ 
 $(document).ready(function() {
     // Marquee animation
-    function animateMarquee() {
-        $('.marquee-content').animate({marginLeft: '-=1px'}, 10, 'linear', function() {
-            if (parseInt($(this).css('marginLeft')) <= -$(this).width()) {
-                $(this).css('marginLeft', $('.marquee-container').width());
+    $(document).ready(function () {
+        const $marquee = $('.marquee-content');
+        const $wrapper = $('.marquee-wrapper');
+        
+        let wrapperWidth = $wrapper.width();
+        let marqueeWidth = $marquee.width();
+        let currentPosition = wrapperWidth;
+
+        function animateMarquee() {
+            currentPosition -= 1;
+            if (currentPosition < -marqueeWidth) {
+                currentPosition = wrapperWidth;
             }
-            animateMarquee();
-        });
-    }
-    
-    // Start marquee animation if there are items
-    if ($('.marquee-item').length > 0) {
-        $('.marquee-content').css('marginLeft', $('.marquee-container').width());
-        animateMarquee();
-    }
+            $marquee.css('left', currentPosition + 'px');
+            requestAnimationFrame(animateMarquee);
+        }
+
+        // Initialize
+        $marquee.css({ left: wrapperWidth + 'px' });
+        requestAnimationFrame(animateMarquee);
+    });
     
     // Notice card hover effect
     $('.notice-card').hover(

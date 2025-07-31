@@ -73,6 +73,11 @@ if ($setting == 0) {
                                 </a>
                             </li>
                             <li>
+                                <a class="dropdown-item" href="vision&mission">
+                                    <i class="fa-solid fa-person-circle-question"></i> Mission & Vission
+                                </a>
+                            </li>
+                            <li>
                                 <a class="dropdown-item" href="governing-body">
                                     <i class="fas fa-users-cog me-2"></i> Governing Body
                                 </a>
@@ -109,6 +114,50 @@ if ($setting == 0) {
                                 </a>
                             </li>
                         </ul>
+                    </li>
+
+                    <!-- Facilities Dropdown -->
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="facilitiesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-building d-lg-none me-2"></i>Facilities
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="facilitiesDropdown">
+                        <li>
+                        <a class="dropdown-item" href="library">
+                            <i class="fas fa-book me-2"></i>Library
+                        </a>
+                        </li>
+                        <li>
+                        <a class="dropdown-item" href="play-ground">
+                            <i class="fas fa-futbol me-2"></i>Play Ground
+                        </a>
+                        </li>
+                        <li>
+                        <a class="dropdown-item" href="physics-lab">
+                            <i class="fas fa-atom me-2"></i>Physics Lab
+                        </a>
+                        </li>
+                        <li>
+                        <a class="dropdown-item" href="biology-lab">
+                            <i class="fas fa-dna me-2"></i>Biology Lab
+                        </a>
+                        </li>
+                        <li>
+                        <a class="dropdown-item" href="ict-lab">
+                            <i class="fas fa-desktop me-2"></i>ICT Lab
+                        </a>
+                        </li>
+                        <li>
+                        <a class="dropdown-item" href="chemistry-lab">
+                            <i class="fas fa-flask me-2"></i>Chemistry Lab
+                        </a>
+                        </li>
+                        <li>
+                        <a class="dropdown-item" href="co-curricular">
+                            <i class="fas fa-puzzle-piece me-2"></i>Co Curricular Activity
+                        </a>
+                        </li>
+                    </ul>
                     </li>
 
                     <!-- Notice & News Dropdown -->
