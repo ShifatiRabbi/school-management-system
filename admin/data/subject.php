@@ -1,6 +1,6 @@
 <?php
 function getAllSubjects($conn) {
-    $sql = "SELECT * FROM subjects ORDER BY subject_name";
+    $sql = "SELECT * FROM subjects ORDER BY CAST(subject_code AS UNSIGNED), subject_name";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     

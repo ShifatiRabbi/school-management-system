@@ -201,10 +201,19 @@ if ($setting == 0) {
                         </ul>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="gallery">
-                            <i class="fas fa-images d-lg-none me-2"></i>Gallery
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="resultDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-award d-lg-none me-2"></i>Media
                         </a>
+                        <ul class="dropdown-menu" aria-labelledby="resultDropdown">
+                            <li><a class="dropdown-item" href="gallery">
+                                <i class="fas fa-images me-2"></i>Image Gallery
+                            </a></li>
+                            <li><a class="dropdown-item" href="video-gallery">
+                                <i class="fas fa-video me-2"></i>Video Gallery
+                            </a></li>
+                        </ul>
                     </li>
 
                     <li class="nav-item">

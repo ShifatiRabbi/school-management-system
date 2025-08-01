@@ -214,13 +214,6 @@ if (count($all_images) > 0) {
             </div>
 
             <div class="col">
-                <a href="ragistrar-office" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
-                    <i class="fas fa-file-signature"></i>
-                    <span>Registrar Office</span>
-                </a>
-            </div>
-
-            <div class="col">
                 <a href="events" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
                     <i class="fas fa-calendar-alt"></i>
                     <span>Events</span>
@@ -244,7 +237,14 @@ if (count($all_images) > 0) {
             <div class="col">
                 <a href="gallery" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
                     <i class="fas fa-images"></i>
-                    <span>Gallery</span>
+                    <span>Image Gallery</span>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="video-gallery" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-video"></i>
+                    <span>Video Gallery</span>
                 </a>
             </div>
 
@@ -280,6 +280,37 @@ if (count($all_images) > 0) {
                 <a href="contact" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
                     <i class="fas fa-envelope"></i>
                     <span>Message</span>
+                </a>
+            </div>
+            
+            <div class="col">
+                <a href="ragistrar-office" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-file-signature"></i>
+                    <span>Registrar Office</span>
+                </a>
+            </div>
+            <div class="col">
+                <a href="library" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-book"></i>
+                    <span>Library</span>
+                </a>
+            </div>
+            <div class="col">
+                <a href="ict-lab" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-desktop"></i>
+                    <span>Ict Lab</span>
+                </a>
+            </div>
+            <div class="col">
+                <a href="play-ground" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-futbol"></i>
+                    <span>Play Ground</span>
+                </a>
+            </div>
+            <div class="col">
+                <a href="vission&mission" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                    <i class="fa-solid fa-person-circle-question"></i>
+                    <span>Mission & Vission</span>
                 </a>
             </div>
 

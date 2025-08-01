@@ -14,25 +14,47 @@ $videos = $stmt_videos->fetchAll();
 ?>
 
 <div class="container">
-    <h2 class="text-center section-title" style="margin: 60px 0px;">Image Gallery of <?= $setting['school_name'] ?></h2>
+    <h2 class="text-center section-title" style="margin: 60px 0px;">Video Gallery of <?= $setting['school_name'] ?></h2>
 </div>
 
-<!-- Image Gallery -->
-<div class="container" id="bootstrap-image-gallery">
-    <div class="row mx-0">
-        <?php foreach ($images as $image): ?>
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-4 px-2">
-                <div class="gallery-item-wrapper">
-                    <a class="lg-item" data-lg-size="1600-1067" data-src="<?= $image['file_path'] ?>" 
-                       data-sub-html="<h4><?= htmlspecialchars($image['caption']) ?></h4>">
-                        <img src="<?= $image['file_path'] ?>" class="gallery-img" alt="<?= htmlspecialchars($image['caption']) ?>" />
-                        <?php if ($image['caption']): ?>
-                            <div class="image-caption"><?= $image['caption'] ?></div>
-                        <?php endif; ?>
-                    </a>
+<div class="container py-4">
+    <div class="row">
+        <?php foreach ($videos as $video): ?>
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4 text-center">
+                <div class="video-thumb-wrapper">
+                    <?php 
+                    // Use uploaded thumbnail if available, otherwise fallback
+                    $thumbnail = !empty($video['thumbnail_path']) && file_exists($video['thumbnail_path']) 
+                                 ? $video['thumbnail_path'] 
+                                 : 'img/video-thumb-placeholder.jpg';
+                    ?>
+                    <img src="<?= $thumbnail ?>" 
+                         class="video-thumb" alt="<?= htmlspecialchars($video['caption']) ?>" 
+                         data-bs-toggle="modal" data-bs-target="#videoModal" 
+                         data-video="<?= $video['file_path'] ?>" 
+                         data-caption="<?= htmlspecialchars($video['caption']) ?>" />
+                    <?php if ($video['caption']): ?>
+                        <div class="video-caption"><?= $video['caption'] ?></div>
+                    <?php endif; ?>
                 </div>
             </div>
         <?php endforeach; ?>
+    </div>
+</div>
+
+<!-- Bootstrap Video Modal -->
+<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-dark">
+            <div class="modal-body p-0">
+                <video id="modalVideo" class="w-100" controls autoplay>
+                    <source src="" type="video/mp4">
+                    Your browser does not support HTML5 video.
+                </video>
+                <div id="videoCaption" class="text-white p-3"></div>
+            </div>
+            <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
     </div>
 </div>
 
