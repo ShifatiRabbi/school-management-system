@@ -6,9 +6,7 @@ if (isset($_SESSION['r_user_id']) &&
     if ($_SESSION['role'] == 'Registrar Office') {
       
        include "../DB_connection.php";
-       include "data/grade.php";
        include "data/section.php";
-       $grades = getAllGrades($conn);
        $sections = getAllSections($conn);
 
 
@@ -41,7 +39,7 @@ if (isset($_SESSION['r_user_id']) &&
 	<link rel="stylesheet" href="../css/style.css">
 	<link rel="icon" href="../logo.png">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/font-awesome.min.css">
 </head>
 <body>
      <div class="container mt-5">
@@ -49,7 +47,7 @@ if (isset($_SESSION['r_user_id']) &&
            class="btn btn-dark">Go Back</a>
 
         <form method="post"
-              class="shadow p-3 mt-5 form-w" 
+              class="shadow p-3 mt-5 form" 
               action="req/student-add.php">
         <h3>Add New Student</h3><hr>
         <?php if (isset($_GET['error'])) { ?>
