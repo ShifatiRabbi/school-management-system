@@ -19,7 +19,7 @@
                 <div class="footer-links">
                     <h5 class="text-uppercase mb-4" style="color: var(--secondary-color);">Site Links</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="/school-management-system" class="text-white footer-link">Home</a></li>
+                        <li class="mb-2"><a href="index" class="text-white footer-link">Home</a></li>
                         <li class="mb-2"><a href="about" class="text-white footer-link">About Us</a></li>
                         <li class="mb-2"><a href="basic-info" class="text-white footer-link">School Details</a></li>
                         <li class="mb-2"><a href="people_info" class="text-white footer-link">Staff Details</a></li>

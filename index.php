@@ -129,14 +129,9 @@ if (count($all_images) > 0) {
             </div>
             <hr>
             <p>
-              It is regarded as one of the best institutions due to its discipline, teaching technique and favorable teaching environment.
-              In the meantime we achieved name and fame due to cent percent successful result in all public exams and has acquired position in top of Sylhet education board.
-            </p>
-            <p>
-              The students of the institution take part actively and successfully in the programs organized by Government and local authorities.
-            </p>
-            <p>
-              In all respects, considering over all activities the institution is one of the best in Sylhet division as well as all over Bangladesh.
+                শিক্ষাই শক্তি শিক্ষাই আলো। কাজেই শিক্ষা অর্জন করা মানুষের মৌলিক অধিকার। এ অধিকারকে যথাযথভাবে বাস্তবায়নের মাধ্যমে বিশ্বের অনেক দেশ আজ উন্নত দেশ হিসেবে উন্নতির চরম শিখরে আরোহণ করেছে।
+                <br>এ ক্ষেত্রে বাংলাদেশ তার কাঙ্ক্ষিত লক্ষ্য অর্জনে সাধ্যমত চেষ্টা চালিয়ে যাচ্ছে। যুগের সাথে তাল মিলিয়ে আমরা প্রত্যেকেই নিজ নিজ সন্তানদের বাস্তবমুখী শিক্ষায় গড়ে তুলতে আগ্রহী। প্রকৃতির সন্তান মানব শিশুকে পরিশুদ্ধ হতে হয়, পরিপুর্ণ হতে হয় স্বীয় পরিকল্পনায়। এ ক্ষেত্রে শিক্ষাই হলো আমাদের প্রধান চালিকা শক্তি। আমরা দৃঢ়ভাবে বিশ্বাস করি শিক্ষার মৌলিক উদ্দেশ্য হলো আচরণগত পরিবর্তন। আর এ লক্ষ্যে তাদেরকে সৃজনশীল, স্বাধীন, সক্রিয় এবং দায়িত্বশীল সুনাগরিক হিসেবে গড়ে তোলা।
+                <br>এ জন্য প্রয়োজন যোগ্য শিক্ষকমন্ডলী এবং উপযুক্ত শিক্ষাদান পদ্ধতির সমন্বয়ে একটি শিক্ষাবান্ধব পরিবেশ। আমি দৃঢ়তার সাথে দাবী করি, বিদ্যালয়ে এসব কিছুর সমন্বয় ঘটানো সম্ভব হয়েছে। শিক্ষার্থীদের দুর্বল প্রতিভা সহজে বিকাশের জন্য প্রতিষ্ঠানটিতে রয়েছে সাধারণ শিক্ষার পাশাপাশি কম্পিউটার শিক্ষা, সাংস্কৃতিক, আনুষ্ঠানিক, খেলাধুলাসহ নানাবিধ শিক্ষা উপকরণ।
             </p>
           </div>
         </div>
@@ -155,13 +150,9 @@ if (count($all_images) > 0) {
             </div>
             <hr>
             <p>
-              I feel pleasure to know that our school is going to open its own website to flow of information. Through this newly opened website, the overall activities of the institution will be ensured getting new speed and accountability. I hope the website activities will be rich in information and be updated regularly.
-            </p>
-            <p>
-              Those who are related opening the website is thanked and felicitated wholeheartedly.
-            </p>
-            <p>
-              The student of this institution will be enlighten citizens by attaining quality education and their on way will be furnished one blessed with truths and morality.
+                শিক্ষাই জাতীর মেরুদন্ড। শিক্ষাই গতি, শিক্ষাই করবে দূর জগতের যত অন্ধকার। শিক্ষাই পারে তথ্য প্রযুক্তির সঠিক ব্যবহার ও বাস্তবায়নের মাধ্যমে মানুষের জীবনযাত্রাকে আধুনিক ও উন্নত করতে পারে।  
+                <br>এ প্রতিষ্ঠানের অগ্রযাত্রাকে আরো যুগোপযোগী ও আধুনিক করার উদ্দেশ্যে বিভিন্ন প্রকল্প হাতে নেয়া হয়েছে। একটি আর্ন্তজাতিক মানসম্পন্ন ওয়েবসাইট চালুকরণ তার একটি প্রয়াস মাত্র। যার মাধ্যমে আমাদের প্রতিষ্ঠানের বিভিন্ন তথ্য ও ছবি বিশ্বব্যাপী ছড়িয়ে পড়বে এবং প্রতিষ্ঠানের ছত্র-ছাত্রীরা বাড়িতে বসেই পরীক্ষার রুটিন, সিলেবাস, ভর্তি ফরম ইত্যাদি পাবে। অভিভাবকরাও বাড়িতে বসেই উত্তরোত্তর তাদের সন্তানের পরীক্ষার ফলাফল, আচরণিক পরিবর্তন, সাফল্য সম্পর্কে জানতে পারবেন। 
+                <br>পাশাপাশি শিক্ষক-শিক্ষার্থী ও অভিভাবকদের মধ্যে সুসম্পর্ক তৈরি হবে এবং বিদ্যালয়ের প্রাক্তন, বর্তমান ও অনাগত শিক্ষক-শিক্ষাথী, অভিভাবক, শুভানুধ্যায়ী, মহৎপ্রাণ ব্যক্তিগণ তাদের প্রিয় প্রতিষ্ঠানের ইতিহাস, ঐতিহ্য, শিক্ষক-শিক্ষার্থীদের তথ্য, বিভিন্ন অর্জন, বিজ্ঞপ্তি ও অন্যান্য তথ্য সমূহ দেখে উপকৃত হবেন।  এতে এ প্রতিষ্ঠানের সামগ্রিক মানোন্নয়নে একটি নতুন মাত্রিকতা যোগ হবে বলে আমার দৃঢ় বিশ্বাস। তাই এই প্রতিষ্ঠান সংশ্লিষ্ট সকলকে শুভেছা জানিয়ে এ ওয়েবসাইটের শুভ সূচনালগ্নে শুভকামনা করছি।
             </p>
           </div>
         </div>

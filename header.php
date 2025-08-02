@@ -30,7 +30,7 @@ if ($setting == 0) {
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="/school-management-system">
+            <a class="navbar-brand" href=" index">
                 <img src="logo.png" alt="<?=$setting['school_name']?>" class="navbar-logo">
             </a>
             <button class="navbar-toggler collapsed" type="button" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,7 +40,7 @@ if ($setting == 0) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/school-management-system">
+                        <a class="nav-link active" href=" index">
                             <i class="fas fa-home d-lg-none me-2"></i>Home
                         </a>
                     </li>
