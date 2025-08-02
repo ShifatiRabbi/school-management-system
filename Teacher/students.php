@@ -6,7 +6,6 @@ if (isset($_SESSION['teacher_id']) &&
     if ($_SESSION['role'] == 'Teacher') {
        include "../DB_connection.php";
        include "data/class.php";
-       include "data/grade.php";
        include "data/section.php";
        include "data/teacher.php";
        
@@ -31,8 +30,12 @@ if (isset($_SESSION['teacher_id']) &&
         include "inc/navbar.php";
         if ($classes != 0) {
      ?>
-     <div class="container mt-5">
 
+     
+     <div class="container mt-5">
+      <h3>Students Access Feature Are Coming Soon !!!</h3>
+      <h4>Stay With Us !!!</h4>
+<!--
            <div class="table-responsive">
               <table class="table table-bordered mt-3 n-table">
                 <thead>
@@ -78,8 +81,12 @@ if (isset($_SESSION['teacher_id']) &&
                 Empty!
               </div>
          <?php } ?>
+
+         -->
+      
      </div>
-     
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>    
     <script>
         $(document).ready(function(){

@@ -57,6 +57,7 @@ html {
 }
 
 .navbar-brand img {
+    width: 70px;
     height: 70px;
     transition: all var(--transition-speed) ease;
 }
