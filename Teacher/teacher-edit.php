@@ -1,13 +1,15 @@
 <?php 
 session_start();
-if (isset($_SESSION['admin_id']) && isset($_SESSION['role']) && isset($_GET['teacher_id'])) {
-    if ($_SESSION['role'] == 'Admin') {
+if (isset($_SESSION['teacher_id']) && 
+    isset($_SESSION['role'])) {
+
+    if ($_SESSION['role'] == 'Teacher') {
         include "../DB_connection.php";
-        include "data/subject.php";
-        include "data/class.php";
-        include "data/teacher.php";
+        include "../admin/data/subject.php";
+        include "../admin/data/class.php";
+        include "../admin/data/teacher.php";
         
-        $teacher_id = $_GET['teacher_id'];
+        $teacher_id = $_SESSION['teacher_id'];
         $teacher = getTeacherById($teacher_id, $conn);
         $subjects = getAllSubjects($conn);
         $classes = getAllClasses($conn);
@@ -20,21 +22,22 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role']) && isset($_GET['tea
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Edit Teacher</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" href="../logo.png">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Teacher - Home</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/style.css">
+	<link rel="icon" href="../logo.png">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
 <body>
     <?php include "inc/navbar.php"; ?>
     <div class="container mt-5">
-        <a href="teacher.php" class="btn btn-dark">Go Back</a>
+        <a href="index.php" class="btn btn-dark">Go Back</a>
 
-        <form method="post" class="shadow p-3 mt-5 form-w" action="req/teacher-edit.php" enctype="multipart/form-data">
+        <form method="post" class="shadow p-3 mt-5 form-w" action="../admin/req/teacher-edit.php" enctype="multipart/form-data">
             <h3>Edit Teacher</h3><hr>
             <?php if (isset($_GET['error'])) { ?>
                 <div class="alert alert-danger" role="alert">
@@ -296,11 +299,6 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role']) && isset($_GET['tea
             <?php } ?>
 
             <div class="mb-3">
-                <label class="form-label">Admin password</label>
-                <input type="password" class="form-control" name="admin_pass" required>
-            </div>
-
-            <div class="mb-3">
                 <label class="form-label">New password</label>
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" name="new_pass" id="passInput">
@@ -344,11 +342,11 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role']) && isset($_GET['tea
 </html>
 <?php 
     } else {
-        header("Location: teacher.php");
+        header("Location: index.php");
         exit;
     } 
 } else {
-    header("Location: teacher.php");
+    header("Location: index.php");
     exit;
 }
 ?>

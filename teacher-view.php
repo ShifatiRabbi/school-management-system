@@ -21,7 +21,7 @@
         <br>
         <div class="card-body text-center">
             <?php if (!empty($teacher['image_path'])): ?>
-                <img src="<?=$teacher['image_path']?>" class="img-fluid rounded-circle mb-3" style="width: 200px; height: 200px; object-fit: cover;">
+                <img src="admin/<?=$teacher['image_path']?>" class="img-fluid rounded-circle mb-3" style="width: 200px; height: 200px; object-fit: cover;">
             <?php else: ?>
                 <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mb-3" style="width: 200px; height: 200px; margin: 0 auto;">
                     <i class="fas fa-user-graduate fa-4x text-muted"></i>

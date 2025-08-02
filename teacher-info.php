@@ -50,7 +50,7 @@ $teachers = getAllTeachers($conn);
                 <div class="card teacher-card h-100">
                     <div class="card-img-top position-relative">
                         <?php if (!empty($teacher['image_path'])): ?>
-                            <img src="<?=$teacher['image_path']?>" class="teacher-img" alt="<?=$teacher['fname']?> <?=$teacher['lname']?>">
+                            <img src="admin/<?=$teacher['image_path']?>" class="teacher-img" alt="<?=$teacher['fname']?> <?=$teacher['lname']?>">
                         <?php else: ?>
                             <div class="teacher-img-placeholder">
                                 <i class="fas fa-user-graduate"></i>

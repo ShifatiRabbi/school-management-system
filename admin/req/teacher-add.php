@@ -13,6 +13,7 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
         ];
         
         // Check all required fields are present
+        // Check all required fields are present
         foreach ($required as $field) {
             if (empty($_POST[$field])) {
                 $em = ucfirst(str_replace('_', ' ', $field)) . " is required";
@@ -21,7 +22,27 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
             }
         }
         
-        // Collect all data
+        // Handle image upload
+        $image_path = null;
+        if (!empty($_FILES['image']['name'])) {
+            $uploadDir = '../uploads/teachers/';
+            if (!file_exists($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+            
+            $fileName = uniqid() . '_' . basename($_FILES['image']['name']);
+            $targetPath = $uploadDir . $fileName;
+            
+            if (move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
+                $image_path = str_replace('../', '', $targetPath);
+            } else {
+                $em = "Failed to upload image";
+                header("Location: ../teacher-add.php?error=$em");
+                exit;
+            }
+        }
+        
+        // Collect other form data
         $fname = $_POST['fname'];
         $lname = $_POST['lname'];
         $uname = $_POST['username'];
@@ -67,23 +88,48 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
         // Hash password
         $pass = password_hash($pass, PASSWORD_DEFAULT);
         
-        // Insert teacher
+        // Insert teacher with image path if uploaded
         $sql = "INSERT INTO teachers (
             username, password, fname, lname, teacher_index, designation, salary_code, salary, 
             highest_qualification, qualification_details, subjects, classes_assigned, address, 
             employee_number, date_of_birth, phone_number, gender, email_address, date_of_joined, 
             years_of_experience, marital_status, bank_name, bank_account, emergency_contact, 
-            emergency_phone, notes
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            emergency_phone, notes";
         
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([
+        if ($image_path) {
+            $sql .= ", image_path";
+        }
+        
+        $sql .= ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
+        
+        if ($image_path) {
+            $sql .= ", ?";
+        }
+        
+        $sql .= ")";
+        
+        $params = [
             $uname, $pass, $fname, $lname, $teacher_index, $designation, $salary_code, $salary,
             $highest_qualification, $qualification_details, $subjects, $classes, $address,
             $employee_number, $date_of_birth, $phone_number, $gender, $email_address, $date_of_joined,
             $years_of_experience, $marital_status, $bank_name, $bank_account, $emergency_contact,
             $emergency_phone, $notes
-        ]);
+        ];
+        
+        if ($image_path) {
+            $params[] = $image_path;
+        }
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($params);
+        
+        // If image was uploaded but not yet associated (for new teachers)
+        if ($image_path && empty($teacher_id)) {
+            $teacher_id = $conn->lastInsertId();
+            $sql = "UPDATE teachers SET image_path = ? WHERE teacher_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$image_path, $teacher_id]);
+        }
         
         $sm = "New teacher registered successfully";
         header("Location: ../teacher-add.php?success=$sm");

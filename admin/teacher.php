@@ -32,7 +32,7 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
         }
         .teacher-img {
             width: 100%;
-            height: 200px;
+            height: 300px;
             object-fit: cover;
             object-position: top;
         }
@@ -132,7 +132,7 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
                 <div class="card teacher-card h-100">
                     <div class="card-img-top position-relative">
                         <?php if (!empty($teacher['image_path'])): ?>
-                            <img src="../<?=$teacher['image_path']?>" class="teacher-img" alt="<?=$teacher['fname']?> <?=$teacher['lname']?>">
+                            <img src="../admin/<?=htmlspecialchars($teacher['image_path'])?>" class="teacher-img" alt="<?=htmlspecialchars($teacher['fname'])?> <?=htmlspecialchars($teacher['lname'])?>">
                         <?php else: ?>
                             <div class="teacher-img-placeholder">
                                 <i class="fas fa-user-graduate"></i>

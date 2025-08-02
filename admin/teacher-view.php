@@ -80,8 +80,13 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role']) && isset($_GET['tea
             </div>
             <br>
             <div class="card-body text-center">
-                <img src="../img/teacher-<?=$teacher['gender']?>.png" class="teacher-img mb-3" alt="Teacher Image">
-                
+                <?php if (!empty($teacher['image_path'])): ?>
+                    <img src="../admin/<?=htmlspecialchars($teacher['image_path'])?>" class="teacher-img" alt="<?=htmlspecialchars($teacher['fname'])?> <?=htmlspecialchars($teacher['lname'])?>">
+                <?php else: ?>
+                    <div class="teacher-img-placeholder">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                <?php endif; ?>
                 <div class="d-flex justify-content-center mb-4">
                     <a href="teacher-edit.php?teacher_id=<?=$teacher['teacher_id']?>" class="btn btn-warning me-2">
                         <i class="fas fa-edit"></i> Edit

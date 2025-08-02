@@ -109,7 +109,7 @@ function handleTeacherImageUpload($file, $teacher_id, $conn) {
         }
     }
     
-    $fileName = uniqid() . '_' . basename($file['name']);
+    $fileName = basename($file['name']);
     $targetPath = $uploadDir . $fileName;
     
     if (move_uploaded_file($file['tmp_name'], $targetPath)) {

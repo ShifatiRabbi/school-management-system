@@ -22,6 +22,19 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
         }
         
         $teacher_id = $_POST['teacher_id'];
+        
+        // Handle image upload
+        $image_path = null;
+        if (!empty($_FILES['image']['name'])) {
+            $image_path = handleTeacherImageUpload($_FILES['image'], $teacher_id, $conn);
+            if ($image_path === false) {
+                $em = "Failed to upload image";
+                header("Location: ../teacher-edit.php?error=$em&teacher_id=$teacher_id");
+                exit;
+            }
+        }
+        
+        // Collect other form data
         $fname = $_POST['fname'];
         $lname = $_POST['lname'];
         $uname = $_POST['username'];
@@ -63,7 +76,7 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
             exit;
         }
         
-        // Update teacher
+        // Update teacher with image path if uploaded
         $sql = "UPDATE teachers SET
                 username = ?, fname = ?, lname = ?, teacher_index = ?, designation = ?, 
                 salary_code = ?, salary = ?, highest_qualification = ?, qualification_details = ?, 
@@ -71,17 +84,27 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
                 date_of_birth = ?, phone_number = ?, gender = ?, email_address = ?, 
                 date_of_joined = ?, years_of_experience = ?, marital_status = ?, 
                 bank_name = ?, bank_account = ?, emergency_contact = ?, 
-                emergency_phone = ?, notes = ?
-                WHERE teacher_id = ?";
+                emergency_phone = ?, notes = ?";
         
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([
+        $params = [
             $uname, $fname, $lname, $teacher_index, $designation, $salary_code, $salary,
             $highest_qualification, $qualification_details, $subjects, $classes, $address,
             $employee_number, $date_of_birth, $phone_number, $gender, $email_address, $date_of_joined,
             $years_of_experience, $marital_status, $bank_name, $bank_account, $emergency_contact,
-            $emergency_phone, $notes, $teacher_id
-        ]);
+            $emergency_phone, $notes
+        ];
+        
+        // Add image path to query if uploaded
+        if ($image_path) {
+            $sql .= ", image_path = ?";
+            $params[] = $image_path;
+        }
+        
+        $sql .= " WHERE teacher_id = ?";
+        $params[] = $teacher_id;
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($params);
         
         $sm = "Teacher updated successfully";
         header("Location: ../teacher-edit.php?success=$sm&teacher_id=$teacher_id");
