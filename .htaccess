@@ -1,3 +1,11 @@
+# .htaccess
+RewriteEngine On
+
+# Remove .php extension from URL
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
 php_value upload_max_filesize 500M
 php_value post_max_size 500M
 php_value max_execution_time 300

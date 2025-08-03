@@ -63,7 +63,7 @@ html {
 }
 
 .navbar.scrolled .navbar-brand img {
-    height: 50px;
+    height: 70px;
 }
 
 .nav-link {
@@ -135,7 +135,7 @@ html {
     }
     
     .navbar-brand img.navbar-logo {
-        height: 50px;
+        height: 70px;
     }
 
     /* Enhanced Navbar Toggler Styles */
@@ -789,7 +789,8 @@ html {
 
 @media (max-width: 768px) {
     .navbar-brand img {
-        height: 50px;
+        height: 70px;
+        width: 70px;
     }
     
     .hero-overlay h1 {
