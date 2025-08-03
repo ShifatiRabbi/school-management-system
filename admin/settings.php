@@ -18,7 +18,7 @@ if (isset($_SESSION['admin_id']) &&
 	<link rel="stylesheet" href="../css/style.css">
 	<link rel="icon" href="../logo.png">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/font-awesome.min.css">
 </head>
 <body>
     <?php 
@@ -27,7 +27,7 @@ if (isset($_SESSION['admin_id']) &&
      ?>
    <div class="container mt-5">
         <form method="post"
-              class="shadow p-3 mt-5 form-w" 
+              class="shadow p-3 mt-5 form" 
               action="req/setting-edit.php">
         <h3>Edit</h3><hr>
         <?php if (isset($_GET['error'])) { ?>
@@ -60,7 +60,7 @@ if (isset($_SESSION['admin_id']) &&
                           rows="4"><?=$setting['about']?></textarea>
         </div>
         <div class="mb-3">
-          <label class="form-label">Current Year</label>
+          <label class="form-label">Establish Year</label>
           <input type="text" 
                  class="form-control"
                  value="<?=$setting['current_year']?>" 

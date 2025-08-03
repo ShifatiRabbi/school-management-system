@@ -7,7 +7,6 @@ if (isset($_SESSION['student_id']) &&
        include "../DB_connection.php";
        include "data/student.php";
        include "data/subject.php";
-       include "data/grade.php";
        include "data/section.php";
 
        $student_id = $_SESSION['student_id'];
@@ -34,8 +33,8 @@ if (isset($_SESSION['student_id']) &&
         if ($student != 0) {
      ?>
      <div class="container mt-5">
-         <div class="card" style="width: 22rem;">
-          <img src="../img/student-<?=$student['gender']?>.png" class="card-img-top" alt="...">
+       <img src="../img/student-<?=$student['gender']?>.png" class="card-img-top" alt="..." style="width:300px; height: 300px">
+         <div class="card" style="width: 72rem;">
           <div class="card-body">
             <h5 class="card-title text-center">@<?=$student['username']?></h5>
           </div>
@@ -47,15 +46,7 @@ if (isset($_SESSION['student_id']) &&
             <li class="list-group-item">Date of birth: <?=$student['date_of_birth']?></li>
             <li class="list-group-item">Email address: <?=$student['email_address']?></li>
             <li class="list-group-item">Gender: <?=$student['gender']?></li>
-            <li class="list-group-item">Date of joined: <?=$student['date_of_joined']?></li>
 
-            <li class="list-group-item">Grade: 
-                 <?php 
-                      $grade = $student['grade'];
-                      $g = getGradeById($grade, $conn);
-                      echo $g['grade_code'].'-'.$g['grade'];
-                  ?>
-            </li>
             <li class="list-group-item">Section: 
                  <?php 
                     $section = $student['section'];
