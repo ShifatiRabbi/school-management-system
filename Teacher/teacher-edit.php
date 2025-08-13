@@ -37,7 +37,7 @@ if (isset($_SESSION['teacher_id']) &&
     <div class="container mt-5">
         <a href="index.php" class="btn btn-dark">Go Back</a>
 
-        <form method="post" class="shadow p-3 mt-5 form" action="../admin/req/teacher-edit.php" enctype="multipart/form-data">
+        <form method="post" class="shadow p-3 mt-5 form" action="req/teacher-edit.php" enctype="multipart/form-data">
             <h3>Edit Teacher</h3><hr>
             <?php if (isset($_GET['error'])) { ?>
                 <div class="alert alert-danger" role="alert">
