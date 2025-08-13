@@ -88,26 +88,25 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
         // Hash password
         $pass = password_hash($pass, PASSWORD_DEFAULT);
         
-        // Insert teacher with image path if uploaded
-        $sql = "INSERT INTO teachers (
-            username, password, fname, lname, teacher_index, designation, salary_code, salary, 
-            highest_qualification, qualification_details, subjects, classes_assigned, address, 
-            employee_number, date_of_birth, phone_number, gender, email_address, date_of_joined, 
-            years_of_experience, marital_status, bank_name, bank_account, emergency_contact, 
-            emergency_phone, notes";
-        
+        // Build column list (add image_path only if uploaded)
+        $columns = [
+            'username','password','fname','lname','teacher_index','designation','salary_code','salary',
+            'highest_qualification','qualification_details','subjects','classes_assigned','address',
+            'employee_number','date_of_birth','phone_number','gender','email_address','date_of_joined',
+            'years_of_experience','marital_status','bank_name','bank_account','emergency_contact',
+            'emergency_phone','notes'
+        ];
         if ($image_path) {
-            $sql .= ", image_path";
+            $columns[] = 'image_path';
         }
-        
-        $sql .= ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
-        
-        if ($image_path) {
-            $sql .= ", ?";
-        }
-        
-        $sql .= ")";
-        
+
+        // Build placeholders to match column count
+        $placeholders = rtrim(str_repeat('?, ', count($columns)), ', ');
+
+        // Prepare SQL
+        $sql = 'INSERT INTO teachers (' . implode(', ', $columns) . ') VALUES (' . $placeholders . ')';
+
+        // Build params in the exact same order as $columns
         $params = [
             $uname, $pass, $fname, $lname, $teacher_index, $designation, $salary_code, $salary,
             $highest_qualification, $qualification_details, $subjects, $classes, $address,
@@ -115,21 +114,16 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
             $years_of_experience, $marital_status, $bank_name, $bank_account, $emergency_contact,
             $emergency_phone, $notes
         ];
-        
         if ($image_path) {
             $params[] = $image_path;
         }
-        
+
+        // Execute
         $stmt = $conn->prepare($sql);
         $stmt->execute($params);
-        
-        // If image was uploaded but not yet associated (for new teachers)
-        if ($image_path && empty($teacher_id)) {
-            $teacher_id = $conn->lastInsertId();
-            $sql = "UPDATE teachers SET image_path = ? WHERE teacher_id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute([$image_path, $teacher_id]);
-        }
+
+        // (No need for a follow-up UPDATE; image_path is already stored if present)
+
         
         $sm = "New teacher registered successfully";
         header("Location: ../teacher-add.php?success=$sm");
