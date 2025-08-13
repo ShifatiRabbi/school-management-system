@@ -223,6 +223,36 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+<!-- ===== Character-by-character typing with 5s pause, clear, loop ===== -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var el = document.getElementById('schoolNameTyping');
+  if (!el) return;
+
+  var name = (el.dataset.name || '').trim();
+  if (!name) return;
+
+  var i = 0;
+  var caret = document.querySelector('.typing-caret');
+
+  // blink caret
+  if (caret) setInterval(function(){ caret.classList.toggle('opacity-0'); }, 400);
+
+  function typeLoop() {
+    if (i < name.length) {
+      el.textContent += name.charAt(i++);
+      setTimeout(typeLoop, 50); // typing speed per char
+    } else {
+      setTimeout(function(){
+        el.textContent = '';   // clear instantly after 5s
+        i = 0;
+        setTimeout(typeLoop, 300); // small delay before retyping
+      }, 3000);
+    }
+  }
+  typeLoop();
+});
+</script>
 
 
 

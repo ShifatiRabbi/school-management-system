@@ -20,58 +20,93 @@ if (count($all_images) > 0) {
     }
 }
 ?>
-<div class="notice-bar bg-light py-2">
-    <div class="container d-flex align-items-center">
-        <div class="notice-label bg-primary text-white px-3 py-2 me-2 rounded-start">
+
+<!-- ===== Unified block (desktop & mobile handled by CSS) ===== -->
+<div class="container">
+  <div class="home-top d-flex flex-column flex-lg-row gap-3 align-items-stretch">
+
+    <!-- LEFT: Notice + typing (70% on desktop) -->
+    <div class="flex-grow-1 left-col mt-3">
+      <!-- Notice bar -->
+      <div class="notice-bar bg-light py-2 rounded shadow-sm">
+        <div class="d-flex align-items-center">
+          <div class="notice-label bg-primary text-white px-3 py-2 me-2 rounded-start">
             <strong>নোটিশঃ</strong>
-        </div>
-        <div class="marquee-wrapper overflow-hidden flex-grow-1">
+          </div>
+          <div class="marquee-wrapper overflow-hidden flex-grow-1">
             <div class="marquee-content d-flex align-items-center">
-                <?php
+              <?php
                 include "admin/data/notice.php";
                 $latestNotices = getLatestNotices($conn, 5);
                 foreach ($latestNotices as $notice) {
-                    echo '<span class="marquee-item me-4"><i class="fas fa-bullhorn text-primary me-2"></i>' 
-                        . htmlspecialchars($notice['title']) . '</span>';
+                  echo '<span class="marquee-item me-4"><i class="fas fa-bullhorn text-primary me-2"></i>'
+                    . htmlspecialchars($notice['title']) . '</span>';
                 }
-                ?>
+              ?>
             </div>
+          </div>
         </div>
+      </div>
+
+      <!-- Typing school name (hidden on mobile) -->
+      <div class="typing-bar bg-white py-2 px-3 mt-3 rounded shadow-sm border-start border-4 border-success d-none d-lg-flex align-items-center">
+        <h1 id="schoolNameTyping"
+              class="typing-text fw-bold" style="padding: 5px 0 0 0;"
+              data-name="<?= htmlspecialchars($setting['school_name']) ?>"></h1>
+        <span class="typing-caret ms-1">|</span>
+      </div>
     </div>
+
+    <!-- RIGHT: Urgent card (30% on desktop, hidden on mobile) -->
+    <aside class="right-col d-none d-lg-block mt-3">
+      <div class="card h-100 shadow-sm urgent-card">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-2">
+            <i class="fas fa-bell me-2 text-warning"></i>
+            <h5 class="card-title mb-0">জরুরি ঘোষণা:</h5>
+          </div>
+          <p class="card-text small mb-0">
+            শিক্ষার্থীদের অবশ্যই আইডি কার্ড ও স্কুল ড্রেস পরিধান করে ক্লাস করতে নির্দেশ দেওয়া হয়েছে।
+            সকল শিক্ষার্থী ও শিক্ষকদের আমাদের এই প্যানেলে একাউন্ট ওপেন করতে নির্দেশ দেওয়া হয়েছে।
+          </p>
+        </div>
+      </div>
+    </aside>
+
+  </div>
 </div>
 
-<!-- Hero Slider Section -->
-<section class="hero-slider-section">
-    <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
-        <div class="carousel-inner">
-            <?php foreach ($images as $index => $image): ?>
-                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-                    <div class="hero-slide" style="background-image: url('<?= $image['file_path'] ?>')">
-                        <div class="hero-overlay d-flex flex-column justify-content-center align-items-center text-center text-white px-3">
-                            <h1 class="display-4 fw-bold"><?= $setting['school_name'] ?></h1>
-                            <p class="lead"><?= $setting['slogan'] ?></p>
-                            <?php if (!empty($image['caption'])): ?>
-                                <div class="bg-dark bg-opacity-50 rounded p-2 mt-3">
-                                    <em><?= htmlspecialchars($image['caption']) ?></em>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
+<!-- ===== Slider below (your existing slider) ===== -->
+<section class="hero-slider-section mt-3">
+  <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+    <div class="carousel-inner">
+      <?php foreach ($images as $index => $image): ?>
+        <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+          <div class="hero-slide" style="background-image: url('<?= $image['file_path'] ?>')">
+            <div class=" d-flex flex-column justify-content-center align-items-center text-center text-white px-3">
+            <!--  <h1 class="display-4 fw-bold"><?= htmlspecialchars($setting['school_name']) ?></h1> -->
+              <?php if (!empty($image['caption'])): ?>
+                <div class="bg-dark bg-opacity-50 rounded p-2 mt-3">
+                  <em><?= htmlspecialchars($image['caption']) ?></em>
                 </div>
-            <?php endforeach; ?>
+              <?php endif; ?>
+            </div>
+          </div>
         </div>
-
-        <?php if (count($images) > 1): ?>
-            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        <?php endif; ?>
+      <?php endforeach; ?>
     </div>
+
+    <?php if (count($images) > 1): ?>
+      <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    <?php endif; ?>
+  </div>
 </section>
 
 <!-- About Section -->
@@ -117,11 +152,11 @@ if (count($all_images) > 0) {
     <div class="row g-4">
       
       <!-- Head Teacher Card -->
-      <div class="col-md-6">
+      <div class="col-md-4">
         <div class="card h-100 shadow-sm rounded-3 border">
           <div class="card-body">
             <div class="d-flex align-items-start mb-3">
-              <img src="img/head-teacher.jpeg" alt="Head Teacher" class="rounded border me-3" style="width: 90px; height: 120px; object-fit: cover;">
+              <img src="img/head-teacher.jpg" alt="Head Teacher" class="rounded border me-3" style="width: 90px; height: 120px; object-fit: cover;">
               <div>
                 <h4 class="mb-1 fw-bold text-uppercase">নগেন্দ্র কুমার সিংহ</h4>
                 <h6 class="text-muted">Head Teacher</h6>
@@ -131,28 +166,46 @@ if (count($all_images) > 0) {
             <p>
                 শিক্ষাই শক্তি শিক্ষাই আলো। কাজেই শিক্ষা অর্জন করা মানুষের মৌলিক অধিকার। এ অধিকারকে যথাযথভাবে বাস্তবায়নের মাধ্যমে বিশ্বের অনেক দেশ আজ উন্নত দেশ হিসেবে উন্নতির চরম শিখরে আরোহণ করেছে।
                 <br>এ ক্ষেত্রে বাংলাদেশ তার কাঙ্ক্ষিত লক্ষ্য অর্জনে সাধ্যমত চেষ্টা চালিয়ে যাচ্ছে। যুগের সাথে তাল মিলিয়ে আমরা প্রত্যেকেই নিজ নিজ সন্তানদের বাস্তবমুখী শিক্ষায় গড়ে তুলতে আগ্রহী। প্রকৃতির সন্তান মানব শিশুকে পরিশুদ্ধ হতে হয়, পরিপুর্ণ হতে হয় স্বীয় পরিকল্পনায়। এ ক্ষেত্রে শিক্ষাই হলো আমাদের প্রধান চালিকা শক্তি। আমরা দৃঢ়ভাবে বিশ্বাস করি শিক্ষার মৌলিক উদ্দেশ্য হলো আচরণগত পরিবর্তন। আর এ লক্ষ্যে তাদেরকে সৃজনশীল, স্বাধীন, সক্রিয় এবং দায়িত্বশীল সুনাগরিক হিসেবে গড়ে তোলা।
-                <br>এ জন্য প্রয়োজন যোগ্য শিক্ষকমন্ডলী এবং উপযুক্ত শিক্ষাদান পদ্ধতির সমন্বয়ে একটি শিক্ষাবান্ধব পরিবেশ। আমি দৃঢ়তার সাথে দাবী করি, বিদ্যালয়ে এসব কিছুর সমন্বয় ঘটানো সম্ভব হয়েছে। শিক্ষার্থীদের দুর্বল প্রতিভা সহজে বিকাশের জন্য প্রতিষ্ঠানটিতে রয়েছে সাধারণ শিক্ষার পাশাপাশি কম্পিউটার শিক্ষা, সাংস্কৃতিক, আনুষ্ঠানিক, খেলাধুলাসহ নানাবিধ শিক্ষা উপকরণ।
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Head Teacher Card -->
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm rounded-3 border">
+          <div class="card-body">
+            <div class="d-flex align-items-start mb-3">
+              <img src="img/prothistata.jpg" alt="প্রতিষ্ঠাতা" class="rounded border me-3" style="width: 90px; height: 120px; object-fit: cover;">
+              <div>
+                <h4 class="mb-1 fw-bold text-uppercase">মরহুম এ্যাড: রফি উদ্দিন আহমেদ</h4>
+                <h6 class="text-muted">প্রতিষ্ঠাতা</h6>
+              </div>
+            </div>
+            <hr>
+            <p>
+                পাশাপাশি শিক্ষক-শিক্ষার্থী ও অভিভাবকদের মধ্যে সুসম্পর্ক তৈরি হবে এবং বিদ্যালয়ের প্রাক্তন, বর্তমান ও অনাগত শিক্ষক-শিক্ষাথী, অভিভাবক, শুভানুধ্যায়ী, মহৎপ্রাণ ব্যক্তিগণ তাদের প্রিয় প্রতিষ্ঠানের ইতিহাস, ঐতিহ্য, শিক্ষক-শিক্ষার্থীদের তথ্য, বিভিন্ন অর্জন, বিজ্ঞপ্তি ও অন্যান্য তথ্য সমূহ দেখে উপকৃত হবেন।  এতে এ প্রতিষ্ঠানের সামগ্রিক মানোন্নয়নে একটি নতুন মাত্রিকতা যোগ হবে বলে আমার দৃঢ় বিশ্বাস। তাই এই প্রতিষ্ঠান সংশ্লিষ্ট সকলকে শুভেছা জানিয়ে এ ওয়েবসাইটের শুভ সূচনালগ্নে শুভকামনা করছি।
+                <br>এ জন্য প্রয়োজন যোগ্য শিক্ষকমন্ডলী এবং উপযুক্ত শিক্ষাদান পদ্ধতির সমন্বয়ে একটি শিক্ষাবান্ধব পরিবেশ। আমি দৃঢ়তার সাথে দাবী করি, বিদ্যালয়ে এসব কিছুর সমন্বয় ঘটানো সম্ভব হয়েছে।
             </p>
           </div>
         </div>
       </div>
 
       <!-- Chairman Card -->
-      <div class="col-md-6">
+      <div class="col-md-4">
         <div class="card h-100 shadow-sm rounded-3 border">
           <div class="card-body">
             <div class="d-flex align-items-start mb-3">
-              <img src="img/head-teacher.jpeg" alt="Chairman" class="rounded border me-3" style="width: 90px; height: 120px; object-fit: cover;">
+              <img src="img/sovapoti.jpg" alt="Chairman" class="rounded border me-3" style="width: 90px; height: 120px; object-fit: cover;">
               <div>
-                <h4 class="mb-1 fw-bold text-uppercase">KANIK CHANDRA SHARMA</h4>
-                <h6 class="text-muted">Chairman</h6>
+                <h4 class="mb-1 fw-bold text-uppercase">মেজর মোহাম্মদ নাজমুল্লাহেল ওয়াদুদ</h4>
+                <h6 class="text-muted">সভাপতি</h6>
               </div>
             </div>
             <hr>
             <p>
                 শিক্ষাই জাতীর মেরুদন্ড। শিক্ষাই গতি, শিক্ষাই করবে দূর জগতের যত অন্ধকার। শিক্ষাই পারে তথ্য প্রযুক্তির সঠিক ব্যবহার ও বাস্তবায়নের মাধ্যমে মানুষের জীবনযাত্রাকে আধুনিক ও উন্নত করতে পারে।  
                 <br>এ প্রতিষ্ঠানের অগ্রযাত্রাকে আরো যুগোপযোগী ও আধুনিক করার উদ্দেশ্যে বিভিন্ন প্রকল্প হাতে নেয়া হয়েছে। একটি আর্ন্তজাতিক মানসম্পন্ন ওয়েবসাইট চালুকরণ তার একটি প্রয়াস মাত্র। যার মাধ্যমে আমাদের প্রতিষ্ঠানের বিভিন্ন তথ্য ও ছবি বিশ্বব্যাপী ছড়িয়ে পড়বে এবং প্রতিষ্ঠানের ছত্র-ছাত্রীরা বাড়িতে বসেই পরীক্ষার রুটিন, সিলেবাস, ভর্তি ফরম ইত্যাদি পাবে। অভিভাবকরাও বাড়িতে বসেই উত্তরোত্তর তাদের সন্তানের পরীক্ষার ফলাফল, আচরণিক পরিবর্তন, সাফল্য সম্পর্কে জানতে পারবেন। 
-                <br>পাশাপাশি শিক্ষক-শিক্ষার্থী ও অভিভাবকদের মধ্যে সুসম্পর্ক তৈরি হবে এবং বিদ্যালয়ের প্রাক্তন, বর্তমান ও অনাগত শিক্ষক-শিক্ষাথী, অভিভাবক, শুভানুধ্যায়ী, মহৎপ্রাণ ব্যক্তিগণ তাদের প্রিয় প্রতিষ্ঠানের ইতিহাস, ঐতিহ্য, শিক্ষক-শিক্ষার্থীদের তথ্য, বিভিন্ন অর্জন, বিজ্ঞপ্তি ও অন্যান্য তথ্য সমূহ দেখে উপকৃত হবেন।  এতে এ প্রতিষ্ঠানের সামগ্রিক মানোন্নয়নে একটি নতুন মাত্রিকতা যোগ হবে বলে আমার দৃঢ় বিশ্বাস। তাই এই প্রতিষ্ঠান সংশ্লিষ্ট সকলকে শুভেছা জানিয়ে এ ওয়েবসাইটের শুভ সূচনালগ্নে শুভকামনা করছি।
             </p>
           </div>
         </div>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 02, 2025 at 08:45 PM
--- Server version: 9.1.0
--- PHP Version: 8.3.14
+-- Generation Time: Aug 12, 2025 at 01:54 PM
+-- Server version: 10.11.10-MariaDB
+-- PHP Version: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `sms_db`
+-- Database: `u773621413_spahhs`
 --
 
 -- --------------------------------------------------------
@@ -27,16 +27,13 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
-DROP TABLE IF EXISTS `admin`;
-CREATE TABLE IF NOT EXISTS `admin` (
-  `admin_id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(127) COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `fname` varchar(127) COLLATE utf8mb4_general_ci NOT NULL,
-  `lname` varchar(127) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`admin_id`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `admin` (
+  `admin_id` int(11) NOT NULL,
+  `username` varchar(127) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `fname` varchar(127) NOT NULL,
+  `lname` varchar(127) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
@@ -51,13 +48,11 @@ INSERT INTO `admin` (`admin_id`, `username`, `password`, `fname`, `lname`) VALUE
 -- Table structure for table `class`
 --
 
-DROP TABLE IF EXISTS `class`;
-CREATE TABLE IF NOT EXISTS `class` (
-  `class_id` int NOT NULL AUTO_INCREMENT,
-  `class_name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `discipline` enum('Science','Humanities','Business Studies','None') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'None',
-  PRIMARY KEY (`class_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `class` (
+  `class_id` int(11) NOT NULL,
+  `class_name` varchar(50) NOT NULL,
+  `discipline` enum('Science','Humanities','Business Studies','None') NOT NULL DEFAULT 'None'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `class`
@@ -76,19 +71,14 @@ INSERT INTO `class` (`class_id`, `class_name`, `discipline`) VALUES
 -- Table structure for table `class_routines`
 --
 
-DROP TABLE IF EXISTS `class_routines`;
-CREATE TABLE IF NOT EXISTS `class_routines` (
-  `routine_id` int NOT NULL AUTO_INCREMENT,
-  `class_id` int NOT NULL,
-  `section_id` int NOT NULL,
-  `routine_image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `upload_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `uploaded_by` int NOT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`routine_id`),
-  KEY `class_id` (`class_id`),
-  KEY `section_id` (`section_id`),
-  KEY `uploaded_by` (`uploaded_by`)
+CREATE TABLE `class_routines` (
+  `routine_id` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `section_id` int(11) NOT NULL,
+  `routine_image` varchar(255) NOT NULL,
+  `upload_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `uploaded_by` int(11) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -97,13 +87,43 @@ CREATE TABLE IF NOT EXISTS `class_routines` (
 -- Table structure for table `class_subjects`
 --
 
-DROP TABLE IF EXISTS `class_subjects`;
-CREATE TABLE IF NOT EXISTS `class_subjects` (
-  `class_id` int NOT NULL,
-  `subject_id` int NOT NULL,
-  PRIMARY KEY (`class_id`,`subject_id`),
-  KEY `subject_id` (`subject_id`)
+CREATE TABLE `class_subjects` (
+  `class_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `events`
+--
+
+CREATE TABLE `events` (
+  `event_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `event_date` date NOT NULL,
+  `start_time` time NOT NULL,
+  `end_time` time NOT NULL,
+  `location` varchar(255) NOT NULL,
+  `is_online` tinyint(1) DEFAULT 0,
+  `event_type` enum('Competition','Seminar','Workshop','Sports','Cultural') DEFAULT 'Seminar',
+  `featured_image` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`event_id`, `title`, `description`, `event_date`, `start_time`, `end_time`, `location`, `is_online`, `event_type`, `featured_image`, `created_at`, `updated_at`) VALUES
+(1, 'Annual Quiz Competition', 'Inter-school quiz competition with exciting prizes', '2023-11-15', '10:00:00', '13:00:00', 'School Auditorium', 0, 'Competition', NULL, '2025-07-20 07:54:38', '2025-07-20 07:54:38'),
+(2, 'Debate Championship', 'National level debate competition on current affairs', '2023-11-20', '09:30:00', '16:00:00', 'City Convention Center', 0, 'Competition', NULL, '2025-07-20 07:54:38', '2025-07-20 07:54:38'),
+(3, 'Science Fair', 'Student projects exhibition and competition', '2023-12-05', '09:00:00', '15:00:00', 'School Ground', 0, 'Competition', NULL, '2025-07-20 07:54:38', '2025-07-20 07:54:38'),
+(4, 'Career Guidance Seminar', 'Interactive session with industry experts', '2023-11-25', '14:00:00', '16:30:00', 'Online', 1, 'Seminar', NULL, '2025-07-20 07:54:38', '2025-07-20 07:54:38'),
+(5, 'Robotics Workshop', 'Hands-on workshop for beginners', '2023-12-10', '10:00:00', '13:00:00', 'Computer Lab', 0, 'Workshop', NULL, '2025-07-20 07:54:38', '2025-07-20 07:54:38'),
+(6, 'Prize Cerimony', 'addsav s sdasd sdsdasdsa dsad sasasa ', '2025-08-04', '11:15:00', '16:00:00', 'School', 0, 'Seminar', NULL, '2025-08-03 09:12:46', '2025-08-03 09:12:46');
 
 -- --------------------------------------------------------
 
@@ -111,17 +131,15 @@ CREATE TABLE IF NOT EXISTS `class_subjects` (
 -- Table structure for table `gallery_images`
 --
 
-DROP TABLE IF EXISTS `gallery_images`;
-CREATE TABLE IF NOT EXISTS `gallery_images` (
-  `id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `gallery_images` (
+  `id` int(11) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `file_path` varchar(255) NOT NULL,
   `thumbnail_path` varchar(255) DEFAULT NULL,
   `caption` varchar(255) DEFAULT NULL,
-  `upload_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `file_type` enum('image','video') NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `upload_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `file_type` enum('image','video') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `gallery_images`
@@ -158,15 +176,13 @@ INSERT INTO `gallery_images` (`id`, `file_name`, `file_path`, `thumbnail_path`, 
 -- Table structure for table `gallery_videos`
 --
 
-DROP TABLE IF EXISTS `gallery_videos`;
-CREATE TABLE IF NOT EXISTS `gallery_videos` (
-  `id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `gallery_videos` (
+  `id` int(11) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `file_path` varchar(255) NOT NULL,
   `thumbnail_path` varchar(255) DEFAULT NULL,
   `caption` varchar(255) DEFAULT NULL,
-  `upload_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  `upload_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -175,17 +191,15 @@ CREATE TABLE IF NOT EXISTS `gallery_videos` (
 -- Table structure for table `governing_body`
 --
 
-DROP TABLE IF EXISTS `governing_body`;
-CREATE TABLE IF NOT EXISTS `governing_body` (
-  `member_id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `governing_body` (
+  `member_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `position` varchar(100) NOT NULL,
   `contact` varchar(20) NOT NULL,
   `role` varchar(50) NOT NULL,
   `image_path` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`member_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `created_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `governing_body`
@@ -203,16 +217,14 @@ INSERT INTO `governing_body` (`member_id`, `name`, `position`, `contact`, `role`
 -- Table structure for table `message`
 --
 
-DROP TABLE IF EXISTS `message`;
-CREATE TABLE IF NOT EXISTS `message` (
-  `message_id` int NOT NULL AUTO_INCREMENT,
-  `sender_full_name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `sender_email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `sender_mobile` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `message` text COLLATE utf8mb4_general_ci NOT NULL,
-  `date_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`message_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `message` (
+  `message_id` int(11) NOT NULL,
+  `sender_full_name` varchar(100) NOT NULL,
+  `sender_email` varchar(255) NOT NULL,
+  `sender_mobile` varchar(20) DEFAULT NULL,
+  `message` text NOT NULL,
+  `date_time` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `message`
@@ -230,21 +242,19 @@ INSERT INTO `message` (`message_id`, `sender_full_name`, `sender_email`, `sender
 -- Table structure for table `news`
 --
 
-DROP TABLE IF EXISTS `news`;
-CREATE TABLE IF NOT EXISTS `news` (
-  `news_id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `news` (
+  `news_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
   `short_description` varchar(255) NOT NULL,
   `image_path` varchar(255) DEFAULT NULL,
   `publish_date` date NOT NULL,
-  `is_featured` tinyint(1) DEFAULT '0',
+  `is_featured` tinyint(1) DEFAULT 0,
   `news_category` enum('Academic','Event','Achievement','General') DEFAULT 'General',
   `author` varchar(100) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`news_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `news`
@@ -262,16 +272,14 @@ INSERT INTO `news` (`news_id`, `title`, `content`, `short_description`, `image_p
 -- Table structure for table `notices`
 --
 
-DROP TABLE IF EXISTS `notices`;
-CREATE TABLE IF NOT EXISTS `notices` (
-  `notice_id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `notices` (
+  `notice_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `notice_date` date NOT NULL,
   `image_path` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`notice_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `created_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `notices`
@@ -288,17 +296,16 @@ INSERT INTO `notices` (`notice_id`, `title`, `description`, `notice_date`, `imag
 -- Table structure for table `previous_results`
 --
 
-DROP TABLE IF EXISTS `previous_results`;
-CREATE TABLE IF NOT EXISTS `previous_results` (
-  `id` int NOT NULL,
-  `student_id` int NOT NULL,
-  `class` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `section` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `roll_number` int NOT NULL,
+CREATE TABLE `previous_results` (
+  `id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `class` varchar(50) NOT NULL,
+  `section` varchar(50) NOT NULL,
+  `roll_number` int(11) NOT NULL,
   `total_marks` decimal(10,2) NOT NULL,
   `gpa` decimal(3,2) NOT NULL,
-  `rank` int NOT NULL,
-  `year` int NOT NULL
+  `rank` int(11) NOT NULL,
+  `year` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -307,26 +314,23 @@ CREATE TABLE IF NOT EXISTS `previous_results` (
 -- Table structure for table `public_results`
 --
 
-DROP TABLE IF EXISTS `public_results`;
-CREATE TABLE IF NOT EXISTS `public_results` (
-  `id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `public_results` (
+  `id` int(11) NOT NULL,
   `exam_type` enum('SSC','HSC','JSC','PSC') NOT NULL,
-  `year` int NOT NULL,
+  `year` int(11) NOT NULL,
   `board` varchar(50) NOT NULL,
-  `appeared` int NOT NULL,
-  `passed` int NOT NULL,
-  `failed` int NOT NULL,
-  `a_plus` int NOT NULL,
+  `appeared` int(11) NOT NULL,
+  `passed` int(11) NOT NULL,
+  `failed` int(11) NOT NULL,
+  `a_plus` int(11) NOT NULL,
   `pass_rate` decimal(5,2) NOT NULL,
   `a_plus_rate` decimal(5,2) NOT NULL,
   `national_rank` varchar(20) NOT NULL,
   `board_rank` varchar(20) NOT NULL,
   `division_rank` varchar(20) NOT NULL,
   `district_rank` varchar(20) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `exam_year_unique` (`exam_type`,`year`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `public_results`
@@ -355,23 +359,21 @@ INSERT INTO `public_results` (`id`, `exam_type`, `year`, `board`, `appeared`, `p
 -- Table structure for table `registrar_office`
 --
 
-DROP TABLE IF EXISTS `registrar_office`;
-CREATE TABLE IF NOT EXISTS `registrar_office` (
-  `r_user_id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(127) COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `fname` varchar(31) COLLATE utf8mb4_general_ci NOT NULL,
-  `lname` varchar(31) COLLATE utf8mb4_general_ci NOT NULL,
-  `address` varchar(31) COLLATE utf8mb4_general_ci NOT NULL,
-  `employee_number` int NOT NULL,
+CREATE TABLE `registrar_office` (
+  `r_user_id` int(11) NOT NULL,
+  `username` varchar(127) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `fname` varchar(31) NOT NULL,
+  `lname` varchar(31) NOT NULL,
+  `address` varchar(31) NOT NULL,
+  `employee_number` int(11) NOT NULL,
   `date_of_birth` date NOT NULL,
-  `phone_number` varchar(31) COLLATE utf8mb4_general_ci NOT NULL,
-  `qualification` varchar(31) COLLATE utf8mb4_general_ci NOT NULL,
-  `gender` varchar(7) COLLATE utf8mb4_general_ci NOT NULL,
-  `email_address` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `date_of_joined` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`r_user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `phone_number` varchar(31) NOT NULL,
+  `qualification` varchar(31) NOT NULL,
+  `gender` varchar(7) NOT NULL,
+  `email_address` varchar(255) NOT NULL,
+  `date_of_joined` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `registrar_office`
@@ -387,16 +389,13 @@ INSERT INTO `registrar_office` (`r_user_id`, `username`, `password`, `fname`, `l
 -- Table structure for table `section`
 --
 
-DROP TABLE IF EXISTS `section`;
-CREATE TABLE IF NOT EXISTS `section` (
-  `section_id` int NOT NULL AUTO_INCREMENT,
-  `class_id` int NOT NULL,
-  `section_name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `male_students` int DEFAULT '0',
-  `female_students` int DEFAULT '0',
-  PRIMARY KEY (`section_id`),
-  KEY `class_id` (`class_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `section` (
+  `section_id` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `section_name` varchar(50) NOT NULL,
+  `male_students` int(11) DEFAULT 0,
+  `female_students` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `section`
@@ -418,16 +417,14 @@ INSERT INTO `section` (`section_id`, `class_id`, `section_name`, `male_students`
 -- Table structure for table `setting`
 --
 
-DROP TABLE IF EXISTS `setting`;
-CREATE TABLE IF NOT EXISTS `setting` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `current_year` int NOT NULL,
-  `current_semester` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
-  `school_name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `slogan` varchar(300) COLLATE utf8mb4_general_ci NOT NULL,
-  `about` text COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `setting` (
+  `id` int(11) NOT NULL,
+  `current_year` int(11) NOT NULL,
+  `current_semester` varchar(11) NOT NULL,
+  `school_name` varchar(100) NOT NULL,
+  `slogan` varchar(300) NOT NULL,
+  `about` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `setting`
@@ -442,33 +439,31 @@ INSERT INTO `setting` (`id`, `current_year`, `current_semester`, `school_name`, 
 -- Table structure for table `students`
 --
 
-DROP TABLE IF EXISTS `students`;
-CREATE TABLE IF NOT EXISTS `students` (
-  `student_id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(127) COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `fname` varchar(127) COLLATE utf8mb4_general_ci NOT NULL,
-  `lname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `class_id` int NOT NULL,
-  `section_id` int NOT NULL,
-  `roll_number` int NOT NULL,
-  `address` varchar(31) COLLATE utf8mb4_general_ci NOT NULL,
-  `gender` varchar(7) COLLATE utf8mb4_general_ci NOT NULL,
-  `email_address` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+CREATE TABLE `students` (
+  `student_id` int(11) NOT NULL,
+  `username` varchar(127) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `fname` varchar(127) NOT NULL,
+  `lname` varchar(255) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `section_id` int(11) NOT NULL,
+  `roll_number` int(11) NOT NULL,
+  `address` varchar(31) NOT NULL,
+  `gender` varchar(7) NOT NULL,
+  `email_address` varchar(255) NOT NULL,
   `date_of_birth` date NOT NULL,
-  `father_name` varchar(127) COLLATE utf8mb4_general_ci NOT NULL,
-  `mother_name` varchar(127) COLLATE utf8mb4_general_ci NOT NULL,
-  `parent_phone_number` varchar(31) COLLATE utf8mb4_general_ci NOT NULL,
-  `last_exam_result` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  PRIMARY KEY (`student_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `father_name` varchar(127) NOT NULL,
+  `mother_name` varchar(127) NOT NULL,
+  `parent_phone_number` varchar(31) NOT NULL,
+  `last_exam_result` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `students`
 --
 
 INSERT INTO `students` (`student_id`, `username`, `password`, `fname`, `lname`, `class_id`, `section_id`, `roll_number`, `address`, `gender`, `email_address`, `date_of_birth`, `father_name`, `mother_name`, `parent_phone_number`, `last_exam_result`) VALUES
-(1, 'john_doe', '123', 'John', 'Doe', 3, 6, 15, '123 Elm Street', 'Male', 'john.doe@example.com', '2010-05-15', 'Michael Doe', 'Sarah Doe', '01700000000', 'Passed with 85%'),
+(1, 'john_doe', '$2y$10$ACpOJl0EZQwlerjv9R8E4eZf2fgYeCJwm7zk62RHySx65xMC1UtN2', 'John', 'Doe', 3, 6, 15, '123 Elm Street', 'Male', 'john.doe@example.com', '2010-05-15', 'Michael Doe', 'Sarah Doe', '01700000000', 'Passed with 85%'),
 (2, 'Matthew', '$2y$10$KnsUVYUiVrvdx0oehE4iWuh.hi6L3O8k2cPR6cSsxlalbTA7gaei.', 'Matthew', 'John', 15, 8, 20, 'near purai railway underbridge', 'Male', 'blocktest@gmail.com', '2005-02-24', 'Michael John', 'Sarah John', '09888854588', NULL);
 
 -- --------------------------------------------------------
@@ -477,13 +472,11 @@ INSERT INTO `students` (`student_id`, `username`, `password`, `fname`, `lname`, 
 -- Table structure for table `subjects`
 --
 
-DROP TABLE IF EXISTS `subjects`;
-CREATE TABLE IF NOT EXISTS `subjects` (
-  `subject_id` int NOT NULL AUTO_INCREMENT,
-  `subject_name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `subject_code` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`subject_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `subjects` (
+  `subject_id` int(11) NOT NULL,
+  `subject_name` varchar(100) NOT NULL,
+  `subject_code` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `subjects`
@@ -522,85 +515,276 @@ INSERT INTO `subjects` (`subject_id`, `subject_name`, `subject_code`) VALUES
 -- Table structure for table `teachers`
 --
 
-DROP TABLE IF EXISTS `teachers`;
-CREATE TABLE IF NOT EXISTS `teachers` (
-  `teacher_id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(127) COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `fname` varchar(127) COLLATE utf8mb4_general_ci NOT NULL,
-  `lname` varchar(127) COLLATE utf8mb4_general_ci NOT NULL,
-  `teacher_index` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Unique teacher identification number',
-  `designation` varchar(100) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Position/Rank of the teacher',
-  `salary_code` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Salary scale or grade',
-  `salary` decimal(10,2) NOT NULL COMMENT 'Monthly salary amount',
-  `highest_qualification` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Highest educational degree',
-  `qualification_details` text COLLATE utf8mb4_general_ci COMMENT 'Details of all qualifications',
-  `subjects` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Subjects taught (comma separated IDs)',
-  `classes_assigned` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Classes assigned (comma separated IDs)',
-  `address` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `employee_number` int NOT NULL,
-  `date_of_birth` date NOT NULL,
-  `phone_number` varchar(31) COLLATE utf8mb4_general_ci NOT NULL,
-  `gender` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `email_address` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `date_of_joined` date NOT NULL COMMENT 'Date joined this school',
-  `years_of_experience` int DEFAULT NULL COMMENT 'Total years of teaching experience',
-  `marital_status` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `bank_name` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `bank_account` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `emergency_contact` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `emergency_phone` varchar(31) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `notes` text COLLATE utf8mb4_general_ci COMMENT 'Additional notes or comments',
-  `image_path` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  PRIMARY KEY (`teacher_id`),
-  UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `teacher_index` (`teacher_index`),
-  UNIQUE KEY `employee_number` (`employee_number`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `teachers` (
+  `teacher_id` int(11) NOT NULL,
+  `username` varchar(127) NOT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `fname` varchar(127) NOT NULL,
+  `lname` varchar(127) DEFAULT NULL,
+  `teacher_index` varchar(50) DEFAULT NULL COMMENT 'Unique teacher identification number',
+  `designation` varchar(100) DEFAULT NULL COMMENT 'Position/Rank of the teacher',
+  `salary_code` varchar(50) DEFAULT NULL COMMENT 'Salary scale or grade',
+  `salary` decimal(10,2) DEFAULT NULL COMMENT 'Monthly salary amount',
+  `highest_qualification` varchar(255) DEFAULT NULL COMMENT 'Highest educational degree',
+  `qualification_details` text DEFAULT NULL,
+  `subjects` varchar(255) DEFAULT NULL COMMENT 'Subjects taught (comma separated IDs)',
+  `classes_assigned` varchar(255) DEFAULT NULL COMMENT 'Classes assigned (comma separated IDs)',
+  `address` varchar(255) DEFAULT NULL,
+  `employee_number` int(11) DEFAULT NULL,
+  `date_of_birth` date DEFAULT NULL,
+  `phone_number` varchar(31) DEFAULT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `email_address` varchar(255) DEFAULT NULL,
+  `date_of_joined` date DEFAULT NULL COMMENT 'Date joined this school',
+  `years_of_experience` int(11) DEFAULT NULL COMMENT 'Total years of teaching experience',
+  `marital_status` varchar(20) DEFAULT NULL,
+  `bank_name` varchar(100) DEFAULT NULL,
+  `bank_account` varchar(50) DEFAULT NULL,
+  `emergency_contact` varchar(100) DEFAULT NULL,
+  `emergency_phone` varchar(31) DEFAULT NULL,
+  `notes` text DEFAULT NULL,
+  `image_path` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `teachers`
 --
 
 INSERT INTO `teachers` (`teacher_id`, `username`, `password`, `fname`, `lname`, `teacher_index`, `designation`, `salary_code`, `salary`, `highest_qualification`, `qualification_details`, `subjects`, `classes_assigned`, `address`, `employee_number`, `date_of_birth`, `phone_number`, `gender`, `email_address`, `date_of_joined`, `years_of_experience`, `marital_status`, `bank_name`, `bank_account`, `emergency_contact`, `emergency_phone`, `notes`, `image_path`) VALUES
-(8, 'nagendra07', '$2y$10$rh7wwuve7WBWO7XGuhkpqeKF5MK4v/42CZSJG0AEYKee1uI48sHc.', 'নগেন্দ্র কুমার', 'সিংহ', '481430', 'প্রধান শিক্ষক', '7', 29000.00, 'B.Ed.', 'SSC - 1st division / 1981, HSC - 2nd division / 1983, B.Sc. - 2nd division / 1987,  B.Ed. - 2nd division / 1997', '', '', 'example address', 0, '1966-12-07', '017xxxxxxxx', 'Male', 'nagendra@example.com', '2000-02-07', 30, 'Married', 'Sonali Bank', '123456789', 'Spouse', '017xxxxxxxx', '', NULL),
-(9, 'msam', '$2y$10$qcO5tqGqY4f2rHpkT5mZQeauumTx6wQ0E0AFrNBLZmK/N0k2aLboK', 'Mohammed Saker', 'Ali Miah', '1059584', 'সহ প্রধান শিক্ষক', '08', 23000.00, 'M.Ed.', 'SSC - 1st division / 1997, HSC - 1st division / 1999, B.Sc. - 2nd division / 2006, M.Sc. - 2nd division / 2007, B.Ed. - 1st division / 2008, M.Ed. - CGPA(2.36) / 2019\r\n', '', '', 'example address', 1059584, '1981-01-09', '018xxxxxxxx', 'Male', 'msam@example.com', '2023-01-09', 18, 'Married', 'Janata Bank', '987654321', 'Brother', '018xxxxxxxx', '', 'uploads/teachers/shaker-ali.jpg'),
-(10, 'giasuddin', '$2y$10$rh7wwuve7WBWO7XGuhkpqeKF5MK4v/42CZSJG0AEYKee1uI48sHc.', 'মোঃ গোলাম', 'মোয়াজ্জেম', '38', 'সহকারী শিক্ষক (ইংরেজি)', '52000', 52000.00, 'এস এস সি', '১৯৮৮ এ এস এস সি, ১৯৯০ এ এইচ এস সি, ১৯৯৩ এ বি এ (অনার্স)', '', NULL, 'example address', 1276530, '1968-03-01', '017xxxxxxxx', 'Male', 'gias@example.com', '1993-03-01', 25, 'Married', 'Sonali Bank', '123456780', 'Wife', '017xxxxxxxx', NULL, NULL);
-
-
---
--- Table structure for table `events`
---
-
-DROP TABLE IF EXISTS `events`;
-CREATE TABLE IF NOT EXISTS `events` (
-  `event_id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `description` text,
-  `event_date` date NOT NULL,
-  `start_time` time NOT NULL,
-  `end_time` time NOT NULL,
-  `location` varchar(255) NOT NULL,
-  `is_online` tinyint(1) DEFAULT '0',
-  `event_type` enum('Competition','Seminar','Workshop','Sports','Cultural') DEFAULT 'Seminar',
-  `featured_image` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`event_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(8, 'nagendra07', '$2y$10$rh7wwuve7WBWO7XGuhkpqeKF5MK4v/42CZSJG0AEYKee1uI48sHc.', 'নগেন্দ্র কুমার', 'সিংহ', '481430', 'প্রধান শিক্ষক', '7', 29000.00, 'B.Ed.', 'SSC - 1st division / 1981, HSC - 2nd division / 1983, B.Sc. - 2nd division / 1987,  B.Ed. - 2nd division / 1997', '', '', 'example address', 481430, '1966-12-07', '017xxxxxxxx', 'Male', 'nagendra@example.com', '2000-02-07', 30, 'Married', 'Sonali Bank', '123456789', 'Spouse', '017xxxxxxxx', '', 'uploads/teachers/FB_IMG_1754212757437.jpg'),
+(9, 'msam', '$2y$10$qcO5tqGqY4f2rHpkT5mZQeauumTx6wQ0E0AFrNBLZmK/N0k2aLboK', 'Mohammed Saker', 'Ali Miah', '1059584', 'সহ প্রধান শিক্ষক', '08', 23000.00, 'M.Ed.', 'SSC - 1st division / 1997, HSC - 1st division / 1999, B.Sc. - 2nd division / 2006, M.Sc. - 2nd division / 2007, B.Ed. - 1st division / 2008, M.Ed. - CGPA(2.36) / 2019\r\n', '13,14,16', '14,13', 'example address', 1059584, '1981-01-09', '01716327877', 'Male', 'msam@example.com', '2023-01-09', 18, 'Married', 'Janata Bank', '987654321', 'Brother', '01644173944', '', 'uploads/teachers/shaker-ali.jpg'),
+(10, 'giasuddin', '$2y$10$rh7wwuve7WBWO7XGuhkpqeKF5MK4v/42CZSJG0AEYKee1uI48sHc.', 'মোঃ গোলাম', 'মোয়াজ্জেম', '38', 'সহকারী শিক্ষক (ইংরেজি)', '52000', 52000.00, 'এস এস সি', '১৯৮৮ এ এস এস সি, ১৯৯০ এ এইচ এস সি, ১৯৯৩ এ বি এ (অনার্স)', '', NULL, 'example address', 1276530, '1968-03-01', '017xxxxxxxx', 'Male', 'gias@example.com', '1993-03-01', 25, 'Married', 'Sonali Bank', '123456780', 'Wife', '017xxxxxxxx', NULL, NULL),
+(11, 'kmd', '$2y$10$YFTQBs0ZMcywajALjzF/CuQCQlnHhpXtK7UQb7Z2Ll2lm0ntSyMWK', 'Krishno', 'Mohon Das', '281662', 'Senior Assistant Teacher', '08', 22000.00, 'B.Ed.', 'SSC - 2nd division / 1983, HSC - 2nd division / 1985, B.Sc. - 3rd division / 1989, B.Ed. - 2nd division / 1996\r\n', '10,11,14,15', '14,1,2,3,13', 'Singjuri, Bangala, Ghior, Manikgang', 281662, '1968-01-01', '01683900306', 'Male', 'krishnomohon1968@gmail.com', '1994-10-25', 31, 'Married', 'Dutch Bangla Bank', 'DBBL12345678', 'Luxmhi Rani Das', '01917558715', '', 'uploads/teachers/FB_IMG_1754201470986.jpg'),
+(12, 'fma75', '$2y$10$ErAFn5NkXElvJzusL85fiu.XQL2CyugAY/XEU2w2lDkag.bT5b5BK', 'F.M. Shamsul', 'Alam', '476887', 'Assistant Teacher', '08', 36000.00, 'MA ( B.Ed. )', 'SSC - 2nd division / 1984, HSC - 2nd division / 1986, B.A. - 2nd division / 1994, M.A. - 1st division / 2013, B.Ed. - 2nd division / 2002\r\n', '8,9,10,14,23', '1,2,3', 'Gobindopur, Khamarpara, Boalmari, Faridpur', 476887, '1968-09-26', '01719591775', 'Male', 'alamfm55@gmail.com', '1988-06-15', 27, 'Married', 'Sonali Bank', 'SBL77889900', 'Selina Alam', '01810000001', 'Teaches with compassion, popular among students.', 'uploads/teachers/IMG-20240406-WA0003.jpg'),
+(13, 'srm', '$2y$10$cXLPJwBNlX7MhkRVArpEWeFF79xG2ngne9jlpLn9uCiQ1MZLit5c2', 'Shilpi Rani', 'Malakar', '1021842', 'Assistant Teacher', '09', 22000.00, 'MA (B.Ed.)', 'SSC - 1st division (Star Mark) / 1995, HSC - 1st division (Star Mark) / 1997, B.A.(Honours) - 2nd division / 2000, M.A. - 2nd division / 2001, B.Ed. - 1st division / 2009', '8,9', '14,2,3,13', 'Lotakhula, Dohar, Dhaka', 1021842, '1980-01-01', '01727766177', 'Female', 'shilpimalakar73@gmail.com', '2005-02-05', 20, 'Married', 'Janata Bank', 'JB1122334455', 'Shilpi Rani Malakar', '01820889787', '', 'uploads/teachers/FB_IMG_1754204460805.jpg');
 
 --
--- Dumping data for table `events`
+-- Indexes for dumped tables
 --
 
-INSERT INTO `events` (`event_id`, `title`, `description`, `event_date`, `start_time`, `end_time`, `location`, `is_online`, `event_type`, `featured_image`, `created_at`, `updated_at`) VALUES
-(1, 'Annual Quiz Competition', 'Inter-school quiz competition with exciting prizes', '2023-11-15', '10:00:00', '13:00:00', 'School Auditorium', 0, 'Competition', NULL, '2025-07-20 07:54:38', '2025-07-20 07:54:38'),
-(2, 'Debate Championship', 'National level debate competition on current affairs', '2023-11-20', '09:30:00', '16:00:00', 'City Convention Center', 0, 'Competition', NULL, '2025-07-20 07:54:38', '2025-07-20 07:54:38'),
-(3, 'Science Fair', 'Student projects exhibition and competition', '2023-12-05', '09:00:00', '15:00:00', 'School Ground', 0, 'Competition', NULL, '2025-07-20 07:54:38', '2025-07-20 07:54:38'),
-(4, 'Career Guidance Seminar', 'Interactive session with industry experts', '2023-11-25', '14:00:00', '16:30:00', 'Online', 1, 'Seminar', NULL, '2025-07-20 07:54:38', '2025-07-20 07:54:38'),
-(5, 'Robotics Workshop', 'Hands-on workshop for beginners', '2023-12-10', '10:00:00', '13:00:00', 'Computer Lab', 0, 'Workshop', NULL, '2025-07-20 07:54:38', '2025-07-20 07:54:38');
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`admin_id`),
+  ADD UNIQUE KEY `username` (`username`);
 
--- --------------------------------------------------------
+--
+-- Indexes for table `class`
+--
+ALTER TABLE `class`
+  ADD PRIMARY KEY (`class_id`);
+
+--
+-- Indexes for table `class_routines`
+--
+ALTER TABLE `class_routines`
+  ADD PRIMARY KEY (`routine_id`),
+  ADD KEY `class_id` (`class_id`),
+  ADD KEY `section_id` (`section_id`),
+  ADD KEY `uploaded_by` (`uploaded_by`);
+
+--
+-- Indexes for table `class_subjects`
+--
+ALTER TABLE `class_subjects`
+  ADD PRIMARY KEY (`class_id`,`subject_id`),
+  ADD KEY `subject_id` (`subject_id`);
+
+--
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`event_id`);
+
+--
+-- Indexes for table `gallery_images`
+--
+ALTER TABLE `gallery_images`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `gallery_videos`
+--
+ALTER TABLE `gallery_videos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `governing_body`
+--
+ALTER TABLE `governing_body`
+  ADD PRIMARY KEY (`member_id`);
+
+--
+-- Indexes for table `message`
+--
+ALTER TABLE `message`
+  ADD PRIMARY KEY (`message_id`);
+
+--
+-- Indexes for table `news`
+--
+ALTER TABLE `news`
+  ADD PRIMARY KEY (`news_id`);
+
+--
+-- Indexes for table `notices`
+--
+ALTER TABLE `notices`
+  ADD PRIMARY KEY (`notice_id`);
+
+--
+-- Indexes for table `public_results`
+--
+ALTER TABLE `public_results`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `exam_year_unique` (`exam_type`,`year`);
+
+--
+-- Indexes for table `registrar_office`
+--
+ALTER TABLE `registrar_office`
+  ADD PRIMARY KEY (`r_user_id`);
+
+--
+-- Indexes for table `section`
+--
+ALTER TABLE `section`
+  ADD PRIMARY KEY (`section_id`),
+  ADD KEY `class_id` (`class_id`);
+
+--
+-- Indexes for table `setting`
+--
+ALTER TABLE `setting`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`student_id`);
+
+--
+-- Indexes for table `subjects`
+--
+ALTER TABLE `subjects`
+  ADD PRIMARY KEY (`subject_id`);
+
+--
+-- Indexes for table `teachers`
+--
+ALTER TABLE `teachers`
+  ADD PRIMARY KEY (`teacher_id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `teacher_index` (`teacher_index`),
+  ADD UNIQUE KEY `employee_number` (`employee_number`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `class`
+--
+ALTER TABLE `class`
+  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `class_routines`
+--
+ALTER TABLE `class_routines`
+  MODIFY `routine_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `events`
+--
+ALTER TABLE `events`
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `gallery_images`
+--
+ALTER TABLE `gallery_images`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `gallery_videos`
+--
+ALTER TABLE `gallery_videos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `governing_body`
+--
+ALTER TABLE `governing_body`
+  MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `message`
+--
+ALTER TABLE `message`
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `news`
+--
+ALTER TABLE `news`
+  MODIFY `news_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `notices`
+--
+ALTER TABLE `notices`
+  MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `public_results`
+--
+ALTER TABLE `public_results`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `registrar_office`
+--
+ALTER TABLE `registrar_office`
+  MODIFY `r_user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `section`
+--
+ALTER TABLE `section`
+  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `setting`
+--
+ALTER TABLE `setting`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `students`
+--
+ALTER TABLE `students`
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `subjects`
+--
+ALTER TABLE `subjects`
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `teachers`
+--
+ALTER TABLE `teachers`
+  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables

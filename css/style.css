@@ -1109,8 +1109,6 @@ textarea.form-control {
             border-radius: 10px 10px 0 0;
         }
         .teacher-img {
-            width: 120px;
-            height: 120px;
             object-fit: cover;
             border-radius: 50%;
             border: 4px solid white;
@@ -1352,8 +1350,9 @@ textarea.form-control {
 }
 
 .teacher-img {
+    margin-top: 20px;
     width: 100%;
-    height: 300px !important;
+    height: 380px !important;
     object-fit: cover;
     object-position: top;
 }
@@ -1422,3 +1421,20 @@ textarea.form-control {
         height: 50px;
     }
 }
+
+/* Desktop layout widths */
+@media (min-width: 992px){
+  .left-col   { flex: 0 0 70%; max-width: 70%; }
+  .right-col  { flex: 0 0 30%; max-width: 30%; }
+  .urgent-card { height: 100%; }
+}
+
+/* On mobile: show only the notice bar (typing + card hidden via d-none d-lg-*) */
+
+/* Marquee */
+.marquee-content { animation: scrollX 30s linear infinite; }
+@keyframes scrollX { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* Typing visuals */
+.typing-text { white-space: nowrap; overflow: hidden; }
+.typing-caret { display:inline-block; width:1ch; }
