@@ -7,12 +7,10 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
         
         // Required fields
         $required = [
-            'fname', 'lname', 'username', 'pass', 'teacher_index', 'designation',
-            'highest_qualification', 'address', 'employee_number', 'date_of_birth',
-            'phone_number', 'gender', 'email_address', 'date_of_joined'
+            'fname', 'lname', 'username', 'pass', 'teacher_index', 
+            'phone_number', 'gender', 'email_address'
         ];
         
-        // Check all required fields are present
         // Check all required fields are present
         foreach ($required as $field) {
             if (empty($_POST[$field])) {
@@ -88,10 +86,28 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
         // Hash password
         $pass = password_hash($pass, PASSWORD_DEFAULT);
         
-        // Build column list (add image_path only if uploaded)
+        // Collect person_type + work_description
+        $person_type = isset($_POST['person_type']) && $_POST['person_type'] === 'staff' ? 'staff' : 'teacher';
+        $work_description = $_POST['work_description'] ?? '';
+
+        // Add person_type to required base fields
+        $required[] = 'person_type';
+
+        // Staff-specific rule: work_description required
+        if ($person_type === 'staff' && empty($work_description)) {
+            $em = "Work description is required for staff";
+            header("Location: ../teacher-add.php?error=".urlencode($em));
+            exit;
+        }
+
+        // Subjects/classes only if teacher; else force empty
+        $subjects = ($person_type === 'teacher' && isset($_POST['subjects'])) ? implode(',', $_POST['subjects']) : '';
+        $classes  = ($person_type === 'teacher' && isset($_POST['classes']))  ? implode(',', $_POST['classes'])  : '';
+
+        // Build columns (order matters!)
         $columns = [
-            'username','password','fname','lname','teacher_index','designation','salary_code','salary',
-            'highest_qualification','qualification_details','subjects','classes_assigned','address',
+            'username','password','fname','lname','person_type','teacher_index','designation','salary_code','salary',
+            'highest_qualification','qualification_details','work_description','subjects','classes_assigned','address',
             'employee_number','date_of_birth','phone_number','gender','email_address','date_of_joined',
             'years_of_experience','marital_status','bank_name','bank_account','emergency_contact',
             'emergency_phone','notes'
@@ -100,29 +116,22 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
             $columns[] = 'image_path';
         }
 
-        // Build placeholders to match column count
         $placeholders = rtrim(str_repeat('?, ', count($columns)), ', ');
 
-        // Prepare SQL
-        $sql = 'INSERT INTO teachers (' . implode(', ', $columns) . ') VALUES (' . $placeholders . ')';
+        $sql = 'INSERT INTO teachers ('.implode(', ', $columns).') VALUES ('.$placeholders.')';
 
-        // Build params in the exact same order as $columns
         $params = [
-            $uname, $pass, $fname, $lname, $teacher_index, $designation, $salary_code, $salary,
-            $highest_qualification, $qualification_details, $subjects, $classes, $address,
+            $uname, $pass, $fname, $lname, $person_type, $teacher_index, $designation, $salary_code, $salary,
+            $highest_qualification, $qualification_details, $work_description, $subjects, $classes, $address,
             $employee_number, $date_of_birth, $phone_number, $gender, $email_address, $date_of_joined,
             $years_of_experience, $marital_status, $bank_name, $bank_account, $emergency_contact,
             $emergency_phone, $notes
         ];
-        if ($image_path) {
-            $params[] = $image_path;
-        }
+        if ($image_path) { $params[] = $image_path; }
 
-        // Execute
         $stmt = $conn->prepare($sql);
         $stmt->execute($params);
 
-        // (No need for a follow-up UPDATE; image_path is already stored if present)
 
         
         $sm = "New teacher registered successfully";

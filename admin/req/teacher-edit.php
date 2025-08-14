@@ -6,25 +6,15 @@ if ((isset($_SESSION['admin_id']) && isset($_SESSION['role']) && $_SESSION['role
         include "../../DB_connection.php";
         include "../data/teacher.php";
         
-        // Required fields
-        $required = [
-            'teacher_id', 'fname', 'lname', 'username', 'teacher_index', 'designation',
-            'highest_qualification', 'address', 'employee_number', 'date_of_birth',
-            'phone_number', 'gender', 'email_address', 'date_of_joined'
-        ];
-        
-        // Check all required fields are present
-        foreach ($required as $field) {
-            if (empty($_POST[$field])) {
-                $em = ucfirst(str_replace('_', ' ', $field)) . " is required";
-                header("Location: ../teacher-edit.php?error=$em&teacher_id=".$_POST['teacher_id']);
+        $teacher_id = $_POST['teacher_id'];
+        if ($_SESSION['role'] === 'Teacher') {
+            if (!isset($_SESSION['teacher_id']) || (int)$teacher_id !== (int)$_SESSION['teacher_id']) {
+                header("Location: ../teacher-edit.php?error=".urlencode("Unauthorized request")."&teacher_id=".$teacher_id);
                 exit;
             }
         }
-        
-        $teacher_id = $_POST['teacher_id'];
-        
-        // Handle image upload
+
+        // Handle image upload (optional)
         $image_path = null;
         if (!empty($_FILES['image']['name'])) {
             $image_path = handleTeacherImageUpload($_FILES['image'], $teacher_id, $conn);
@@ -34,15 +24,15 @@ if ((isset($_SESSION['admin_id']) && isset($_SESSION['role']) && $_SESSION['role
                 exit;
             }
         }
-        
-        // Collect other form data
+
+        // Collect form data
         $fname = $_POST['fname'];
         $lname = $_POST['lname'];
         $uname = $_POST['username'];
         $teacher_index = $_POST['teacher_index'];
         $designation = $_POST['designation'];
         $salary_code = $_POST['salary_code'] ?? '';
-        $salary = $_POST['salary'] ?? 0;
+        $salary = ($_POST['salary'] === '' ? null : $_POST['salary']);
         $highest_qualification = $_POST['highest_qualification'];
         $qualification_details = $_POST['qualification_details'] ?? '';
         $address = $_POST['address'];
@@ -52,58 +42,82 @@ if ((isset($_SESSION['admin_id']) && isset($_SESSION['role']) && $_SESSION['role
         $gender = $_POST['gender'];
         $email_address = $_POST['email_address'];
         $date_of_joined = $_POST['date_of_joined'];
-        $years_of_experience = $_POST['years_of_experience'] ?? null;
+        $years_of_experience = ($_POST['years_of_experience'] === '' ? null : $_POST['years_of_experience']);
         $marital_status = $_POST['marital_status'] ?? '';
         $bank_name = $_POST['bank_name'] ?? '';
         $bank_account = $_POST['bank_account'] ?? '';
         $emergency_contact = $_POST['emergency_contact'] ?? '';
         $emergency_phone = $_POST['emergency_phone'] ?? '';
         $notes = $_POST['notes'] ?? '';
-        
-        // Subjects and classes (arrays)
-        $subjects = isset($_POST['subjects']) ? implode(',', $_POST['subjects']) : '';
-        $classes = isset($_POST['classes']) ? implode(',', $_POST['classes']) : '';
-        
-        // Validate username and teacher index uniqueness
+
+        $person_type = (isset($_POST['person_type']) && $_POST['person_type'] === 'staff') ? 'staff' : 'teacher';
+        $work_description = $_POST['work_description'] ?? '';
+
+        if ($person_type === 'staff' && empty($work_description)) {
+            $em = "Work description is required for staff";
+            header("Location: ../teacher-edit.php?error=".urlencode($em)."&teacher_id=".$teacher_id);
+            exit;
+        }
+
+        $subjects = ($person_type === 'teacher' && isset($_POST['subjects'])) ? implode(',', $_POST['subjects']) : '';
+        $classes  = ($person_type === 'teacher' && isset($_POST['classes']))  ? implode(',', $_POST['classes'])  : '';
+
+        // Uniqueness checks (ignore current record)
         if (!unameIsUnique($uname, $conn, $teacher_id)) {
             $em = "Username is taken! try another";
             header("Location: ../teacher-edit.php?error=$em&teacher_id=$teacher_id");
             exit;
         }
-        
         if (!teacherIndexIsUnique($teacher_index, $conn, $teacher_id)) {
             $em = "Teacher Index is already in use! try another";
             header("Location: ../teacher-edit.php?error=$em&teacher_id=$teacher_id");
             exit;
         }
-        
-        // Update teacher with image path if uploaded
-        $sql = "UPDATE teachers SET
-                username = ?, fname = ?, lname = ?, teacher_index = ?, designation = ?, 
-                salary_code = ?, salary = ?, highest_qualification = ?, qualification_details = ?, 
-                subjects = ?, classes_assigned = ?, address = ?, employee_number = ?, 
-                date_of_birth = ?, phone_number = ?, gender = ?, email_address = ?, 
-                date_of_joined = ?, years_of_experience = ?, marital_status = ?, 
-                bank_name = ?, bank_account = ?, emergency_contact = ?, 
-                emergency_phone = ?, notes = ?";
-        
-        $params = [
-            $uname, $fname, $lname, $teacher_index, $designation, $salary_code, $salary,
-            $highest_qualification, $qualification_details, $subjects, $classes, $address,
-            $employee_number, $date_of_birth, $phone_number, $gender, $email_address, $date_of_joined,
-            $years_of_experience, $marital_status, $bank_name, $bank_account, $emergency_contact,
-            $emergency_phone, $notes
+
+        // Build UPDATE dynamically (include image_path only if uploaded)
+        $cols = [
+            'username' => $uname,
+            'fname' => $fname,
+            'lname' => $lname,
+            'person_type' => $person_type,
+            'teacher_index' => $teacher_index,
+            'designation' => $designation,
+            'salary_code' => $salary_code,
+            'salary' => $salary,
+            'highest_qualification' => $highest_qualification,
+            'qualification_details' => $qualification_details,
+            'work_description' => $work_description,
+            'subjects' => $subjects,
+            'classes_assigned' => $classes,
+            'address' => $address,
+            'employee_number' => $employee_number,
+            'date_of_birth' => $date_of_birth,
+            'phone_number' => $phone_number,
+            'gender' => $gender,
+            'email_address' => $email_address,
+            'date_of_joined' => $date_of_joined,
+            'years_of_experience' => $years_of_experience,
+            'marital_status' => $marital_status,
+            'bank_name' => $bank_name,
+            'bank_account' => $bank_account,
+            'emergency_contact' => $emergency_contact,
+            'emergency_phone' => $emergency_phone,
+            'notes' => $notes
         ];
-        
-        // Add image path to query if uploaded
         if ($image_path) {
-            $sql .= ", image_path = ?";
-            $params[] = $image_path;
+            $cols['image_path'] = $image_path;
         }
-        
-        $sql .= " WHERE teacher_id = ?";
+
+        // Create "SET col=?" list and params in the same order
+        $setParts = [];
+        $params = [];
+        foreach ($cols as $c => $v) {
+            $setParts[] = "$c = ?";
+            $params[] = $v;
+        }
         $params[] = $teacher_id;
-        
+
+        $sql = "UPDATE teachers SET ".implode(', ', $setParts)." WHERE teacher_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute($params);
         

@@ -35,7 +35,7 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role']) && isset($_GET['tea
         <a href="teacher.php" class="btn btn-dark">Go Back</a>
 
         <form method="post" class="shadow p-3 mt-5 form-w" action="req/teacher-edit.php" enctype="multipart/form-data">
-            <h3>Edit Teacher</h3><hr>
+            <h3>Edit Teacher or Staff</h3><hr>
             <?php if (isset($_GET['error'])) { ?>
                 <div class="alert alert-danger" role="alert">
                     <?=$_GET['error']?>
@@ -49,6 +49,14 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role']) && isset($_GET['tea
             
             <input type="hidden" name="teacher_id" value="<?=$teacher['teacher_id']?>">
             
+            <div class="mb-3">
+                <label class="form-label">Person Type</label>
+                <select class="form-control" name="person_type" id="person_type" required>
+                    <option value="teacher" <?=$teacher['person_type']=='teacher'?'selected':''?>>Teacher</option>
+                    <option value="staff"   <?=$teacher['person_type']=='staff'  ?'selected':''?>>Staff</option>
+                </select>
+            </div>
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
@@ -222,7 +230,7 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role']) && isset($_GET['tea
                 <textarea class="form-control" name="notes" rows="2"><?=$teacher['notes']?></textarea>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3" id="subjects_wrap">
                 <label class="form-label">Subjects</label>
                 <div class="row row-cols-1 row-cols-md-3 g-2">
                     <?php 
@@ -243,7 +251,7 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role']) && isset($_GET['tea
                 </div>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3" id="classes_wrap">
                 <label class="form-label">Classes Assigned</label>
                 <div class="row row-cols-1 row-cols-md-3 g-2">
                     <?php 
@@ -262,6 +270,11 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role']) && isset($_GET['tea
                     </div>
                     <?php endforeach ?>
                 </div>
+            </div>
+
+            <div class="mb-3" id="work_desc_wrap" style="display:none;">
+                <label class="form-label">Work Description (for staff)</label>
+                <textarea class="form-control" name="work_description" rows="3"><?=htmlspecialchars($teacher['work_description'] ?? '')?></textarea>
             </div>
 
             <div class="mb-3">
@@ -339,6 +352,17 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role']) && isset($_GET['tea
             e.preventDefault();
             makePass(8);
         });
+    </script>
+    <script>
+        function toggleByType() {
+            var t = document.getElementById('person_type').value;
+            var isTeacher = t === 'teacher';
+            document.getElementById('subjects_wrap').style.display = isTeacher ? '' : 'none';
+            document.getElementById('classes_wrap').style.display = isTeacher ? '' : 'none';
+            document.getElementById('work_desc_wrap').style.display = isTeacher ? 'none' : '';
+        }
+        document.getElementById('person_type').addEventListener('change', toggleByType);
+        toggleByType();
     </script>
 </body>
 </html>

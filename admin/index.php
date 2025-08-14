@@ -34,6 +34,13 @@ if (isset($_SESSION['admin_id']) &&
             </div>
             
             <div class="col">
+               <a href="staff" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
+                  <i class="fas fa-chalkboard-teacher"></i>
+                  <span>All Staff</span>
+               </a>
+            </div>
+            
+            <div class="col">
                <a href="student" class="btn quick-link-btn d-flex flex-column align-items-center justify-content-center">
                   <i class="fas fa-user-graduate"></i>
                   <span>All Students</span>

@@ -12,7 +12,7 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
         $teachers = [];
         if ($all && is_array($all)) {
             foreach ($all as $t) {
-                if (!isset($t['person_type']) || $t['person_type'] === 'teacher') {
+                if (!isset($t['person_type']) || $t['person_type'] === 'staff') {
                     $teachers[] = $t;
                 }
             }
@@ -23,7 +23,7 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Teachers</title>
+    <title>Admin - Staff</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
@@ -70,10 +70,10 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
     <?php include "inc/navbar.php"; ?>
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Manage Teachers</h2>
+            <h2>Manage Staff</h2>
             <div>
                 <a href="teacher-add.php" class="btn btn-dark me-2">
-                    <i class="fas fa-plus"></i> Add Teacher
+                    <i class="fas fa-plus"></i> Add Staff
                 </a>
                 <a href="req/teacher-export.php" class="btn btn-success me-2">
                     <i class="fas fa-file-export"></i> Export
@@ -90,7 +90,7 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
                 <div class="modal-content">
                     <form action="req/teacher-import.php" method="post" enctype="multipart/form-data">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="importModalLabel">Import Teachers</h5>
+                            <h5 class="modal-title" id="importModalLabel">Import Staff</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -187,8 +187,8 @@ if (isset($_SESSION['admin_id']) && isset($_SESSION['role'])) {
             <div class="col-12">
                 <div class="alert alert-info text-center py-4" role="alert">
                     <i class="fas fa-info-circle fa-2x mb-3"></i>
-                    <h4>No teachers found</h4>
-                    <p class="mb-0">Click "Add Teacher" to create a new teacher record</p>
+                    <h4>No staff found</h4>
+                    <p class="mb-0">Click "Add Staff" to create a new staff record</p>
                 </div>
             </div>
             <?php } ?>
