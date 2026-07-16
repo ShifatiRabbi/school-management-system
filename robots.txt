@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://spahhs.edu.bd/sitemap.xml

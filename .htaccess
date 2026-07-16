@@ -1,0 +1,65 @@
+########################################
+# CORE
+########################################
+Options -Indexes
+RewriteEngine On
+
+########################################
+# REMOVE .php EXTENSION
+########################################
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L]
+
+########################################
+# SECURITY HEADERS
+########################################
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://ajax.googleapis.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; media-src 'self' blob:; frame-src 'self' https://www.google.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self';"
+</IfModule>
+
+########################################
+# BLOCK COMMON ATTACKS
+########################################
+RewriteCond %{QUERY_STRING} (\.\./|base64_encode|union.*select|select.*from|concat|sleep\(|benchmark\() [NC]
+RewriteRule .* - [F,L]
+
+########################################
+# PROTECT SENSITIVE FILES
+########################################
+<FilesMatch "^(\.env|\.git|\.htaccess|\.htpasswd|config\.php|DB_connection\.php|composer\.(json|lock)|.*\.(sql|md|log|bak|old))$">
+    Require all denied
+</FilesMatch>
+
+# Allow README for reference only if needed — keep denied with other md files above.
+# Documentation lives in /docs but is blocked via FilesMatch for .md
+
+########################################
+# BLOCK PHP EXECUTION IN UPLOADS
+########################################
+<DirectoryMatch "/(uploads|files)/">
+    <FilesMatch "\.php$">
+        Require all denied
+    </FilesMatch>
+</DirectoryMatch>
+
+########################################
+# PHP LIMITS (SAFE)
+########################################
+<IfModule mod_php.c>
+    php_value upload_max_filesize 50M
+    php_value post_max_size 50M
+    php_value max_execution_time 120
+    php_value max_input_time 120
+</IfModule>
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php81” package as the default “PHP” programming language.
+<IfModule mime_module>
+    AddHandler application/x-httpd-ea-php81 .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

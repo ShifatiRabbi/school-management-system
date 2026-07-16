@@ -1,0 +1,26 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Logs & caches
+storage/logs/*
+!storage/logs/.gitkeep
+storage/cache/*
+!storage/cache/.gitkeep
+error_log
+*.log
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Temporary tooling (local only)
+tools_*.py
+__pycache__/
+
+# Optional: keep uploads out of git if desired (commented — data may be needed)
+# uploads/**

@@ -1,0 +1,8 @@
+# Prevent PHP execution in uploads
+<FilesMatch "\.(?i:php|phtml|php3|php4|php5|php7|php8|phar|cgi|pl|asp|aspx|exe|sh|bat)$">
+    Require all denied
+</FilesMatch>
+Options -Indexes
+php_flag engine off
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .phar
+RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .phar
